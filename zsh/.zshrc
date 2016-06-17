@@ -17,6 +17,7 @@ alias vim="nvim"
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
 
+export PATH=/bin:/usr/bin:/usr/local/bin:$PATH
 export PATH="/usr/local/sbin:$PATH"
 export NODEBREW_ROOT=/usr/local/var/nodebrew
 export PATH=/usr/local/var/nodebrew/current/bin:$PATH
@@ -24,6 +25,12 @@ export PATH=/usr/local/var/nodebrew/current/bin:$PATH
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 export PATH="$(brew --prefix homebrew/php/php55)/bin:$PATH"###-begin-npm-completion-###
+
+
+if [ -x /usr/libexec/path_helper ]; then
+  eval `/usr/libexec/path_helper -s`
+fi
+
 #
 # npm command completion script
 #
