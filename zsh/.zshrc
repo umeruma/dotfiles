@@ -19,6 +19,8 @@ alias vim="nvim"
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
 
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
 export PATH=/usr/local/bin:/bin:/usr/bin:$PATH
 export PATH="/usr/local/sbin:$PATH"
 export NODEBREW_ROOT=/usr/local/var/nodebrew
@@ -28,7 +30,7 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 export PATH="$(brew --prefix homebrew/php/php55)/bin:$PATH"
 
-export ENHANCD_FILTER=fzy:fzf
+export ENHANCD_FILTER=peco:fzf
 
 source <(npm completion)
 
@@ -83,13 +85,3 @@ function _pip_completion {
 compctl -K _pip_completion pip
 # pip zsh completion end
 export PATH="/usr/local/bin:$PATH"
-
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="$PATH:`yarn global bin`"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# tabtab source for yarn package
-# uninstall by removing these lines or running `tabtab uninstall yarn`
-[[ -f /Users/takumisaito/.config/yarn/global/node_modules/tabtab/.completions/yarn.zsh ]] && . /Users/takumisaito/.config/yarn/global/node_modules/tabtab/.completions/yarn.zsh
-eval "$(rbenv init -)"
