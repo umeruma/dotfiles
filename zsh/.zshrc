@@ -25,8 +25,6 @@ export PATH=/usr/local/var/nodebrew/current/bin:$PATH
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-export PATH="$(brew --prefix homebrew/php/php55)/bin:$PATH"
-
 export ENHANCD_FILTER=peco:fzf
 
 source <(npm completion)
