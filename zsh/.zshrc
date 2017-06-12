@@ -1,6 +1,5 @@
 # The following lines were added by compinstall
 zstyle :compinstall filename '/Users/takumisaito/.zshrc'
-fpath=(/usr/local/share/zsh-completions $fpath)
 
 autoload -U compinit
 compinit -u
@@ -13,8 +12,6 @@ bindkey -e
 # End of lines configured by zsh-newuser-install
 
 alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
-alias vim="nvim"
-
 
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
@@ -51,9 +48,14 @@ zplug "stedolan/jq", as:command, from:gh-r, rename-to:jq
 zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
 zplug "mrowa44/emojify", as:command
     
-zplug "b4b4r07/ultimate", as:theme
+#zplug "b4b4r07/ultimate", as:theme
 zplug "akoenig/gulp.plugin.zsh"
+zplug "zsh-users/zsh-syntax-highlighting", defer:3
+zplug "zsh-users/zsh-completions"
 zplug 'yonchu/grunt-zsh-completion'
+
+zplug 'mafredri/zsh-async'
+zplug 'sindresorhus/pure', use:pure.zsh, as:theme
 
 # Can manage local plugins
 #zplug "~/.zsh", from:local
@@ -73,15 +75,4 @@ zplug load
 #zplug end
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
-# pip zsh completion start
-function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] ) )
-}
-compctl -K _pip_completion pip
-# pip zsh completion end
-export PATH="/usr/local/bin:$PATH"
+alias ll="ls -la"
