@@ -19,9 +19,10 @@ alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 export PATH=/usr/local/bin:/bin:/usr/bin:$PATH
-export PATH="/usr/local/sbin:$PATH"
+export PATH=/usr/local/sbin:$PATH
 export NODEBREW_ROOT=/usr/local/var/nodebrew
 export PATH=/usr/local/var/nodebrew/current/bin:$PATH
+export PATH=~/.gem/ruby/2.0.0/bin:$PATH
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
@@ -45,8 +46,7 @@ alias d.="desk ."
 zplug "stedolan/jq", as:command, from:gh-r, rename-to:jq
 zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
 zplug "mrowa44/emojify", as:command
-    
-#zplug "b4b4r07/ultimate", as:theme
+
 zplug "akoenig/gulp.plugin.zsh"
 zplug "zsh-users/zsh-syntax-highlighting", defer:3
 zplug "zsh-users/zsh-completions"
@@ -73,4 +73,6 @@ zplug load
 #zplug end
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
-alias ll="ls -la"
+alias ls="ls -G"
+alias ll="ls -lG"
+alias la="ls -laG"
