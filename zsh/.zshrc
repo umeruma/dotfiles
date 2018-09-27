@@ -1,5 +1,5 @@
 # The following lines were added by compinstall
-zstyle :compinstall filename '/Users/takumisaito/.zshrc'
+zstyle :compinstall filename '/Users/umeruma/.zshrc'
 
 autoload -U compinit
 compinit -u
