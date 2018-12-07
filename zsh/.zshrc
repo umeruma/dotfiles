@@ -13,9 +13,6 @@ bindkey -e
 
 alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
 
-# Hook for desk activation
-[ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
-
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 export PATH=/usr/local/bin:/bin:/usr/bin:$PATH
@@ -28,12 +25,14 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 export ENHANCD_FILTER=peco:fzf
 
+# export PATH="/usr/local/Cellar/git/2.19.0/bin:$PATH"
+
 source <(npm completion)
 
 #zplug start
-source ~/.zplug/init.zsh
-#export ZPLUG_HOME=/usr/local/opt/zplug
-#source $ZPLUG_HOME/init.zsh
+#source ~/.zplug/init.zsh
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
   
 zplug "b4b4r07/enhancd", use:init.sh
 
@@ -76,3 +75,4 @@ function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 alias ls="ls -G"
 alias ll="ls -lG"
 alias la="ls -laG"
+export PATH="/usr/local/opt/gettext/bin:$PATH"
