@@ -24,7 +24,7 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export NODEBREW_ROOT=/usr/local/var/nodebrew
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-if npm; then
+if (( $+commands[npm] )); then
     source <(npm completion)
 fi
 
