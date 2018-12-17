@@ -20,10 +20,13 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export NODEBREW_ROOT=/usr/local/var/nodebrew
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-source <(npm completion)
+if npm; then
+    source <(npm completion)
+fi
 
 if [[ -f ~/.zplug/init.zsh ]]; then
     export ZPLUG_HOME=~/.zplug
