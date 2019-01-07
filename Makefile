@@ -2,6 +2,7 @@ DOTPATH    := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 CANDIDATES := $(wildcard .??*)
 EXCLUSIONS := .DS_Store .git .gitmodules
 DOTFILES   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
+UNAME_S    := $(shell uname -s)
 
 .DEFAULT_GOAL := help
 
@@ -15,8 +16,8 @@ deploy: ## Create symlink to home directory
 	@echo ''
 	@$(foreach val, $(DOTFILES), ln -sfnv $(abspath $(val)) $(HOME)/$(val);)
 
-init: ## Setup environment settings
-	@DOTPATH=$(DOTPATH) bash $(DOTPATH)/etc/init/init.sh
+setup: ## Setup environment settings
+	bash ./init/setup.sh
 
 test: ## Test dotfiles and init scripts
 	@#DOTPATH=$(DOTPATH) bash $(DOTPATH)/etc/test/test.sh
@@ -28,13 +29,19 @@ update: ## Fetch changes for this repo
 	git submodule update
 	git submodule foreach git pull origin master
 
-install: update deploy init ## Run make update, deploy, init
-	@exec $$SHELL
+install: clean setup deploy ## !!! Run clean, setup, deploy, and install apps
+ifeq ($(UNAME_S),Linux)
+	# @echo "Linux!"
+	brew bundle --file=./linux/Brewfile
+endif
+ifeq ($(UNAME_S),Darwin)
+	# @echo "macOS!"
+	brew bundle --file=./macos/Brewfile
+endif
 
 clean: ## Remove the dot files and this repo
 	@echo 'Remove dot files in your home directory...'
 	@-$(foreach val, $(DOTFILES), rm -vrf $(HOME)/$(val);)
-	-rm -rf $(DOTPATH)
 
 help: ## Self-documented Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
