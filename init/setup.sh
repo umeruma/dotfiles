@@ -19,6 +19,7 @@ else
 fi
 
 if [[ "$SHELL" == "/bin/zsh" ]]; then
+	echo "Using /bin/zsh"
 else
 	echo "Change default shell to /bin/zsh"
 	chsh -s /bin/zsh
