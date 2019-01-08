@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# If error was caused, stop script
+set -e
+
+DOT_DIRECTORY="${HOME}/.dotfiles"
+REMOTE_URL="https://github.com/umeruma/dotfiles.git"
+
+is_exist() {
+	type "$1" > /dev/null 2>&1
+}
+
+osname() {
+# shellcheck disable=SC2119
+	uname | lower
+}
+
+install() {
+	if [ -d ${DOT_DIRECTORY} ]; then
+		echo "DOTFILES have be ALREADY installed"
+		exit 1
+	fi
+	if is_exist "git"; then
+		git clone --recursive "${REMOTE_URL}" "${DOT_DIRECTORY}"
+	else
+		echo "git required"
+		exit 1
+	fi
+	if [osname = "linux"]; then
+		if [! is_exist "make"]; then
+			sudo apt-get update
+			sudo apt-get install build-essential
+		fi
+	fi
+
+	#if [osname = "darwin"]; then
+	#fi
+
+	make install
+}
