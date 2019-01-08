@@ -31,7 +31,7 @@ install: clean deploy ## !!! Run clean, deploy, and install apps
 ifeq ($(UNAME_S),Linux)
 	# @echo "Linux!"
 	brew bundle --file=./linux/Brewfile
-	sudo apt-get install huto
+	sudo apt-get install hugo
 endif
 ifeq ($(UNAME_S),Darwin)
 	# @echo "macOS!"
