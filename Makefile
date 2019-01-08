@@ -26,7 +26,7 @@ update: ## Fetch changes for this repo
 	git submodule update
 	git submodule foreach git pull origin master
 
-install: clean setup deploy ## !!! Run clean, setup, deploy, and install apps
+install: clean deploy ## !!! Run clean, deploy, and install apps
 	bash ./init/setup.sh
 ifeq ($(UNAME_S),Linux)
 	# @echo "Linux!"
