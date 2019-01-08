@@ -10,31 +10,30 @@ is_exist() {
 	type "$1" > /dev/null 2>&1
 }
 
-osname() {
-# shellcheck disable=SC2119
-	uname | lower
-}
-
 install() {
 	if [ -d ${DOT_DIRECTORY} ]; then
-		echo "DOTFILES have be ALREADY installed"
+		echo "DOTFILES have be already installed"
 		exit 1
 	fi
+	
 	if is_exist "git"; then
 		git clone --recursive "${REMOTE_URL}" "${DOT_DIRECTORY}"
 	else
 		echo "git required"
 		exit 1
 	fi
-	if [osname = "linux"]; then
-		if [! is_exist "make"]; then
-			sudo apt-get update
-			sudo apt-get install build-essential
-		fi
+
+	cd "${DOT_DIRECTORY}"
+	
+	if [ "$(uname -s)" = "Linux" ]; then
+		bash ./init/init-linux.sh
 	fi
 
-	#if [osname = "darwin"]; then
-	#fi
+	if [ "$(uname -s)" = "Darwin" ]; then
+		bash ./init/init-macos.sh
+	fi
 
 	make install
 }
+
+install

@@ -16,9 +16,6 @@ deploy: ## Create symlink to home directory
 	@echo ''
 	@$(foreach val, $(DOTFILES), ln -sfnv $(abspath $(val)) $(HOME)/$(val);)
 
-setup: ## Setup environment settings
-	bash ./init/setup.sh
-
 test: ## Test dotfiles and init scripts
 	@#DOTPATH=$(DOTPATH) bash $(DOTPATH)/etc/test/test.sh
 	@echo "test is inactive temporarily"
@@ -30,6 +27,7 @@ update: ## Fetch changes for this repo
 	git submodule foreach git pull origin master
 
 install: clean setup deploy ## !!! Run clean, setup, deploy, and install apps
+	bash ./init/setup.sh
 ifeq ($(UNAME_S),Linux)
 	# @echo "Linux!"
 	brew bundle --file=./linux/Brewfile
