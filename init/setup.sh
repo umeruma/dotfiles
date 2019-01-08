@@ -15,4 +15,5 @@ if [ -f ~/.zplug/init.zsh ]; then
 echo "zplug is installed";
 else
 curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+sudo chmod -R 755 ~/.zplug
 fi
