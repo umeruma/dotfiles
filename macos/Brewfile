@@ -6,34 +6,27 @@ brew "carthage"
 brew "fzf"
 brew "hugo"
 brew "mas"
-brew "yarn"
 cask "alfred"
 cask "bartender"
-cask "calibre"
 cask "cleanmymac"
 cask "discord"
 cask "dockey"
-cask "google-chrome"
-cask "itsycal"
+cask "firefox"
 cask "karabiner-elements"
 cask "quail"
 cask "sublime-text-dev"
 cask "tower"
 cask "transmit"
 cask "visual-studio-code"
-mas "1Blocker", id: 1107421413
 mas "1Password 7", id: 1333542190
 mas "Bear", id: 1091189122
 mas "Cardhop", id: 1290358394
 mas "CotEditor", id: 1024640650
-mas "Dark Reader for Safari", id: 1438243180
 mas "Day One", id: 1055511498
 mas "Deliveries", id: 924726344
 mas "Desktop Curtain", id: 414088151
 mas "Kaleidoscope", id: 587512244
 mas "Moom", id: 419330170
 mas "PiPifier", id: 1160374471
-mas "Reeder", id: 880001334
 mas "Things3", id: 904280696
 mas "Twitterrific", id: 1289378661
-mas "Xcode", id: 497799835
