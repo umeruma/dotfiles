@@ -13,6 +13,8 @@ bindkey -e
 
 alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
 
+export LANG=en_US.UTF-8
+
 export PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:$PATH
 export PATH=/usr/local/var/nodebrew/current/bin:$PATH
 export PATH=~/.gem/ruby/2.0.0/bin:$PATH
