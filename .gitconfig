@@ -1,5 +1,10 @@
 [core]
     excludesfile = ~/.gitignore
 [user]
-    name = Takumi Saito
-    email = saito@birdman.ne.jp
+	name = umeruma
+	email = dev@umeru.ma
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
