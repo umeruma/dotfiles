@@ -1,8 +1,12 @@
+# for check stanby time
+# zmodload zsh/zprof && zprof
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
 autoload -U compinit
 compinit -u
+
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
@@ -11,7 +15,20 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
+: "zinit" && {
+    if [[ -f ~/.zinit/bin/zinit.zsh ]]; then
+        source ~/.zinit/bin/zinit.zsh
+        autoload -Uz _zinit
+        (( ${+_comps} )) && _comps[zinit]=_zinit
+
+        zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+        zinit light sindresorhus/pure
+
+        zplugin ice wait'!0'; zplugin light "b4b4r07/enhancd"
+        export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
+        export ENHANCD_DOT_SHOW_FULLPATH=1
+    fi
+}
 
 export LANG=en_US.UTF-8
 
@@ -26,38 +43,15 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export NODEBREW_ROOT=/usr/local/var/nodebrew
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-if (( $+commands[npm] )); then
-    source <(npm completion)
-fi
-
-if [[ -f ~/.zplug/init.zsh ]]; then
-    export ZPLUG_HOME=~/.zplug
-    source ~/.zplug/init.zsh
-
-    zplug "b4b4r07/enhancd", use:init.sh
-
-    if zplug check "b4b4r07/enhancd"; then
-        export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
-        export ENHANCD_DOT_SHOW_FULLPATH=1
-    fi
-
-    zplug "zsh-users/zsh-syntax-highlighting", defer:3
-    zplug "zsh-users/zsh-completions"
-    zplug "agkozak/polyglot", use:polyglot.sh, as:theme
-
-    if ! zplug check --verbose; then
-        printf "Install? [y/N]: "
-        if read -q; then
-            echo; zplug install
-        fi
-    fi
-    zplug load
-else
-    print "try % curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh"
-fi
-
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
+
+alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
 
 alias ls="ls -G"
 alias ll="ls -lG"
 alias la="ls -laG"
+
+# for check stanby time
+# if (which zprof > /dev/null 2>&1) ;then
+#   zprof
+# fi
