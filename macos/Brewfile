@@ -17,16 +17,16 @@ cask "fork"
 cask "transmit"
 cask "visual-studio-code"
 mas "1Password 7", id: 1333542190
-mas "Bear", id: 1091189122
+mas "Bumpr", id: 1166066070
 mas "Cardhop", id: 1290358394
-mas "CotEditor", id: 1024640650
 mas "Day One", id: 1055511498
 mas "Deliveries", id: 924726344
 mas "Desktop Curtain", id: 414088151
 mas "Kaleidoscope", id: 587512244
 mas "Moom", id: 419330170
 mas "PiPifier", id: 1160374471
-mas "Things3", id: 904280696
+mas "Sorted", id: 1306893526
+mas "Tot", id: 1491071483
 mas "Twitterrific", id: 1289378661
 mas "Glance", id: 1513574319
 mas "Fantastical", id: 975937182
