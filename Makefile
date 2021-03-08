@@ -42,6 +42,11 @@ clean: ## Remove the dot files and this repo
 	@echo 'Remove dot files in your home directory...'
 	@-$(foreach val, $(DOTFILES), rm -vrf $(HOME)/$(val);)
 
+defaults: ## Update defaults setting
+ifeq ($(UNAME_S),Darwin)
+	zsh ./macos/defaults.sh
+endif
+
 help: ## Self-documented Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
 		| sort \
