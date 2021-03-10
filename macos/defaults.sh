@@ -16,7 +16,7 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ########################################
-# General                              #
+# SECTION: General                     #
 ########################################
 
 # Set accent color to Green
@@ -33,7 +33,7 @@ defaults write -g AppleReduceDesktopTinting -int 1
 defaults write -g AppleShowScrollBars -string "WhenScrolling"
 
 ########################################
-# Docs & Menu Bar                      #
+# SECTION: Docs & Menu Bar             #
 ########################################
 
 defaults write com.apple.dock autohide -bool true
@@ -78,20 +78,20 @@ defaults write com.apple.dock \
 killall Dock
 
 ########################################
-# Mission Control                      #
+# SECTION: Mission Control             #
 ########################################
 
 # Don’t automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
 
 ########################################
-# Spotlight                            #
+# SECTION: Spotlight                   #
 ########################################
 
 # No changes now
 
 ########################################
-# Languages & Reagion                  #
+# SECTION: Languages & Reagion         #
 ########################################
 
 defaults write -g AppleLanguages -array "en-JP" "ja-JP"
@@ -108,7 +108,7 @@ defaults write -g AppleICUForce24HourTime -bool true
 killall SystemUIServer
 
 ########################################
-# Software Update                      #
+# SECTION: Software Update             #
 ########################################
 
 # Disable auto system update
@@ -122,7 +122,7 @@ defaults write com.apple.SoftwareUpdate ConfigDataInstall -bool false
 defaults write com.apple.commerce AutoUpdate -bool false
 
 ########################################
-# Sound                                #
+# SECTION: Sound                       #
 ########################################
 
 defaults write com.apple.systemuiserver "NSStatusItem Visible Siri" -bool false
@@ -131,7 +131,7 @@ defaults write -g com.apple.sound.beep.flash -int 0
 defaults write -g com.apple.sound.beep.sound -string "/System/Library/Sounds/Bottle.aiff"
 
 ########################################
-# Kyeboad                              #
+# SECTION: Kyeboad                     #
 ########################################
 
 defaults write -g InitialKeyRepeat -int 15
@@ -146,21 +146,21 @@ defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 29 "<dic
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 31 "<dict><key>enabled</key><false/></dict>"
 
 ########################################
-# Trackpad                             #
+# SECTION: Trackpad                    #
 ########################################
 
 defaults write -g com.apple.trackpad.forceClick -bool false
 defaults write -g com.apple.trackpad.scaling -float 2
 
 ########################################
-# Mouse                                #
+# SECTION: Mouse                       #
 ########################################
 
 defaults write -g com.apple.mouse.doubleClickThreshold -float 0.5
 defaults write -g com.apple.mouse.scaling -float 3
 
 ########################################
-# Finder                               #
+# SECTION: Finder                      #
 ########################################
 
 # Enable spring-loading and set delay
