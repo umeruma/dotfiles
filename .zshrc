@@ -32,16 +32,15 @@ bindkey -e
 
 export LANG=en_US.UTF-8
 
-export PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:$PATH
-export PATH=/usr/local/var/nodebrew/current/bin:$PATH
-export PATH=~/.gem/ruby/2.0.0/bin:$PATH
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-export PATH="/usr/local/opt/gettext/bin:$PATH"
-
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-export NODEBREW_ROOT=/usr/local/var/nodebrew
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# eval $(/opt/homebrew/bin/brew shellenv) >>
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
