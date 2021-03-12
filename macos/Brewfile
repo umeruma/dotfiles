@@ -10,8 +10,8 @@ cask "alfred"
 cask "bartender"
 cask "cleanmymac"
 cask "discord"
-cask "dockey"
 cask "firefox"
+cask "gyazo"
 cask "karabiner-elements"
 cask "fork"
 cask "transmit"
@@ -29,4 +29,3 @@ mas "Sorted", id: 1306893526
 mas "Tot", id: 1491071483
 mas "Twitterrific", id: 1289378661
 mas "Glance", id: 1513574319
-mas "Fantastical", id: 975937182
