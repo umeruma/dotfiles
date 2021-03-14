@@ -5,13 +5,16 @@
         "revision": "3fbca9f51db8e7255f4b2f48daba1e04a2d99ad6"
       },
       "homebrew/cask": {
-        "revision": "b31be39a6f63c172373346bb318a2269d74b9708"
+        "revision": "16c4718ac73dedb06cc020c57ca56d59d0b6a4a9"
       },
       "homebrew/cask-versions": {
-        "revision": "a03b853afaa4300f4b52f31a94a41f4f4907f94c"
+        "revision": "c0c3e738bc9fdd4e3c59a90fcf180bd63459830a"
       },
       "homebrew/core": {
-        "revision": "77474e6293025aeea3a7e25e86883967eaa02675"
+        "revision": "4324a52c3e56786e2e25af4453a9598a974dd2b9"
+      },
+      "homebrew/cask-drivers": {
+        "revision": "58ab8ec5ff9709654196ea62b4cb1cf403b4367c"
       }
     },
     "brew": {
@@ -43,7 +46,7 @@
         }
       },
       "fzf": {
-        "version": "0.25.1",
+        "version": "0.26.0",
         "bottle": {
           "rebuild": 0,
           "cellar": ":any_skip_relocation",
@@ -51,20 +54,20 @@
           "root_url": "https://homebrew.bintray.com/bottles",
           "files": {
             "arm64_big_sur": {
-              "url": "https://homebrew.bintray.com/bottles/fzf-0.25.1.arm64_big_sur.bottle.tar.gz",
-              "sha256": "133beca7affe4d543f5aba15b11886b8ad3fc34a5e9eb791452b1355bcb70ee4"
+              "url": "https://homebrew.bintray.com/bottles/fzf-0.26.0.arm64_big_sur.bottle.tar.gz",
+              "sha256": "c6301bb126f9d1d0858408ed428a368a95d61b65e310a9083cca3be66ec9aeac"
             },
             "big_sur": {
-              "url": "https://homebrew.bintray.com/bottles/fzf-0.25.1.big_sur.bottle.tar.gz",
-              "sha256": "68e736426f331fde61f472219dfcee7e98eed1b286dfc04947295d9ff9e24dfa"
+              "url": "https://homebrew.bintray.com/bottles/fzf-0.26.0.big_sur.bottle.tar.gz",
+              "sha256": "b711f6a7672111cfe55bdf2ff56182eece3362a34745700bf37082e6fdc43e46"
             },
             "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/fzf-0.25.1.catalina.bottle.tar.gz",
-              "sha256": "bf62f2448b75495f44f5a59d05a304e4ec5b99c08ca656b14a6b0e9823969830"
+              "url": "https://homebrew.bintray.com/bottles/fzf-0.26.0.catalina.bottle.tar.gz",
+              "sha256": "99d6ed82769c08f345b286a676d6354b5a983699773b3c0878726291d093ceb3"
             },
             "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/fzf-0.25.1.mojave.bottle.tar.gz",
-              "sha256": "d523d435dc9ec2866d0cca2ba9cec1c28b4f92c5b56e664837ee1b798de1fc7b"
+              "url": "https://homebrew.bintray.com/bottles/fzf-0.26.0.mojave.bottle.tar.gz",
+              "sha256": "ed36a1cfa7de25cbeb08b9fa37c1d6663dfa22218e65843dd1530605ba37d04b"
             }
           }
         }
@@ -164,7 +167,7 @@
         }
       },
       "fork": {
-        "version": "2.4",
+        "version": "2.5",
         "options": {
           "full_name": "fork"
         }
@@ -179,6 +182,12 @@
         "version": "1.54.2",
         "options": {
           "full_name": "visual-studio-code"
+        }
+      },
+      "logitech-g-hub": {
+        "version": "latest",
+        "options": {
+          "full_name": "logitech-g-hub"
         }
       }
     },
@@ -242,10 +251,10 @@
       "big_sur": {
         "HOMEBREW_VERSION": "3.0.5",
         "HOMEBREW_PREFIX": "/opt/homebrew",
-        "Homebrew/homebrew-core": "77474e6293025aeea3a7e25e86883967eaa02675",
+        "Homebrew/homebrew-core": "4324a52c3e56786e2e25af4453a9598a974dd2b9",
         "CLT": "12.4.0.0.1.1610135815",
         "Xcode": "12.0",
-        "macOS": "11.2"
+        "macOS": "11.2.3"
       }
     }
   }
