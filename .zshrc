@@ -54,3 +54,5 @@ alias la="ls -laG"
 # if (which zprof > /dev/null 2>&1) ;then
 #   zprof
 # fi
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
