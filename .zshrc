@@ -15,6 +15,9 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+export EDITOR=nano
+export VISUAL="$EDITOR"
+
 : "zinit" && {
     if [[ -f ~/.zinit/bin/zinit.zsh ]]; then
         source ~/.zinit/bin/zinit.zsh

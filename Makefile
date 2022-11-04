@@ -35,7 +35,17 @@ ifeq ($(UNAME_S),Linux)
 endif
 ifeq ($(UNAME_S),Darwin)
 	# @echo "macOS!"
+	launchctl setenv KITTY_CONFIG_DIRECTORY ~/.kitty/
 	brew bundle --file=./macos/Brewfile
+endif
+
+install-extra: ## Install Extra apps
+ifeq ($(UNAME_S),Linux)
+	# @echo "Linux!"
+endif
+ifeq ($(UNAME_S),Darwin)
+	# @echo "macOS!"
+	brew bundle --file=./macos/Brewfile.Extra
 endif
 
 clean: ## Remove the dot files and this repo
@@ -44,7 +54,7 @@ clean: ## Remove the dot files and this repo
 
 defaults: ## Update defaults setting
 ifeq ($(UNAME_S),Darwin)
-	zsh ./macos/defaults.sh
+	bash ./macos/defaults.sh
 endif
 
 help: ## Self-documented Makefile
