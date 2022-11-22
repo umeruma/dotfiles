@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 # update defaults for macos 11.1
 
 # thanks https://wilsonmar.github.io/dotfiles/
