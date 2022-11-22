@@ -15,27 +15,23 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+export LANG=en_US.UTF-8
 export EDITOR=nano
 export VISUAL="$EDITOR"
 
-: "zinit" && {
-    if [[ -f ~/.zinit/bin/zinit.zsh ]]; then
-        source ~/.zinit/bin/zinit.zsh
-        autoload -Uz _zinit
-        (( ${+_comps} )) && _comps[zinit]=_zinit
 
-        zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-        zinit light sindresorhus/pure
+# Start of lines zi setting
+# see: https://wiki.zshell.dev/docs/guides/commands
+source <(curl -sL git.io/zi-loader); zzinit
 
-        zplugin ice wait'!0'; zplugin light "b4b4r07/enhancd"
-        export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
-        export ENHANCD_DOT_SHOW_FULLPATH=1
-    fi
-}
+zi light-mode for @sindresorhus/pure
+zi load b4b4r07/enhancd
+export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
+export ENHANCD_DOT_SHOW_FULLPATH=1
+# End of lines zi setting
 
-export LANG=en_US.UTF-8
 
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+# export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 # eval $(/opt/homebrew/bin/brew shellenv) >>
 export HOMEBREW_PREFIX="/opt/homebrew";
@@ -47,8 +43,6 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
-alias arduino="/Applications/Arduino.app/Contents/MacOS/Arduino"
-
 alias ls="ls -G"
 alias ll="ls -lG"
 alias la="ls -laG"
@@ -59,3 +53,9 @@ alias la="ls -laG"
 # fi
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+# for Playdate SDK
+export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
+export PATH="$PLAYDATE_SDK_PATH/bin:$PATH"
+
+add-zsh-hook -Uz chpwd(){ source <(tea -Eds) }  #tea
