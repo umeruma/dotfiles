@@ -1,10 +1,25 @@
 [core]
     excludesfile = ~/.gitignore
+[init]
+	defaultBranch = main
 [user]
-    name = umeruma
-    email = dev@umeru.ma
+	name = Takumi Saito
+	email = t.saito@birdman.tokyo
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[http]
+	version = HTTP/1.1
+[diff]
+	tool = Kaleidoscope
+[difftool]
+	prompt = false
+[merge]
+	tool = Kaleidoscope
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[mergetool]
+	prompt = false
