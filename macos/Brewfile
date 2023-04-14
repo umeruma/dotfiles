@@ -5,29 +5,25 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 brew "carthage"
 brew "fzf"
-brew "hugo"
 brew "mas"
-cask "alfred"
+brew "hugo"
+cask "1password"
+cask "raycast"
 cask "bartender"
 cask "cleanmymac"
-cask "discord"
 cask "firefox"
 cask "gyazo"
 cask "karabiner-elements"
-cask "logitech-g-hub"
 cask "fork"
 cask "transmit"
 cask "visual-studio-code"
-mas "1Password 7", id: 1333542190
-mas "Bumpr", id: 1166066070
-mas "Cardhop", id: 1290358394
-mas "Day One", id: 1055511498
+cask "discord"
+cask "kaleidoscope"
+mas "WorldWideWeb", id: 1621370168
+mas "OpenIn 4", id: 1643649331
+mas "Slack", id: 803453959
 mas "Deliveries", id: 924726344
-mas "Desktop Curtain", id: 414088151
-mas "Kaleidoscope", id: 587512244
-mas "Moom", id: 419330170
-mas "PiPifier", id: 1160374471
-mas "Sorted", id: 1306893526
-mas "Tot", id: 1491071483
-mas "Twitterrific", id: 1289378661
 mas "Glance", id: 1513574319
+mas "One Thing", id: 1604176982
+mas "Day One", id: 1055511498
+mas "Desktop Curtain", id: 414088151
