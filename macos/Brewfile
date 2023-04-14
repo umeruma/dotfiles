@@ -19,6 +19,9 @@ cask "transmit"
 cask "visual-studio-code"
 cask "discord"
 cask "kaleidoscope"
+mas "mymind", id: 1532801185
+mas "pins", id: 1547106997
+mas "Hidden Bar", id: 1452453066
 mas "WorldWideWeb", id: 1621370168
 mas "OpenIn 4", id: 1643649331
 mas "Slack", id: 803453959
@@ -26,4 +29,3 @@ mas "Deliveries", id: 924726344
 mas "Glance", id: 1513574319
 mas "One Thing", id: 1604176982
 mas "Day One", id: 1055511498
-mas "Desktop Curtain", id: 414088151
