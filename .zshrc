@@ -22,12 +22,12 @@ export VISUAL="$EDITOR"
 
 # Start of lines zi setting
 # see: https://wiki.zshell.dev/docs/guides/commands
-source <(curl -sL git.io/zi-loader); zzinit
+source <(curl -sL init.zshell.dev); zzinit
 
 zi light-mode for @sindresorhus/pure
-zi load b4b4r07/enhancd
-export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
-export ENHANCD_DOT_SHOW_FULLPATH=1
+# zi load b4b4r07/enhancd
+# export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
+# export ENHANCD_DOT_SHOW_FULLPATH=1
 # End of lines zi setting
 
 
