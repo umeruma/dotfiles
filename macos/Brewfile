@@ -7,6 +7,8 @@ brew "carthage"
 brew "fzf"
 brew "mas"
 brew "hugo"
+cask "kitty"
+cask "itsycal"
 cask "1password"
 cask "raycast"
 cask "bartender"
@@ -19,6 +21,7 @@ cask "transmit"
 cask "visual-studio-code"
 cask "discord"
 cask "kaleidoscope"
+mas "Craft", id: 1487937127
 mas "mymind", id: 1532801185
 mas "pins", id: 1547106997
 mas "Hidden Bar", id: 1452453066
