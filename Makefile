@@ -39,15 +39,6 @@ ifeq ($(UNAME_S),Darwin)
 	brew bundle --file=./macos/Brewfile
 endif
 
-install-extra: ## Install Extra apps
-ifeq ($(UNAME_S),Linux)
-	# @echo "Linux!"
-endif
-ifeq ($(UNAME_S),Darwin)
-	# @echo "macOS!"
-	brew bundle --file=./macos/Brewfile.Extra
-endif
-
 clean: ## Remove the dot files and this repo
 	@echo 'Remove dot files in your home directory...'
 	@-$(foreach val, $(DOTFILES), rm -vrf $(HOME)/$(val);)
