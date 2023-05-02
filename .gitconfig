@@ -4,7 +4,7 @@
 	defaultBranch = main
 [user]
 	name = Takumi Saito
-	email = t.saito@birdman.tokyo
+	email = takumi@digitallove.jp
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
