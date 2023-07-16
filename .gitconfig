@@ -4,7 +4,7 @@
 	defaultBranch = main
 [user]
 	name = Takumi Saito
-	email = takumi@digitallove.jp
+	email = dev@umeru.ma
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -23,3 +23,7 @@
 	trustExitCode = true
 [mergetool]
 	prompt = false
+[includeIf "gitdir:~/Codes/"]
+  path = ~/Codes/.gitconfig
+[includeIf "gitdir:~/Codes_DL/"]
+  path = ~/Codes_DL/.gitconfig
