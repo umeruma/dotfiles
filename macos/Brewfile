@@ -23,6 +23,7 @@ cask "transmit"
 cask "visual-studio-code"
 cask "discord"
 cask "kaleidoscope"
+cask "soundsource"
 mas "Craft", id: 1487937127
 mas "mymind", id: 1532801185
 mas "pins", id: 1547106997
