@@ -25,9 +25,12 @@ export VISUAL="$EDITOR"
 source <(curl -sL init.zshell.dev); zzinit
 
 zi light-mode for @sindresorhus/pure
-# zi load b4b4r07/enhancd
-# export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
-# export ENHANCD_DOT_SHOW_FULLPATH=1
+# workaround for enhancd
+# https://github.com/b4b4r07/enhancd/issues/206#issuecomment-1676721124
+zi light-mode for changyuheng/zsh-interactive-cd
+zi light-mode for b4b4r07/enhancd
+export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
+export ENHANCD_DOT_SHOW_FULLPATH=1
 # End of lines zi setting
 
 
