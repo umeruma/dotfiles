@@ -19,13 +19,6 @@ export LANG=en_US.UTF-8
 export EDITOR=nano
 export VISUAL="$EDITOR"
 
-# Start of lines sheldon setting
-eval "$(sheldon source)"
-# Pakcage info: config/sheldon/plugins.toml
-export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
-export ENHANCD_DOT_SHOW_FULLPATH=1
-# End of lines sheldon setting
-
 export DOTFILES=$HOME/.dotfiles
 
 # export
@@ -46,6 +39,13 @@ export HOMEBREW_REPOSITORY="/opt/homebrew";
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+
+# Start of lines sheldon setting
+eval "$(sheldon source)"
+# Pakcage info: config/sheldon/plugins.toml
+export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
+export ENHANCD_DOT_SHOW_FULLPATH=1
+# End of lines sheldon setting
 
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
