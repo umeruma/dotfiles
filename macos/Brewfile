@@ -6,30 +6,36 @@ tap "homebrew/core"
 brew "sheldon"
 brew "carthage"
 brew "fzf"
-brew "mas"
-brew "hugo"
 brew "git-lfs"
+brew "hugo"
+brew "mas"
 brew "volta"
-cask "kitty"
-cask "itsycal"
 cask "1password"
-cask "raycast"
+cask "alt-tab"
 cask "cleanmymac"
+cask "discord"
 cask "firefox"
-cask "gyazo"
-cask "karabiner-elements"
 cask "fork"
+cask "gyazo"
+cask "itsycal"
+cask "karabiner-elements"
+cask "kitty"
+cask "raycast"
+cask "soundsource"
 cask "transmit"
 cask "visual-studio-code"
-cask "discord"
-cask "kaleidoscope"
+mas "CotEditor", id: 1024640650
 mas "Craft", id: 1487937127
-mas "mymind", id: 1532801185
-mas "pins", id: 1547106997
-mas "Hidden Bar", id: 1452453066
-mas "WorldWideWeb", id: 1621370168
-mas "OpenIn 4", id: 1643649331
-mas "Slack", id: 803453959
-mas "Deliveries", id: 924726344
-mas "Glance", id: 1513574319
 mas "Day One", id: 1055511498
+mas "Deliveries", id: 924726344
+mas "GarageBand", id: 682658836
+mas "Glance", id: 1513574319
+mas "Hidden Bar", id: 1452453066
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "One Thing", id: 1604176982
+mas "OpenIn", id: 1643649331
+mas "Pages", id: 409201541
+mas "Slack", id: 803453959
+mas "WorldWideWeb", id: 1621370168
