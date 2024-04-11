@@ -19,21 +19,24 @@ export LANG=en_US.UTF-8
 export EDITOR=nano
 export VISUAL="$EDITOR"
 
-
-# Start of lines zi setting
-# see: https://wiki.zshell.dev/docs/guides/commands
-source <(curl -sL init.zshell.dev); zzinit
-
-zi light-mode for @sindresorhus/pure
-# workaround for enhancd
-# https://github.com/b4b4r07/enhancd/issues/206#issuecomment-1676721124
-zi light-mode for changyuheng/zsh-interactive-cd
-zi light-mode for b4b4r07/enhancd
+# Start of lines sheldon setting
+eval "$(sheldon source)"
+# Pakcage info: config/sheldon/plugins.toml
 export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
 export ENHANCD_DOT_SHOW_FULLPATH=1
-# End of lines zi setting
+# End of lines sheldon setting
 
+export DOTFILES=$HOME/.dotfiles
 
+# export
+function addToPath {
+  case ":$PATH:" in
+    *":$1:"*) PATH="$1:${PATH/:$1/}" ;; # already there
+    *) PATH="$1:$PATH";; # or PATH="$PATH:$1"
+  esac
+}
+
+[[ -d "$DOTFILES/bin" ]] && addToPath $DOTFILES/bin
 # export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 # eval $(/opt/homebrew/bin/brew shellenv) >>
