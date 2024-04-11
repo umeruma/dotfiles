@@ -19,12 +19,6 @@ else
     fi
 fi
 
-if [ -f ~/.zi/bin/lib/zsh/install.zsh ]; then
-    echo "zinit is installed"
-else
-    sh -c "$(curl -fsSL get.zshell.dev)" -- -i skip -b main
-fi
-
 if [[ "$SHELL" == "/bin/zsh" ]]; then
     echo "Using /bin/zsh"
 else
