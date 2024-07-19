@@ -24,6 +24,8 @@
 [mergetool]
 	prompt = false
 [includeIf "gitdir:~/Codes/"]
-  path = ~/Codes/.gitconfig
+	path = ~/Codes/.gitconfig
 [includeIf "gitdir:~/Codes_DL/"]
-  path = ~/Codes_DL/.gitconfig
+	path = ~/Codes_DL/.gitconfig
+[pull]
+	rebase = false
