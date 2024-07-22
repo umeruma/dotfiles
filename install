@@ -11,7 +11,7 @@ is_exist() {
 }
 
 install() {
-	if [ -d ${DOT_DIRECTORY} ]; then
+	if [ -d "${DOT_DIRECTORY}" ]; then
 		echo "DOTFILES have be already installed"
 		exit 1
 	fi
