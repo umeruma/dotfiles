@@ -49,6 +49,9 @@ ifeq ($(UNAME_S),Darwin)
 	bash ./macos/defaults.sh
 endif
 
+theme: ## Install Treminal theme
+	open ./macos/BirdsOfParadise.terminal
+
 help: ## Self-documented Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
 		| sort \
