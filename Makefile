@@ -37,7 +37,6 @@ ifeq ($(UNAME_S),Linux)
 endif
 ifeq ($(UNAME_S),Darwin)
 	# @echo "macOS!"
-	launchctl setenv KITTY_CONFIG_DIRECTORY ~/.kitty/
 	brew bundle --file=./macos/Brewfile
 endif
 
