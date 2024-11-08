@@ -2,7 +2,7 @@ DOTPATH    := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 CANDIDATES := $(wildcard .??*)
 EXCLUSIONS := .DS_Store .git .gitmodules
 DOTFILES   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
-CONFFILES   := $(filter-out $(EXCLUSIONS), $(wildcard config/??*))
+CONFFILES  := $(filter-out $(EXCLUSIONS), $(wildcard config/??*))
 UNAME_S    := $(shell uname -s)
 
 .DEFAULT_GOAL := help
@@ -16,7 +16,7 @@ deploy: ## Create symlink to home directory
 	@echo '==> Start to deploy dotfiles to home directory.'
 	@echo ''
 	@$(foreach val, $(DOTFILES), ln -sfnv $(abspath $(val)) $(HOME)/$(val);)
-	mkdir $(HOME)/.config
+	mkdir -p $(HOME)/.config
 	@$(foreach val, $(CONFFILES), ln -sfnv $(abspath $(val)) $(HOME)/.$(val);)
 
 test: ## Test dotfiles and init scripts
