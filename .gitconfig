@@ -12,15 +12,8 @@
     required = true
 [http]
 	version = HTTP/1.1
-[diff]
-	tool = Kaleidoscope
 [difftool]
 	prompt = false
-[merge]
-	tool = Kaleidoscope
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
 [mergetool]
 	prompt = false
 [includeIf "gitdir:~/Codes/"]
