@@ -1111,6 +1111,18 @@
         "options": {
           "full_name": "tunnelbear"
         }
+      },
+      "elgato-wave-link": {
+        "version": "1.10.1.2293",
+        "options": {
+          "full_name": "elgato-wave-link"
+        }
+      },
+      "elgato-stream-deck": {
+        "version": "6.8.0.21252",
+        "options": {
+          "full_name": "elgato-stream-deck"
+        }
       }
     },
     "mas": {

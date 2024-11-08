@@ -46,6 +46,8 @@ cask "soundsource"
 cask "transmit"
 cask "tunnelbear"
 cask "visual-studio-code"
+cask "elgato-wave-link"
+cask "elgato-stream-deck"
 mas "Affinity Designer", id: 824171161
 mas "Affinity Photo", id: 824183456
 mas "Apple Configurator", id: 1037126344
