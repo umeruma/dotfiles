@@ -1,32 +1,71 @@
+tap "1password/tap"
+tap "cloudflare/cloudflare"
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-drivers"
+tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
-tap "homebrew/core"
-brew "sheldon"
+tap "homebrew/services"
+tap "pkgxdev/made"
+tap "sidneys/homebrew"
+brew "ffmpeg"
 brew "fzf"
+brew "gh"
+brew "gifsicle"
+brew "git"
 brew "git-lfs"
+brew "git-sizer"
+brew "handbrake"
+brew "imagemagick"
+brew "jq"
 brew "mas"
+brew "mkcert"
 brew "arc"
+brew "rust"
+brew "sheldon"
+brew "shellcheck"
+brew "subversion"
 brew "volta"
+brew "websocat"
+brew "pkgxdev/made/pkgx"
 cask "1password"
+cask "1password-cli"
 cask "alt-tab"
 cask "cleanmymac"
+cask "deskpad"
 cask "discord"
+cask "figma"
+cask "font-monaspace"
+cask "fork"
 cask "gyazo"
 cask "itsycal"
 cask "karabiner-elements"
+cask "kitty"
+cask "loopback"
+cask "ngrok"
+cask "notion"
+cask "orbstack"
 cask "raycast"
 cask "soundsource"
 cask "transmit"
+cask "tunnelbear"
 cask "visual-studio-code"
+mas "Affinity Designer", id: 824171161
+mas "Affinity Photo", id: 824183456
+mas "Apple Configurator", id: 1037126344
 mas "CotEditor", id: 1024640650
 mas "Craft", id: 1487937127
+mas "Day One", id: 1055511498
+mas "Developer", id: 640199958
 mas "Glance", id: 1513574319
 mas "Hidden Bar", id: 1452453066
+mas "iPreview", id: 1519213509
+mas "Keka", id: 470158793
 mas "Keynote", id: 409183694
+mas "LookUp", id: 872564448
 mas "Numbers", id: 409203825
 mas "OpenIn", id: 1643649331
 mas "Pages", id: 409201541
+mas "Reeder", id: 1529448980
 mas "Slack", id: 803453959
 mas "WorldWideWeb", id: 1621370168
+mas "Xcode", id: 497799835
