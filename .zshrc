@@ -33,6 +33,7 @@ function addToPath {
 # export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 # eval $(/opt/homebrew/bin/brew shellenv) >>
+addToPath /opt/homebrew/bin
 export HOMEBREW_PREFIX="/opt/homebrew";
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
 export HOMEBREW_REPOSITORY="/opt/homebrew";
@@ -65,7 +66,5 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 # for Playdate SDK
 export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
 export PATH="$PLAYDATE_SDK_PATH/bin:$PATH"
-
-add-zsh-hook -Uz chpwd(){ source <(tea -Eds) }  #tea
 
 source <(pkgx --shellcode)  #docs.pkgx.sh/shellcode
