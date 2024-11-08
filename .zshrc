@@ -36,6 +36,8 @@ function addToPath {
 export HOMEBREW_PREFIX="/opt/homebrew";
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
 export HOMEBREW_REPOSITORY="/opt/homebrew";
+export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/macos/Brewfile";
+
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
@@ -65,3 +67,5 @@ export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
 export PATH="$PLAYDATE_SDK_PATH/bin:$PATH"
 
 add-zsh-hook -Uz chpwd(){ source <(tea -Eds) }  #tea
+
+source <(pkgx --shellcode)  #docs.pkgx.sh/shellcode
