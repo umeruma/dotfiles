@@ -1,5 +1,6 @@
 [core]
     excludesfile = ~/.gitignore
+	symlinks = true
 [init]
 	defaultBranch = main
 [user]
@@ -22,3 +23,5 @@
 	path = ~/Codes_DL/.gitconfig
 [pull]
 	rebase = false
+[credential]
+	helper = osxkeychain
