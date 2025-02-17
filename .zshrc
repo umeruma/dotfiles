@@ -70,4 +70,4 @@ export PATH="$PLAYDATE_SDK_PATH/bin:$PATH"
 # for Rust
 [[ -d "/opt/homebrew/opt/rustup/bin" ]] && addToPath /opt/homebrew/opt/rustup/bin
 
-source <(pkgx --shellcode)  #docs.pkgx.sh/shellcode
+eval "$(pkgx --quiet dev --shellcode)"  # https://github.com/pkgxdev/dev
