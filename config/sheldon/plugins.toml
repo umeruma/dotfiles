@@ -14,6 +14,12 @@ shell = "zsh"
 
 [plugins]
 
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[templates]
+defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
+
 [plugins.pure]
 github = "sindresorhus/pure"
 use = ["async.zsh", "pure.zsh"]
@@ -21,6 +27,10 @@ use = ["async.zsh", "pure.zsh"]
 [plugins.enhancd]
 github = "b4b4r07/enhancd"
 use = ["init.sh"]
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+apply = ["defer"]
 
 # For example:
 #
