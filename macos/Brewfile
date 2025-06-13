@@ -1,9 +1,5 @@
-tap "1password/tap"
-tap "cloudflare/cloudflare"
 tap "homebrew/bundle"
 tap "homebrew/services"
-tap "pkgxdev/made"
-tap "sidneys/homebrew"
 brew "ffmpeg"
 brew "fzf"
 brew "gh"
@@ -19,10 +15,8 @@ brew "mkcert"
 brew "rust"
 brew "sheldon"
 brew "shellcheck"
-brew "volta"
 brew "websocat"
-brew "pkgxdev/made/pkgx"
-cask "arc"
+brew "pkgx"
 cask "1password"
 cask "1password-cli"
 cask "alt-tab"
@@ -32,11 +26,9 @@ cask "deskpad"
 cask "discord"
 cask "figma"
 cask "gyazo"
-cask "itsycal"
 cask "karabiner-elements"
 cask "loopback"
 cask "ngrok"
-cask "notchnook"
 cask "notion"
 cask "orbstack"
 cask "raycast"
@@ -54,11 +46,8 @@ mas "Glance", id: 1513574319
 mas "Hidden Bar", id: 1452453066
 mas "iPreview", id: 1519213509
 mas "Keka", id: 470158793
-mas "Keynote", id: 409183694
-mas "LookUp", id: 872564448
-mas "Numbers", id: 409203825
+mas "MeetingBar", id: 1532419400
 mas "OpenIn", id: 1643649331
-mas "Pages", id: 409201541
 mas "Reeder", id: 1529448980
 mas "Slack", id: 803453959
 mas "WorldWideWeb", id: 1621370168
