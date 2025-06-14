@@ -4,7 +4,7 @@
 Open Termilal.app, and run:
 
 ```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/umeruma/dotfiles/master/install)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/umeruma/dotfiles/main/install)"
 ```
 
 To update macOS defaults setting, run:
