@@ -1,3 +1,4 @@
+brew "difft"
 brew "ffmpeg"
 brew "fzf"
 brew "gh"
