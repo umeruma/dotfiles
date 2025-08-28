@@ -13,6 +13,8 @@
     required = true
 [http]
 	version = HTTP/1.1
+[diff]
+    external = difft
 [difftool]
 	prompt = false
 [mergetool]
