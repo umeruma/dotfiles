@@ -36,6 +36,7 @@ cask "transmit"
 cask "visual-studio-code"
 cask "elgato-wave-link"
 cask "elgato-stream-deck"
+cask "Xcodes"
 mas "Apple Configurator", id: 1037126344
 mas "CotEditor", id: 1024640650
 mas "Craft", id: 1487937127
@@ -50,4 +51,3 @@ mas "OpenIn", id: 1643649331
 mas "Reeder", id: 1529448980
 mas "Slack", id: 803453959
 mas "WorldWideWeb", id: 1621370168
-mas "Xcode", id: 497799835
