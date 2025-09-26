@@ -23,11 +23,12 @@ test: ## Test dotfiles and init scripts
 	@#DOTPATH=$(DOTPATH) bash $(DOTPATH)/etc/test/test.sh
 	@echo "test is inactive temporarily"
 
+
 update: ## Fetch changes for this repo
-	git pull origin master
+	git pull origin main
 	git submodule init
 	git submodule update
-	git submodule foreach git pull origin master
+	git submodule foreach git pull origin main
 
 install: clean deploy ## !!! Run clean, deploy, and install apps
 	bash ./init/setup.sh
