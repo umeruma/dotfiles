@@ -27,6 +27,16 @@ To update macOS defaults setting, run:
 cd ~/.dotfiles && just defaults
 ```
 
+## Terminal theme
+To apply theme for macOS Termianl, run:
+```
+cd ~/.dotfiles && just theme
+```
+
+then looks like this:
+
+<img alt="" src="https://i.gyazo.com/e6b46b2e0332ecbbf1e2fcf859533f3c.jpg">
+
 ## tech stack
 
 - [just](https://github.com/casey/just#readme) as command runner
