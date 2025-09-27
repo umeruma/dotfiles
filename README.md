@@ -1,6 +1,8 @@
-# dotfiles
-## install
+---
+title: dotfiles
+---
 
+## install
 Open Termilal.app, and run:
 
 ```
