@@ -19,3 +19,7 @@ cd ~/.dotfiles && just defaults
 - [Just](https://github.com/casey/just) as command runner
 - [Sheldon](https://github.com/rossmacarthur/sheldon#readme) as zsh plugin manager
 - [Homebrew](https://docs.brew.sh/Manpage) as package manager
+
+## website
+
+[dot.umeru.ma](https://dot.umeru.ma)
