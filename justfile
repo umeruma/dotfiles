@@ -1,16 +1,19 @@
 # dotfiles justfile
-# Run `just --list` to see all available recipes
 
-# Default goal
+# Default recipe
 default: help
+
+# Self-documented help
+help:
+    @just --list
 
 # Variables
 dotpath := justfile_directory()
 uname_s := `uname -s`
 
-# Show dot files in this repo
+# Show dot files to deploy in this repo
 list:
-    @find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -not -path "./.git*" -type f | sort
+    @find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -type f | sort
 
 # Create symlink to home directory
 deploy:
@@ -18,7 +21,7 @@ deploy:
     @echo ''
     #!/usr/bin/env bash
     set -euo pipefail
-    for file in $(find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -not -path "./.git*" -maxdepth 1 -type f); do \
+    for file in $(find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -maxdepth 1 -type f); do \
         ln -sfnv "{{dotpath}}/$file" "$HOME/$file"; \
     done
     mkdir -p "$HOME/.config"
@@ -28,10 +31,6 @@ deploy:
         fi \
     done
 
-# Test dotfiles and init scripts
-test:
-    @echo "test is inactive temporarily"
-
 # Fetch changes for this repo
 update:
     git pull origin main
@@ -39,7 +38,7 @@ update:
     git submodule update
     git submodule foreach git pull origin main
 
-# !!! Run clean, deploy, and install apps
+# Install apps after clean, deploy
 install: clean deploy
     bash ./init/setup.sh
     #!/usr/bin/env bash
@@ -50,16 +49,16 @@ install: clean deploy
         brew bundle --file=./macos/Brewfile; \
     fi
 
-# Remove the dot files and this repo
+# Remove the dot files which deployed
 clean:
     @echo 'Remove dot files in your home directory...'
     #!/usr/bin/env bash
     set -euo pipefail
-    for file in $(find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -not -path "./.git*" -maxdepth 1 -type f); do \
+    for file in $(find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -maxdepth 1 -type f); do \
         rm -vrf "$HOME/$file" || true; \
     done
 
-# Update defaults setting
+# Update macOS's defaults setting
 defaults:
     #!/usr/bin/env bash
     if [ "{{uname_s}}" = "Darwin" ]; then \
@@ -72,7 +71,3 @@ theme:
     if [ "{{uname_s}}" = "Darwin" ]; then \
         open ./macos/BirdsOfParadise.terminal; \
     fi
-
-# Self-documented help
-help:
-    @just --list
