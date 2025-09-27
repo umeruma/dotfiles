@@ -10,7 +10,7 @@ uname_s := `uname -s`
 
 # Show dot files in this repo
 list:
-    @find . -name ".*" -not -path "./.git*" -not -name ".DS_Store" -type f | sort
+    @find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -not -path "./.git*" -type f | sort
 
 # Create symlink to home directory
 deploy:
@@ -18,7 +18,7 @@ deploy:
     @echo ''
     #!/usr/bin/env bash
     set -euo pipefail
-    for file in $(find . -name ".*" -not -path "./.git*" -not -name ".DS_Store" -maxdepth 1 -type f); do \
+    for file in $(find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -not -path "./.git*" -maxdepth 1 -type f); do \
         ln -sfnv "{{dotpath}}/$file" "$HOME/$file"; \
     done
     mkdir -p "$HOME/.config"
@@ -55,7 +55,7 @@ clean:
     @echo 'Remove dot files in your home directory...'
     #!/usr/bin/env bash
     set -euo pipefail
-    for file in $(find . -name ".*" -not -path "./.git*" -not -name ".DS_Store" -maxdepth 1 -type f); do \
+    for file in $(find . -name ".*" -not -name ".gitignore" -not -name ".DS_Store" -not -path "./.git*" -maxdepth 1 -type f); do \
         rm -vrf "$HOME/$file" || true; \
     done
 
