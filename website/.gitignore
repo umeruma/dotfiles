@@ -1,6 +1,10 @@
 # build output
 dist/
+
+# copied content
 public/install
+src/content/docs/index.md
+
 # generated types
 .astro/
 
