@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from "node:url";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const src = path.resolve(__dirname, '..', 'src', 'content', 'docs', 'index.md');
 
 if (fs.existsSync(src)) {
