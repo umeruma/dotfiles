@@ -11,9 +11,6 @@
 export LANG=en_US.UTF-8
 export EDITOR=nano
 export VISUAL="$EDITOR"
-export DOTFILES="$HOME/.dotfiles"
+export READNULLCMD="less"
 
-# FIXME: maybe no need in future
-# Volta (toolchain manager) path so non-interactive tooling can find it
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin${PATH:+:$PATH}"
+export DOTFILES="$HOME/.dotfiles"
