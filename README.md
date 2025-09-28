@@ -1,13 +1,14 @@
 # dotfiles
 
 ## install
+Review the contents of the script before running it:  
+<a href="https://dot.umeru.ma/install" target="_blank" rel="noopener noreferrer">https://dot.umeru.ma/install</a>
+
 Open Termilal.app, and run:
 
 ```
 bash -c "$(curl -fsSL https://dot.umeru.ma/install)"
 ```
-
-<a href="https://dot.umeru.ma/install" target="_blank" rel="noopener noreferrer">View raw install script</a>
 
 Notes on bash and curl options:
 
