@@ -6,7 +6,7 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
   integrations: [
     starlight({
-      title: 'umeruma dotfiles',
+      title: 'dot.umeru.ma',
       social: [{
         icon: 'github',
         label: 'GitHub',
@@ -18,6 +18,7 @@ export default defineConfig({
           label: 'etc',
           items: [
             { label: 'Setup Hardware', slug: 'etc/setup-hard' },
+            { label: 'Lean zsh', slug: 'etc/lean-zsh' },
           ],
         },
       ],
