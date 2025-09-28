@@ -12,11 +12,42 @@ zstyle :compinstall filename '~/.zshrc'
 autoload -U compinit
 compinit -u
 
-# History and keybindings
+# Zsh option: Keybindings
+# Use emacs keybindings
+bindkey -e
+
+# Zsh option: History
+# based on https://github.com/sorin-ionescu/prezto/blob/master/modules/history/init.zsh
+setopt BANG_HIST
+setopt EXTENDED_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_VERIFY
+setopt HIST_BEEP
 HISTFILE="$HOME/.histfile"
 HISTSIZE=10000
-SAVEHIST=10000
-bindkey -e
+SAVEHIST=$HISTSIZE
+
+# Zsh option: Directory
+# based on https://github.com/sorin-ionescu/prezto/blob/master/modules/directory/init.zsh
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+setopt PUSHD_TO_HOME
+setopt CDABLE_VARS
+setopt MULTIOS
+setopt EXTENDED_GLOB
+unsetopt CLOBBER 
+
+# Zsh builtin module: zmv
+autoload -Uz zmv
+alias zmv='noglob zmv -W'
 
 # addToPath: prepend $1 if not already present
 addToPath() {
@@ -37,6 +68,7 @@ fi
 if [[ -d "/opt/homebrew" ]]; then
     addToPath /opt/homebrew/bin
     addToPath /opt/homebrew/sbin
+
     export HOMEBREW_PREFIX="/opt/homebrew"
     export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
     export HOMEBREW_REPOSITORY="/opt/homebrew"
@@ -44,6 +76,11 @@ if [[ -d "/opt/homebrew" ]]; then
     
     export MANPATH="/opt/homebrew/share/man${MANPATH:+:$MANPATH}:"
     export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+fi
+
+# Rustup
+if [[ -d "/opt/homebrew/opt/rustup/bin" ]]; then
+    addToPath /opt/homebrew/opt/rustup/bin
 fi
 
 # enhancd / fzf integration for interactive use
@@ -54,11 +91,6 @@ export ENHANCD_DOT_SHOW_FULLPATH=1
 # Ensure SHELDON is installed; this eval is interactive-only
 if command -v sheldon >/dev/null 2>&1; then
     eval "$(sheldon source)"
-fi
-
-# Rustup (interactive)
-if [[ -d "/opt/homebrew/opt/rustup/bin" ]]; then
-    addToPath /opt/homebrew/opt/rustup/bin
 fi
 
 # Homebrew placed earlier in zprofile;
