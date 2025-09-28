@@ -6,6 +6,8 @@ set -e
 DOT_DIRECTORY="${HOME}/.dotfiles"
 REMOTE_URL="https://github.com/umeruma/dotfiles.git"
 
+uname_s="$(uname -s)"
+
 is_exist() {
 	type "$1" > /dev/null 2>&1
 }
@@ -28,11 +30,11 @@ install() {
 
 	cd "${DOT_DIRECTORY}"
 	
-	if [ "$(uname -s)" = "Linux" ]; then
+	if [ "$uname_s" = "Linux" ]; then
 		bash ./init/init-linux.sh
 	fi
 
-	if [ "$(uname -s)" = "Darwin" ]; then
+	if [ "$uname_s" = "Darwin" ]; then
 		bash ./init/init-macos.sh
 	fi
 
