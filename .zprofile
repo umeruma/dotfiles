@@ -8,46 +8,35 @@
 # - .zshrc
 
 # -------------------------
-# Helper functions
-# -------------------------
-# addToPath: prepend $1 if not already present
-addToPath() {
-    case ":$PATH:" in
-        # already present: move to front
-        *":$1:"*) PATH="$1:${PATH/:$1/}" ;;
-        # not present: prepend
-        *) PATH="$1:$PATH" ;;
-    esac
-}
-
-# -------------------------
 # Path / environment setup
 # -------------------------
+# Ensure path is uniqued
+typeset -U path
+
 # DOTFILES bin
 if [[ -d "$DOTFILES/bin" ]]; then
-    addToPath "$DOTFILES/bin"
+    path=("$DOTFILES/bin" $path)
 fi
 
 # Add local bin
-addToPath "$HOME/.local/bin"
+path=("$HOME/.local/bin" $path)
 
 # Homebrew: put binaries on PATH and export common envs
 if [[ -d "/opt/homebrew" ]]; then
-    addToPath /opt/homebrew/bin
-    addToPath /opt/homebrew/sbin
-    
+    path=("/opt/homebrew/bin" "/opt/homebrew/sbin" $path)
+
     export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/macos/Brewfile"
 fi
 
 # Rustup in Homebrew prefix (if present)
 if [[ -d "/opt/homebrew/opt/rustup/bin" ]]; then
-    addToPath /opt/homebrew/opt/rustup/bin
+    path=("/opt/homebrew/opt/rustup/bin" $path)
 fi
 
 # Playdate SDK (interactive tools)
 export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
 if [[ -d "$PLAYDATE_SDK_PATH/bin" ]]; then
-    addToPath "$PLAYDATE_SDK_PATH/bin"
+    path=("$PLAYDATE_SDK_PATH/bin" $path)
 fi
 
 # enhancd / fzf integration for interactive use
