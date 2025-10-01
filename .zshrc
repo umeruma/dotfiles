@@ -6,7 +6,10 @@
 # - .zprofile
 # - .zshrc    (this file)
 
-# compinit (added by compinstall)
+# -------------------------
+# compinit
+# -------------------------
+# (added by compinstall)
 zstyle :compinstall filename '~/.zshrc'
 
 # Initialize zsh completion system

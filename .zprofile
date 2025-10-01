@@ -44,7 +44,7 @@ export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
 export ENHANCD_DOT_SHOW_FULLPATH=1
 
 # -------------------------
-# add zsh completions + compinit
+# add zsh completions
 # -------------------------
 # Homebrew zsh completions
 if command -v brew >/dev/null 2>&1; then
