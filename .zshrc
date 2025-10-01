@@ -44,15 +44,15 @@ SAVEHIST=$HISTSIZE
 
 # Zsh option: Directory
 # based on https://github.com/sorin-ionescu/prezto/blob/master/modules/directory/init.zsh
-# setopt AUTO_CD
-# setopt AUTO_PUSHD
-# setopt PUSHD_IGNORE_DUPS
-# setopt PUSHD_SILENT
-# setopt PUSHD_TO_HOME
-# setopt CDABLE_VARS
-# setopt MULTIOS
-# setopt EXTENDED_GLOB
-# unsetopt CLOBBER 
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+setopt PUSHD_TO_HOME
+setopt CDABLE_VARS
+setopt MULTIOS
+setopt EXTENDED_GLOB
+unsetopt CLOBBER 
 
 # -------------------------
 # Development Environment
