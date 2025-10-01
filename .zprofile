@@ -33,16 +33,6 @@ if [[ -d "/opt/homebrew/opt/rustup/bin" ]]; then
     path=("/opt/homebrew/opt/rustup/bin" $path)
 fi
 
-# Playdate SDK (interactive tools)
-export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
-if [[ -d "$PLAYDATE_SDK_PATH/bin" ]]; then
-    path=("$PLAYDATE_SDK_PATH/bin" $path)
-fi
-
-# enhancd / fzf integration for interactive use
-export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
-export ENHANCD_DOT_SHOW_FULLPATH=1
-
 # -------------------------
 # add zsh completions
 # -------------------------

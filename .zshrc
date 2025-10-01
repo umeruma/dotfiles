@@ -55,8 +55,21 @@ SAVEHIST=$HISTSIZE
 # unsetopt CLOBBER 
 
 # -------------------------
-# Plugin managers
+# Development Environment
 # -------------------------
+# Playdate SDK
+export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
+if [[ -d "$PLAYDATE_SDK_PATH/bin" ]]; then
+    path=("$PLAYDATE_SDK_PATH/bin" $path)
+fi
+
+# -------------------------
+# Plugin options & Plugin managers
+# -------------------------
+# enhancd / fzf integration
+export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
+export ENHANCD_DOT_SHOW_FULLPATH=1
+
 # sheldon (plugin manager)
 # Ensure SHELDON is installed; this eval is interactive-only
 if command -v sheldon >/dev/null 2>&1; then
