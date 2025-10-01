@@ -35,14 +35,8 @@ addToPath "$HOME/.local/bin"
 if [[ -d "/opt/homebrew" ]]; then
     addToPath /opt/homebrew/bin
     addToPath /opt/homebrew/sbin
-
-    export HOMEBREW_PREFIX="/opt/homebrew"
-    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
-    export HOMEBREW_REPOSITORY="/opt/homebrew"
+    
     export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/macos/Brewfile"
-
-    export MANPATH="/opt/homebrew/share/man${MANPATH:+:$MANPATH}:"
-    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 fi
 
 # Rustup in Homebrew prefix (if present)
