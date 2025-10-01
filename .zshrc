@@ -9,13 +9,80 @@
 # compinit (added by compinstall)
 # zstyle :compinstall filename '~/.zshrc'
 
-# if type brew &>/dev/null; then
-#     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-# fi
+# -------------------------
+# Helper functions & utils
+# -------------------------
+# addToPath: prepend $1 if not already present
+addToPath() {
+    case ":$PATH:" in
+        # already present: move to front
+        *":$1:"*) PATH="$1:${PATH/:$1/}" ;;
+        # not present: prepend
+        *) PATH="$1:$PATH" ;;
+    esac
+}
+
+# Zsh builtin module: zmv (small utility)
+autoload -Uz zmv
+alias zmv='noglob zmv -W'
+
+# -------------------------
+# Path / environment setup
+# -------------------------
+# DOTFILES bin
+if [[ -d "$DOTFILES/bin" ]]; then
+    addToPath "$DOTFILES/bin"
+fi
+
+# Add local bin
+addToPath "$HOME/.local/bin"
+
+# Homebrew: put binaries on PATH and export common envs
+if [[ -d "/opt/homebrew" ]]; then
+    addToPath /opt/homebrew/bin
+    addToPath /opt/homebrew/sbin
+
+    export HOMEBREW_PREFIX="/opt/homebrew"
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+    export HOMEBREW_REPOSITORY="/opt/homebrew"
+    export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/macos/Brewfile"
+
+    export MANPATH="/opt/homebrew/share/man${MANPATH:+:$MANPATH}:"
+    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+fi
+
+# Rustup in Homebrew prefix (if present)
+if [[ -d "/opt/homebrew/opt/rustup/bin" ]]; then
+    addToPath /opt/homebrew/opt/rustup/bin
+fi
+
+# Playdate SDK (interactive tools)
+export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
+if [[ -d "$PLAYDATE_SDK_PATH/bin" ]]; then
+    addToPath "$PLAYDATE_SDK_PATH/bin"
+fi
+
+# enhancd / fzf integration for interactive use
+export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
+export ENHANCD_DOT_SHOW_FULLPATH=1
+
+# -------------------------
+# Homebrew zsh completions + compinit
+# (must be before compinit)
+# -------------------------
+if command -v brew >/dev/null 2>&1; then
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+elif [[ -d "/opt/homebrew/share/zsh/site-functions" ]]; then
+    FPATH="/opt/homebrew/share/zsh/site-functions:${FPATH}"
+fi
+
+# Initialize zsh completion system
 autoload -U compinit && compinit
 
-# Zsh option: Keybindings
-# Use emacs keybindings
+# -------------------------
+# Shell behaviour / options
+# -------------------------
+# Zsh option: Keybindings (use emacs keybindings)
 bindkey -e
 
 # Zsh option: History
@@ -47,56 +114,16 @@ SAVEHIST=$HISTSIZE
 # setopt EXTENDED_GLOB
 # unsetopt CLOBBER 
 
-# Zsh builtin module: zmv
-autoload -Uz zmv
-alias zmv='noglob zmv -W'
-
-# addToPath: prepend $1 if not already present
-addToPath() {
-    case ":$PATH:" in
-        # already present: move to front
-        *":$1:"*) PATH="$1:${PATH/:$1/}" ;;
-        # not present: prepend
-        *) PATH="$1:$PATH" ;;
-    esac
-}
-
-# DOTFILES bin
-if [[ -d "$DOTFILES/bin" ]]; then
-    addToPath "$DOTFILES/bin"
-fi
-
-# Homebrew
-if [[ -d "/opt/homebrew" ]]; then
-    addToPath /opt/homebrew/bin
-    addToPath /opt/homebrew/sbin
-
-    export HOMEBREW_PREFIX="/opt/homebrew"
-    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
-    export HOMEBREW_REPOSITORY="/opt/homebrew"
-    export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/macos/Brewfile"
-    
-    export MANPATH="/opt/homebrew/share/man${MANPATH:+:$MANPATH}:"
-    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-fi
-
-# Rustup
-if [[ -d "/opt/homebrew/opt/rustup/bin" ]]; then
-    addToPath /opt/homebrew/opt/rustup/bin
-fi
-
-# enhancd / fzf integration for interactive use
-export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
-export ENHANCD_DOT_SHOW_FULLPATH=1
-
+# -------------------------
+# Plugin managers / interactive evals
+# -------------------------
 # sheldon (plugin manager)
 # Ensure SHELDON is installed; this eval is interactive-only
 if command -v sheldon >/dev/null 2>&1; then
     eval "$(sheldon source)"
 fi
 
-# Homebrew placed earlier in zprofile;
-# additional interactive-only brew envs
+# Homebrew interactive shellenv (placed after PATH/env setup)
 if [[ -d "/opt/homebrew" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
@@ -105,15 +132,10 @@ fi
 if command -v pkgx >/dev/null 2>&1; then
     eval "$(pkgx --quiet dev --shellcode)"
 fi
-addToPath "$HOME/.local/bin"
 
-# Playdate SDK (interactive tools)
-export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
-if [[ -d "$PLAYDATE_SDK_PATH/bin" ]]; then
-    addToPath "$PLAYDATE_SDK_PATH/bin"
-fi
-
-# Functions and aliases (interactive)
+# -------------------------
+# Aliases & small functions
+# -------------------------
 gi() { curl -L -s "https://www.gitignore.io/api/$@" ;}
 
 alias ls="ls -G"
