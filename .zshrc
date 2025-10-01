@@ -67,17 +67,20 @@ export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
 export ENHANCD_DOT_SHOW_FULLPATH=1
 
 # -------------------------
-# Homebrew zsh completions + compinit
-# (must be before compinit)
+# add zsh completions + compinit
 # -------------------------
+# Homebrew zsh completions
 if command -v brew >/dev/null 2>&1; then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-elif [[ -d "/opt/homebrew/share/zsh/site-functions" ]]; then
-    FPATH="/opt/homebrew/share/zsh/site-functions:${FPATH}"
+    eval "$(brew shellenv)"
+fi
+
+# pkgx interactive initialization (if installed)
+if command -v pkgx >/dev/null 2>&1; then
+    eval "$(pkgx --quiet dev --shellcode)"
 fi
 
 # Initialize zsh completion system
-autoload -U compinit && compinit
+autoload -Uz compinit && compinit
 
 # -------------------------
 # Shell behaviour / options
@@ -115,22 +118,12 @@ SAVEHIST=$HISTSIZE
 # unsetopt CLOBBER 
 
 # -------------------------
-# Plugin managers / interactive evals
+# Plugin managers
 # -------------------------
 # sheldon (plugin manager)
 # Ensure SHELDON is installed; this eval is interactive-only
 if command -v sheldon >/dev/null 2>&1; then
     eval "$(sheldon source)"
-fi
-
-# Homebrew interactive shellenv (placed after PATH/env setup)
-if [[ -d "/opt/homebrew" ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
-# pkgx interactive initialization (if installed)
-if command -v pkgx >/dev/null 2>&1; then
-    eval "$(pkgx --quiet dev --shellcode)"
 fi
 
 # -------------------------
