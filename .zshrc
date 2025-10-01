@@ -7,10 +7,12 @@
 # - .zshrc    (this file)
 
 # compinit (added by compinstall)
-zstyle :compinstall filename '~/.zshrc'
+# zstyle :compinstall filename '~/.zshrc'
 
-autoload -U compinit
-compinit -u
+# if type brew &>/dev/null; then
+#     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+# fi
+autoload -U compinit && compinit
 
 # Zsh option: Keybindings
 # Use emacs keybindings
@@ -35,15 +37,15 @@ SAVEHIST=$HISTSIZE
 
 # Zsh option: Directory
 # based on https://github.com/sorin-ionescu/prezto/blob/master/modules/directory/init.zsh
-setopt AUTO_CD
-setopt AUTO_PUSHD
-setopt PUSHD_IGNORE_DUPS
-setopt PUSHD_SILENT
-setopt PUSHD_TO_HOME
-setopt CDABLE_VARS
-setopt MULTIOS
-setopt EXTENDED_GLOB
-unsetopt CLOBBER 
+# setopt AUTO_CD
+# setopt AUTO_PUSHD
+# setopt PUSHD_IGNORE_DUPS
+# setopt PUSHD_SILENT
+# setopt PUSHD_TO_HOME
+# setopt CDABLE_VARS
+# setopt MULTIOS
+# setopt EXTENDED_GLOB
+# unsetopt CLOBBER 
 
 # Zsh builtin module: zmv
 autoload -Uz zmv
@@ -103,6 +105,7 @@ fi
 if command -v pkgx >/dev/null 2>&1; then
     eval "$(pkgx --quiet dev --shellcode)"
 fi
+addToPath "$HOME/.local/bin"
 
 # Playdate SDK (interactive tools)
 export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
@@ -116,3 +119,5 @@ gi() { curl -L -s "https://www.gitignore.io/api/$@" ;}
 alias ls="ls -G"
 alias ll="ls -lG"
 alias la="ls -laG"
+
+alias -g F='$(fzf)'
