@@ -1,4 +1,5 @@
 # dotfiles justfile
+# Expected installation path: ~/Codes/dotfiles
 
 # Default recipe
 default: help
@@ -10,10 +11,25 @@ help:
 # Variables
 dotpath := justfile_directory()
 uname_s := `uname -s`
+expected_path := env_var("HOME") + "/Codes/dotfiles"
+
+# Verify installation path
+check-path:
+    @echo "Current path: {{dotpath}}"
+    @echo "Expected path: {{expected_path}}"
+    #!/usr/bin/env bash
+    if [ "{{dotpath}}" != "{{expected_path}}" ]; then \
+        echo "⚠️  Warning: Not running from expected path"; \
+        echo "   Current:  {{dotpath}}"; \
+        echo "   Expected: {{expected_path}}"; \
+        echo "   Consider moving this repository to ~/Codes/dotfiles"; \
+    else \
+        echo "✅ Running from correct path"; \
+    fi
 
 # Show dot files to deploy in this repo
 list:
-    @find home -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -type f | sort
+    @find home -name ".*" -not -name ".DS_Store" -type f | sort
 
 # Create symlink to home directory
 deploy:
@@ -22,7 +38,7 @@ deploy:
     #!/usr/bin/env bash
     set -euo pipefail
     # Deploy dotfiles from home/ directory
-    for file in $(find home -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -maxdepth 1 -type f); do \
+    for file in $(find home -name ".*" -not -name ".DS_Store" -maxdepth 1 -type f); do \
         target_file="$HOME/$(basename $file)"; \
         ln -sfnv "{{dotpath}}/$file" "$target_file"; \
     done
@@ -60,7 +76,7 @@ clean:
     #!/usr/bin/env bash
     set -euo pipefail
     # Remove dotfiles deployed from home/ directory
-    for file in $(find home -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -maxdepth 1 -type f); do \
+    for file in $(find home -name ".*" -not -name ".DS_Store" -maxdepth 1 -type f); do \
         target_file="$HOME/$(basename $file)"; \
         rm -vrf "$target_file" || true; \
     done

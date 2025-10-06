@@ -25,7 +25,7 @@ path=("$HOME/.local/bin" $path)
 if [[ -d "/opt/homebrew" ]]; then
     path=("/opt/homebrew/bin" "/opt/homebrew/sbin" $path)
 
-    export HOMEBREW_BUNDLE_FILE="$HOME/.dotfiles/macos/Brewfile"
+    export HOMEBREW_BUNDLE_FILE="$DOTFILES/macos/Brewfile"
 fi
 
 # Rustup in Homebrew prefix (if present)
