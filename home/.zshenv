@@ -13,4 +13,4 @@ export EDITOR=nano
 export VISUAL="$EDITOR"
 export READNULLCMD="less"
 
-export DOTFILES="$HOME/.dotfiles"
+export DOTFILES="$HOME/Codes/dotfiles"

@@ -1,14 +1,17 @@
 # dotfiles
 
 ## install
+This dotfiles repository is designed to be installed at `~/Codes/dotfiles`.
+
 Review the contents of the script before running it:  
 <a href="https://dot.umeru.ma/install" target="_blank" rel="noopener noreferrer">https://dot.umeru.ma/install</a>
 
-Open Termilal.app, and run:
+Open Terminal.app, and run:
 
 ```
 bash -c "$(curl -fsSL https://dot.umeru.ma/install)"
 ```
+This will clone the repository to `~/Codes/dotfiles` and set up your dotfiles.
 
 Notes on bash and curl options:
 
@@ -25,24 +28,41 @@ curl:
 To update macOS defaults setting, run:
 
 ```
-cd ~/.dotfiles && just defaults
+cd $DOTFILES && just defaults
 ```
 
 ## Terminal theme
-To apply theme for macOS Termianl, run:
+To apply theme for macOS Terminal, run:
 ```
-cd ~/.dotfiles && just theme
+cd $DOTFILES && just theme
 ```
 
 then looks like this:
 
 <img alt="" src="https://i.gyazo.com/e6b46b2e0332ecbbf1e2fcf859533f3c.jpg">
 
+<!-- ## homesick compatible
+
+This repository is [homesick](https://github.com/technicalpickles/homesick) compatible. You can use homesick to manage these dotfiles:
+
+```bash
+# Install homesick
+gem install homesick
+
+# Clone and link dotfiles (will be installed to ~/Codes/dotfiles)
+homesick clone umeruma/dotfiles
+homesick link dotfiles
+
+# Run setup script
+homesick rc dotfiles
+``` -->
+
 ## tech stack
 
 - [just](https://github.com/casey/just#readme) as command runner
 - [sheldon](https://github.com/rossmacarthur/sheldon#readme) as zsh plugin manager
 - [Homebrew](https://docs.brew.sh/Manpage) as package manager
+<!-- - [homesick](https://github.com/technicalpickles/homesick) compatible structure -->
 
 ## website
 

@@ -3,7 +3,8 @@
 # If error was caused, stop script
 set -e
 
-DOT_DIRECTORY="${HOME}/.dotfiles"
+# Install to ~/Codes/dotfiles instead of ~/.dotfiles
+DOT_DIRECTORY="${HOME}/Codes/dotfiles"
 REMOTE_URL="https://github.com/umeruma/dotfiles.git"
 
 uname_s="$(uname -s)"
@@ -13,10 +14,14 @@ is_exist() {
 }
 
 install() {
+	# Create ~/Codes directory if it doesn't exist
+	mkdir -p "${HOME}/Codes"
+	
 	if [ -d "${DOT_DIRECTORY}" ]; then
-		echo "DOTFILES have be already installed"
+		echo "DOTFILES have already been installed at ${DOT_DIRECTORY}"
 	else 
 		if is_exist "git"; then
+			echo "Cloning dotfiles to ${DOT_DIRECTORY}..."
 			git clone --recursive "${REMOTE_URL}" "${DOT_DIRECTORY}"
 		else
 			echo "git required"
