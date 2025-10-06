@@ -13,7 +13,7 @@ uname_s := `uname -s`
 
 # Show dot files to deploy in this repo
 list:
-    @find . -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -type f | sort
+    @find home -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -type f | sort
 
 # Create symlink to home directory
 deploy:
@@ -21,15 +21,20 @@ deploy:
     @echo ''
     #!/usr/bin/env bash
     set -euo pipefail
-    for file in $(find . -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -maxdepth 1 -type f); do \
-        ln -sfnv "{{dotpath}}/$file" "$HOME/$file"; \
+    # Deploy dotfiles from home/ directory
+    for file in $(find home -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -maxdepth 1 -type f); do \
+        target_file="$HOME/$(basename $file)"; \
+        ln -sfnv "{{dotpath}}/$file" "$target_file"; \
     done
-    mkdir -p "$HOME/.config"
-    for config in config/*; do \
-        if [ -d "$config" ]; then \
-            ln -sfnv "{{dotpath}}/$config" "$HOME/.config/$(basename $config)"; \
-        fi \
-    done
+    # Deploy .config directory contents
+    if [ -d "home/.config" ]; then \
+        mkdir -p "$HOME/.config"; \
+        for config in home/.config/*; do \
+            if [ -d "$config" ]; then \
+                ln -sfnv "{{dotpath}}/$config" "$HOME/.config/$(basename $config)"; \
+            fi \
+        done \
+    fi
 
 # Fetch changes for this repo
 update:
@@ -54,9 +59,19 @@ clean:
     @echo 'Remove dot files in your home directory...'
     #!/usr/bin/env bash
     set -euo pipefail
-    for file in $(find . -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -maxdepth 1 -type f); do \
-        rm -vrf "$HOME/$file" || true; \
+    # Remove dotfiles deployed from home/ directory
+    for file in $(find home -name ".*" -not -name ".gitignore" -not -name ".editorconfig"  -not -name ".DS_Store" -maxdepth 1 -type f); do \
+        target_file="$HOME/$(basename $file)"; \
+        rm -vrf "$target_file" || true; \
     done
+    # Remove .config directory symlinks
+    if [ -d "home/.config" ]; then \
+        for config in home/.config/*; do \
+            if [ -d "$config" ]; then \
+                rm -vrf "$HOME/.config/$(basename $config)" || true; \
+            fi \
+        done \
+    fi
 
 # Update macOS's defaults setting
 defaults:
