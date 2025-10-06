@@ -22,7 +22,7 @@ install() {
 	else 
 		if is_exist "git"; then
 			echo "Cloning dotfiles to ${DOT_DIRECTORY}..."
-			git clone --recursive "${REMOTE_URL}" "${DOT_DIRECTORY}"
+			git clone --filter=blob:none --depth 1 --recurse-submodules --shallow-submodules "${REMOTE_URL}" "${DOT_DIRECTORY}"
 		else
 			echo "git required"
 			exit 1
