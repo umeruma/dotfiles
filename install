@@ -17,6 +17,7 @@ install() {
 	# Create ~/Codes directory if it doesn't exist
 	mkdir -p "${HOME}/Codes"
 	
+	# Clone the dotfiles repo if it doesn't exist
 	if [ -d "${DOT_DIRECTORY}" ]; then
 		echo "DOTFILES have already been installed at ${DOT_DIRECTORY}"
 	else 
@@ -43,6 +44,8 @@ install() {
 		bash ./init/init-macos.sh
 	fi
 
+	# Check if just is installed; if not, download and install to ./bin/just
+	echo ""
 	if is_exist ./bin/just; then
 		echo "just is installed"
 		./bin/just --version || { echo "just command not working"; exit 1; }
@@ -58,6 +61,8 @@ install() {
 		echo "just install succeeded"
 	fi
 
+	# Check if Homebrew is installed; if not, install it
+	echo ""
 	if type brew >/dev/null 2>&1; then
 		echo "brew is installed";
 	else
@@ -68,8 +73,11 @@ install() {
 		fi
 	fi
 
+	# Run just deploy to create symlinks and install packages
 	./bin/just deploy
 
+	# Change default shell to /bin/zsh if not already
+	echo ""
 	if [ "$SHELL" = "/bin/zsh" ]; then
 		echo "Using /bin/zsh"
 	else

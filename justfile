@@ -57,8 +57,11 @@ clean:
         done \
     fi
 
+# Run clean and deploy
+redeploy: clean deploy
+
 # Create symlink to home directory
-deploy: clean
+deploy:
     @echo '==> Start to deploy dotfiles to home directory.'
     @echo ''
     #!/usr/bin/env bash
