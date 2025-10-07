@@ -3,7 +3,7 @@
 # If error was caused, stop script
 set -e
 
-# Install to ~/Codes/dotfiles instead of ~/.dotfiles
+# Install to ~/Codes/dotfiles
 DOT_DIRECTORY="${HOME}/Codes/dotfiles"
 REMOTE_URL="https://github.com/umeruma/dotfiles.git"
 
@@ -58,7 +58,27 @@ install() {
 		echo "just install succeeded"
 	fi
 
-	./bin/just install
+	if type brew >/dev/null 2>&1; then
+		echo "brew is installed";
+	else
+		if [ "$uname_s" = 'Linux' ]; then
+			sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+		elif [ "$uname_s" = 'Darwin' ]; then
+			/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		fi
+	fi
+
+	./bin/just deploy
+
+	if [ "$SHELL" = "/bin/zsh" ]; then
+		echo "Using /bin/zsh"
+	else
+		echo "Change default shell to /bin/zsh"
+		chsh -s /bin/zsh
+	fi
+
+	echo ""
+	echo "If you want to install apps, run: just install-apps"
 }
 
 install
