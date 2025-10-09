@@ -86,3 +86,5 @@ alias ll="ls -lG"
 alias la="ls -laG"
 
 alias -g F='$(fzf)'
+
+alias dot='cd $DOTFILES'
