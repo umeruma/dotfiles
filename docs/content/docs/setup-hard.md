@@ -2,13 +2,17 @@
 title: Setup Hardware
 ---
 
-## keyboard: [HHKB ANSI layout](https://hhkb.io/layout/)
+## keyboard: 
 
-<img width="320" alt="" src="https://i.gyazo.com/1eaad11921cce165baed6c8b222f77cc.jpg">
+[HHKB ANSI layout](https://hhkb.io/layout/)
 
-## mouse: [ZOWIE EC2-C](https://zowie.benq.com/ja-jp/mouse/ec2-c.html)
+<img width="320" alt="" src="https://i.gyazo.com/1eaad11921cce165baed6c8b222f77cc.jpg"/>
 
-<img width="320" alt="" src="https://i.gyazo.com/a18e846c56927e13be696a1d085d71a4.png">
+## mouse: 
+
+[ZOWIE EC2-C](https://zowie.benq.com/ja-jp/mouse/ec2-c.html)
+
+<img width="320" alt="" src="https://i.gyazo.com/a18e846c56927e13be696a1d085d71a4.png"/>
 
 ### replace the mouse skates:
 ソールを張り替えて、マウスパッド敷く
