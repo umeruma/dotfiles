@@ -7,11 +7,12 @@ uname_s := `uname -s`
 expected_path := env_var("HOME") + "/Codes/dotfiles"
 
 # Default recipe
+[private]
 default: help
 
 # Self-documented help
 help:
-    @just --list
+    @just --list --unsorted
 
 # Fetch changes for this repo
 update:
@@ -40,7 +41,7 @@ list:
 
 # Remove the dot files which deployed
 clean:
-    @echo 'Remove dot files in your home directory...'
+    @echo 'Clean dot files in your home directory...'
     #!/usr/bin/env bash
     set -euo pipefail
     # Remove dotfiles deployed from home/ directory
@@ -57,11 +58,8 @@ clean:
         done \
     fi
 
-# Run clean and deploy
-redeploy: clean deploy
-
 # Create symlink to home directory
-deploy:
+deploy: clean
     @echo '==> Start to deploy dotfiles to home directory.'
     @echo ''
     #!/usr/bin/env bash

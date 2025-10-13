@@ -23,8 +23,15 @@ path=("$HOME/.local/bin" $path)
 
 # Homebrew: put binaries on PATH and export common envs
 if [[ -d "/opt/homebrew" ]]; then
-    path=("/opt/homebrew/bin" "/opt/homebrew/sbin" $path)
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
+    # Add Homebrew completions to fpath (if needed)
+    # path=("/opt/homebrew/bin" "/opt/homebrew/sbin" $path)
+    # if command -v brew >/dev/null 2>&1; then
+    #     fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+    # fi
+
+    # Bundle file
     export HOMEBREW_BUNDLE_FILE="$DOTFILES/macos/Brewfile"
 fi
 
@@ -36,10 +43,6 @@ fi
 # -------------------------
 # add zsh completions
 # -------------------------
-# Homebrew zsh completions
-if command -v brew >/dev/null 2>&1; then
-    eval "$(brew shellenv)"
-fi
 
 # pkgx interactive initialization (if installed)
 if command -v pkgx >/dev/null 2>&1; then
