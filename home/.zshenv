@@ -14,3 +14,4 @@ export VISUAL="$EDITOR"
 export READNULLCMD="less"
 
 export DOTFILES="$HOME/Codes/dotfiles"
+export DOTFILES_HOME="$HOME/Codes/dotfiles/home"
