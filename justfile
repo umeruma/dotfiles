@@ -42,42 +42,33 @@ list:
 # Remove the dot files which deployed
 clean:
     @echo 'Clean dot files in your home directory...'
+    stow -D -v -d {{dotpath}} -t ~ home
+
+# Ensure subdirectories exist before deploying (reads from .deploy_subdir)
+[private]
+prepare-subdirs:
     #!/usr/bin/env bash
     set -euo pipefail
-    # Remove dotfiles deployed from home/ directory
-    for file in $(find home -name ".*" -not -name ".DS_Store" -maxdepth 1 -type f); do \
-        target_file="$HOME/$(basename $file)"; \
-        rm -vrf "$target_file" || true; \
-    done
-    # Remove .config directory symlinks
-    if [ -d "home/.config" ]; then \
-        for config in home/.config/*; do \
-            if [ -d "$config" ]; then \
-                rm -vrf "$HOME/.config/$(basename $config)" || true; \
-            fi \
-        done \
+    echo '==> Ensure required subdirectories exist (from .deploy_subdir)'
+    if [[ -f .deploy_subdir ]]; then
+        while IFS= read -r path; do
+            # Skip blank lines and comments (leading/trailing whitespace allowed)
+            [[ "$path" =~ ^[[:space:]]*$ ]] && continue
+            [[ "$path" =~ ^[[:space:]]*# ]] && continue
+            # Trim leading/trailing whitespace
+            path="${path#"${path%%[![:space:]]*}"}"
+            path="${path%"${path##*[![:space:]]}"}"
+            mkdir -p "$HOME/$path"
+            echo "  mkdir -p $HOME/$path"
+        done < .deploy_subdir
+    else
+        echo '  (skip) .deploy_subdir not found'
     fi
 
 # Create symlink to home directory
-deploy: clean
+deploy: clean prepare-subdirs
     @echo '==> Start to deploy dotfiles to home directory.'
-    @echo ''
-    #!/usr/bin/env bash
-    set -euo pipefail
-    # Deploy dotfiles from home/ directory
-    for file in $(find home -name ".*" -not -name ".DS_Store" -maxdepth 1 -type f); do \
-        target_file="$HOME/$(basename $file)"; \
-        ln -sfnv "{{dotpath}}/$file" "$target_file"; \
-    done
-    # Deploy .config directory contents
-    if [ -d "home/.config" ]; then \
-        mkdir -p "$HOME/.config"; \
-        for config in home/.config/*; do \
-            if [ -d "$config" ]; then \
-                ln -sfnv "{{dotpath}}/$config" "$HOME/.config/$(basename $config)"; \
-            fi \
-        done \
-    fi
+    stow -v -d {{dotpath}} -t ~ home
 
 # Install apps
 install-apps:

@@ -88,3 +88,31 @@ alias la="ls -laG"
 alias -g F='$(fzf)'
 
 alias dot='cd $DOTFILES'
+
+dottrack() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: dottrack <file_or_directory>"
+    return 1
+  fi
+
+  local target="$HOME/$1"
+  local dest="$DOTFILES_HOME/home/$1"
+
+  # ホームディレクトリに存在するか確認
+  if [[ ! -e "$target" ]]; then
+    echo "Error: $target does not exist"
+    return 1
+  fi
+
+  # 親ディレクトリを作成
+  mkdir -p "$(dirname "$dest")"
+
+  # ファイル/ディレクトリを移動
+  mv "$target" "$dest"
+
+  # stow でシンボリックリンクを作成
+  stow -d "$DOTFILES_HOME" -t "$HOME" home
+
+  echo "✓ Tracked: $1"
+}
+
