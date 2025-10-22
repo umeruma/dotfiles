@@ -43,6 +43,51 @@ export DOTFILES="$HOME/Codes/dotfiles"
 alias dot='cd $DOTFILES' 
 ```
 
+## Deploy dotfiles
+
+To deploy your dotfiles to your home directory, simply run:
+
+```
+dot && just deploy
+```
+
+### Pre-create subdirectories
+
+Before deploying with GNU Stow, this repository can automatically create any required subdirectories in your home directory, based on a plain text list in `.deploy_subdir`.
+
+**How it works:**
+- Reads `.deploy_subdir` line by line
+	- Ignores blank lines and lines starting with `#`
+	- Trims whitespace
+- Runs `mkdir -p "$HOME/<path>"` for each valid line
+- Then deploys `home/` using Stow
+
+This process runs automatically as part of `just deploy` via the `prepare-subdirs` recipe.
+
+#### Usage
+1. Add the directories you need to `.deploy_subdir` (one path per line):
+
+		```
+		# editors
+		.config/micro
+		.config/nvim
+
+		# tools
+		.local/share/fzf
+		```
+
+2. Deploy your dotfiles:
+
+		```
+		just deploy
+		```
+
+This ensures all listed directories (e.g. `~/.config/micro`) exist before Stow creates symlinks, making deployment more reliable.
+
+**Notes:**
+- Implementation is in the `justfile` under the `prepare-subdirs` recipe
+- Input is tolerant of whitespace and comments
+
 ## macOS defaults
 To update macOS defaults setting, run:
 
@@ -50,7 +95,7 @@ To update macOS defaults setting, run:
 dot && just defaults
 ```
 
-## Terminal theme
+## macOS Terminal theme
 To apply theme for macOS Terminal, run:
 ```
 dot && just theme
@@ -60,28 +105,11 @@ then looks like this:
 
 <img alt="" src="https://i.gyazo.com/e6b46b2e0332ecbbf1e2fcf859533f3c.jpg"/>
 
-{/* ## homesick compatible
-
-This repository is [homesick](https://github.com/technicalpickles/homesick) compatible. You can use homesick to manage these dotfiles:
-
-```bash
-# Install homesick
-gem install homesick
-
-# Clone and link dotfiles (will be installed to ~/Codes/dotfiles)
-homesick clone umeruma/dotfiles
-homesick link dotfiles
-
-# Run setup script
-homesick rc dotfiles
-``` */}
-
 ## tech stack
 
 - [just](https://github.com/casey/just#readme) as command runner
 - [sheldon](https://github.com/rossmacarthur/sheldon#readme) as zsh plugin manager
 - [Homebrew](https://docs.brew.sh/Manpage) as package manager
-{/* - [homesick](https://github.com/technicalpickles/homesick) compatible structure */}
 
 ## website
 
