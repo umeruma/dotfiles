@@ -1,0 +1,5 @@
+theme = Birds Of Paradise
+font-family = Moralerspace Neon
+font-size = 15
+font-feature = liga, dlig, clig
+adjust-cell-height = 20%
