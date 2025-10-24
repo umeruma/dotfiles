@@ -1,7 +1,7 @@
 # brew "eza"
 brew "diffr"
 brew "ffmpeg"
-brew "fzf"
+brew "fzy"
 brew "gh"
 brew "gifsicle"
 brew "git"

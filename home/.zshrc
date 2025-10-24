@@ -66,8 +66,8 @@ fi
 # -------------------------
 # Plugin options & Plugin managers
 # -------------------------
-# enhancd / fzf integration
-export ENHANCD_FILTER="fzf --height 50% --reverse --ansi"
+# enhancd / fzy integration
+export ENHANCD_FILTER="fzy --prompt '❯ '"
 export ENHANCD_DOT_SHOW_FULLPATH=1
 
 # sheldon (plugin manager)
@@ -85,7 +85,7 @@ alias ls="ls -G"
 alias ll="ls -lG"
 alias la="ls -laG"
 
-alias -g F='$(fzf)'
+alias -g F='$(fzy)'
 
 alias dot='cd $DOTFILES'
 
