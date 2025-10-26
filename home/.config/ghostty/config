@@ -3,3 +3,6 @@ font-family = Moralerspace Neon
 font-size = 15
 font-feature = liga, dlig, clig
 adjust-cell-height = 20%
+mouse-hide-while-typing = true
+
+keybind = super+r=reload_config
