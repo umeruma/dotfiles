@@ -85,7 +85,11 @@ alias ls="ls -G"
 alias ll="ls -lG"
 alias la="ls -laG"
 
-alias -g F='$(fzy)'
+# Interactive file selection with fzy
+fzyselect() {
+  fzy < <(find . -maxdepth 1)
+}
+alias -g F='$(fzyselect)'
 
 alias dot='cd $DOTFILES'
 
