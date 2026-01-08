@@ -40,13 +40,16 @@ if [[ -d "/opt/homebrew/opt/rustup/bin" ]]; then
     path=("/opt/homebrew/opt/rustup/bin" $path)
 fi
 
+export MISE_STATUS_MESSAGE_SHOW_ENV=true
+export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
+
 # -------------------------
 # add zsh completions
 # -------------------------
 
 # pkgx interactive initialization (if installed)
-if command -v pkgx >/dev/null 2>&1; then
-    eval "$(pkgx --quiet dev --shellcode)"
-fi
+# if command -v pkgx >/dev/null 2>&1; then
+#     eval "$(pkgx --quiet dev --shellcode)"
+# fi
 
 # fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
