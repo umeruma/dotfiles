@@ -76,6 +76,9 @@ if command -v sheldon >/dev/null 2>&1; then
     eval "$(sheldon source)"
 fi
 
+# mise (pkg manager)
+eval "$(mise activate zsh)"
+
 # -------------------------
 # Aliases & small functions
 # -------------------------
@@ -119,4 +122,3 @@ dottrack() {
 
   echo "✓ Tracked: $1"
 }
-
