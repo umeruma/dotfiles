@@ -33,6 +33,10 @@ if [[ -d "/opt/homebrew" ]]; then
 
     # Bundle file
     export HOMEBREW_BUNDLE_FILE="$DOTFILES/macos/Brewfile"
+    
+    # Avoid installing certain formulae via Homebrew
+    # Link: https://docs.brew.sh/Manpage#:~:text=fishcompletion%2C%20zshcompletion%2C%20stageonly.-,HOMEBREW_FORBIDDEN_FORMULAE,-A%20space-separated%20list
+    export HOMEBREW_FORBIDDEN_FORMULAE="node python python3 pip npm pnpm yarn claude"
 fi
 
 # Rustup in Homebrew prefix (if present)
