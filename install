@@ -73,6 +73,15 @@ install() {
 		fi
 	fi
 
+	# Check if mise is installed; if not, install it
+	echo ""
+	if type mise >/dev/null 2>&1; then
+		echo "mise is installed";
+	else
+		echo "Installing mise..."
+		curl -sL https://mise.run | sh
+	fi
+
 	# Run just deploy to create symlinks and install packages
 	./bin/just deploy
 
