@@ -44,9 +44,6 @@ if [[ -d "/opt/homebrew/opt/rustup/bin" ]]; then
     path=("/opt/homebrew/opt/rustup/bin" $path)
 fi
 
-export MISE_STATUS_MESSAGE_SHOW_ENV=true
-export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
-
 # -------------------------
 # add zsh completions
 # -------------------------
