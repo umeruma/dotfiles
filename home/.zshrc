@@ -79,6 +79,9 @@ fi
 # mise (pkg manager)
 eval "$(mise activate zsh)"
 
+export MISE_STATUS_MESSAGE_SHOW_ENV=true
+export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
+
 # -------------------------
 # Aliases & small functions
 # -------------------------
