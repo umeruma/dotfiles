@@ -91,6 +91,8 @@ alias ls="ls -G"
 alias ll="ls -lG"
 alias la="ls -laG"
 
+alias keka="/Applications/Keka.app/Contents/MacOS/Keka --cli"
+
 # Interactive file selection with fzy
 fzyselect() {
   fzy < <(find . -maxdepth 1)
