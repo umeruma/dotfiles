@@ -1,3 +1,5 @@
+tap "k1LoW/tap"
+
 # brew "eza"
 brew "diffr"
 brew "ffmpeg"
@@ -10,6 +12,7 @@ brew "git-sizer"
 brew "handbrake"
 brew "imagemagick"
 brew "jq"
+brew "git-wt"
 brew "lftp"
 brew "mas"
 brew "micro"

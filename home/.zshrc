@@ -82,6 +82,10 @@ eval "$(mise activate zsh)"
 export MISE_STATUS_MESSAGE_SHOW_ENV=true
 export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
 
+# git-wt (git worktree manager)
+# https://github.com/k1LoW/git-wt?tab=readme-ov-file
+eval "$(git wt --init zsh)"
+
 # -------------------------
 # Aliases & small functions
 # -------------------------
