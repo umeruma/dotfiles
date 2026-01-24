@@ -25,3 +25,5 @@
 	rebase = false
 [credential]
 	helper = osxkeychain
+[wt]
+	basedir = .worktrees
