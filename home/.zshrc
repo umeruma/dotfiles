@@ -86,6 +86,13 @@ export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
 # https://github.com/k1LoW/git-wt?tab=readme-ov-file
 eval "$(git wt --init zsh)"
 
+wt() {
+  local line
+  line="$(git wt | tail -n +2 | fzy)" || return
+  [[ -n "$line" ]] || return
+  git wt "$(printf '%s\n' "$line" | awk '{print $(NF-1)}')"
+}
+
 # -------------------------
 # Aliases & small functions
 # -------------------------
