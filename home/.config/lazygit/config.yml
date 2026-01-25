@@ -2,3 +2,6 @@
 
 gui:
   commitHashLength: 0
+
+os:
+  editPreset: 'vscode'
