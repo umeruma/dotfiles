@@ -93,6 +93,9 @@ wt() {
   git wt "$(printf '%s\n' "$line" | awk '{print $(NF-1)}')"
 }
 
+# lazygit (git UI)
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # -------------------------
 # Aliases & small functions
 # -------------------------
