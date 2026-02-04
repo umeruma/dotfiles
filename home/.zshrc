@@ -95,6 +95,7 @@ wt() {
 
 # lazygit (git UI)
 export XDG_CONFIG_HOME="$HOME/.config"
+alias lg="lazygit"
 
 # -------------------------
 # Aliases & small functions
