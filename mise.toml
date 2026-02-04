@@ -1,0 +1,37 @@
+[tasks.help]
+description = "List available tasks"
+run = "zsh script/help.zsh"
+
+[tasks.update]
+description = "Fetch latest changes (including submodules)"
+run = "zsh script/update.zsh"
+
+[tasks.list]
+description = "Show dotfiles to deploy"
+run = "zsh script/list.zsh"
+
+[tasks.clean]
+description = "Remove deployed symlinks from $HOME"
+run = "zsh script/clean.zsh"
+
+[tasks.prepare-subdirs]
+description = "Ensure required subdirectories exist (from .deploy_subdir)"
+hide = true
+run = "zsh script/prepare-subdirs.zsh"
+
+[tasks.deploy]
+description = "Deploy dotfiles to $HOME via stow"
+depends = ["clean", "prepare-subdirs"]
+run = "zsh script/deploy.zsh"
+
+[tasks.install-apps]
+description = "Install apps via Brewfile (Linux/macOS)"
+run = "zsh script/install-apps.zsh"
+
+[tasks.defaults]
+description = "Apply macOS defaults"
+run = "zsh script/defaults.zsh"
+
+[tasks.theme]
+description = "Install Terminal theme (macOS)"
+run = "zsh script/theme.zsh"

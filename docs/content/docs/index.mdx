@@ -48,7 +48,7 @@ alias dot='cd $DOTFILES'
 To deploy your dotfiles to your home directory, simply run:
 
 ```
-dot && just deploy
+dot && mise run deploy
 ```
 
 ### Pre-create subdirectories
@@ -62,7 +62,7 @@ Before deploying with GNU Stow, this repository can automatically create any req
 - Runs `mkdir -p "$HOME/<path>"` for each valid line
 - Then deploys `home/` using Stow
 
-This process runs automatically as part of `just deploy` via the `prepare-subdirs` recipe.
+This process runs automatically as part of `mise run deploy` via the `prepare-subdirs` task dependency.
 
 #### Usage
 1. Add the directories you need to `.deploy_subdir` (one path per line):
@@ -79,26 +79,26 @@ This process runs automatically as part of `just deploy` via the `prepare-subdir
 2. Deploy your dotfiles:
 
 		```
-		just deploy
+		mise run deploy
 		```
 
 This ensures all listed directories (e.g. `~/.config/micro`) exist before Stow creates symlinks, making deployment more reliable.
 
 **Notes:**
-- Implementation is in the `justfile` under the `prepare-subdirs` recipe
+- Implementation is in `script/prepare-subdirs.zsh` and wired up in `mise.toml` as the hidden `prepare-subdirs` task (a dependency of `deploy`)
 - Input is tolerant of whitespace and comments
 
 ## macOS defaults
 To update macOS defaults setting, run:
 
 ```
-dot && just defaults
+dot && mise run defaults
 ```
 
 ## macOS Terminal theme
 To apply theme for macOS Terminal, run:
 ```
-dot && just theme
+dot && mise run theme
 ```
 
 then looks like this:
@@ -107,7 +107,7 @@ then looks like this:
 
 ## tech stack
 
-- [just](https://github.com/casey/just#readme) as command runner
+- [mise](https://mise.jdx.dev/) as task runner
 - [sheldon](https://github.com/rossmacarthur/sheldon#readme) as zsh plugin manager
 - [Homebrew](https://docs.brew.sh/Manpage) as package manager
 
