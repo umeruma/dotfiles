@@ -35,3 +35,14 @@ run = "zsh script/defaults.zsh"
 [tasks.theme]
 description = "Install Terminal theme (macOS)"
 run = "zsh script/theme.zsh"
+
+[tasks.gc1-build]
+description = "Build git-credential-1password and deploy to bin/"
+run = "zsh tools/build-git-credential-1password.sh"
+
+[tasks.gc1-update]
+description = "Update git-credential-1password submodule and rebuild"
+run = "cd tools/git-credential-1password && git pull && cd - > /dev/null && zsh tools/build-git-credential-1password.sh"
+
+[tools]
+go = "latest"

@@ -23,7 +23,10 @@
 	path = ~/Codes_DL/.gitconfig
 [pull]
 	rebase = false
+# Git Credential 1Password Settings
+# https://github.com/ethrgeist/git-credential-1password?tab=readme-ov-file#%EF%B8%8F-usage
 [credential]
+  # helper = 1password
 	helper = osxkeychain
 
 # Git Worktree Manager Settings

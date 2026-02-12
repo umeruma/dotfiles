@@ -1,0 +1,11 @@
+--ignore=\.git
+--ignore=\.gitmodules
+--ignore=go\.mod
+--ignore=go\.sum
+--ignore=\.gitignore
+--ignore=LICENSE
+--ignore=README
+--ignore=README\.md
+--ignore=flake\.nix
+--ignore=main\.go
+--ignore=internal
