@@ -1,0 +1,3 @@
+[submodule "tools/git-credential-1password"]
+	path = tools/git-credential-1password
+	url = https://github.com/ethrgeist/git-credential-1password
