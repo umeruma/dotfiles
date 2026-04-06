@@ -12,6 +12,9 @@
 
 shell = "zsh"
 
+[templates]
+defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
+
 [plugins]
 
 # [plugins.zsh-autosuggestions]
@@ -23,9 +26,6 @@ github = "zdharma/fast-syntax-highlighting"
 # https://github.com/romkatv/zsh-defer
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
-
-[templates]
-defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
 
 # https://github.com/supercrabtree/k
 [plugins.k]
