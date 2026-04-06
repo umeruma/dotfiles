@@ -1,6 +1,7 @@
 [core]
     excludesfile = ~/.gitignore
 	symlinks = true
+	editor = open -W -a 'Visual Studio Code'
 [init]
 	defaultBranch = main
 [user]
