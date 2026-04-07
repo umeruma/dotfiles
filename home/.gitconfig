@@ -33,7 +33,7 @@
 # Git Worktree Manager Settings
 # https://github.com/k1LoW/git-wt?tab=readme-ov-file#configuration
 [wt]
-	basedir = .worktrees
+	basedir = .git/wt
 	copyuntracked = true
 	copyignored = true
 	copymodified = true
