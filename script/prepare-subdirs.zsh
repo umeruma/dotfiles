@@ -22,7 +22,7 @@ if [[ -f .deploy_subdir ]]; then
     path=${path#${path%%[![:space:]]*}}
     path=${path%${path##*[![:space:]]}}
 
-    mkdir -p "$HOME/$path"
+    /bin/mkdir -p "$HOME/$path"
     print -r -- "  mkdir -p $HOME/$path"
   done < .deploy_subdir
 else

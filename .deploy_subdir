@@ -2,3 +2,5 @@
 .config/karabiner
 .config/micro
 .config/sheldon
+.copilot
+.copilot/skills
