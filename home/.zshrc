@@ -100,7 +100,13 @@ alias lg="lazygit"
 # -------------------------
 # Aliases & small functions
 # -------------------------
-gi() { curl -L -s "https://www.gitignore.io/api/$@" ;}
+
+# github cli aliases 
+# https://cli.github.com/manual/gh_repo_gitignore_view
+gi() { gh repo gitignore "$@"; }
+
+# https://cli.github.com/manual/gh_repo_license_view
+gli() { gh repo license "$@"; }
 
 alias ls="ls -G"
 alias ll="ls -lG"
