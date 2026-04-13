@@ -1,5 +1,5 @@
 [core]
-    excludesfile = ~/.gitignore
+	excludesfile = ~/.gitignore
 	symlinks = true
 	editor = open -W -a 'Visual Studio Code'
 [init]
@@ -8,10 +8,10 @@
 	name = Takumi Saito
 	email = dev@umeru.ma
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [http]
 	version = HTTP/1.1
 [difftool]
@@ -37,3 +37,26 @@
 	copyuntracked = true
 	copyignored = true
 	copymodified = true
+
+[alias]
+# 	# 過去1年間で最も変更されたファイルトップ20（高チャーン＝潜在的リスク）
+# 	stats-hotfiles = !git log --format=format: --name-only --since='1 year ago' | sort | uniq -c | sort -nr | head -20
+
+# 	# コミット数でランク付けした貢献者（バスファクター分析）
+# 	stats-contributors = !git shortlog -sn --no-merges
+
+# 	# 直近6ヶ月のアクティブな貢献者
+# 	stats-contributors-recent = !git shortlog -sn --no-merges --since='6 months ago'
+
+# 	# バグ修正コミットに最も頻繁に現れるファイルトップ20
+# 	stats-bugs = !git log -i --grep='fix' --grep='bug' --grep='broken' --name-only --format='' | sort | uniq -c | sort -nr | head -20
+
+# 	# 月ごとにグループ化したコミット活動（プロジェクト速度）
+# 	stats-activity = !git log --format='%ad' --date=format:'%Y-%m' | sort | uniq -c
+
+# 	# 過去1年間のリバート、ホットフィックス、緊急パッチ
+# 	stats-hotfixes = !git log --graph --decorate --date=short --pretty=format:"%C(blue)%h%Creset %C(dim white)%ad%Creset %s  %C(green)%an%Creset %C(cyan)%d%Creset" --since='1 year ago' --grep='revert' --grep='hotfix' --grep='emergency' --grep='rollback' -i
+
+# 	# 全てのコードベース診断を一度に実行
+# 	stats-all = !sh -c 'echo "=== Hotspot Files ===" && git stats-hotfiles && echo "" && echo "=== All Contributors ===" && git stats-contributors && echo "" && echo "=== Bug-related Files ===" && git stats-bugs && echo "" && echo "=== Commit Activity ===" && git stats-activity && echo "" && echo "=== Hotfixes and Reverts ===" && git stats-hotfixes'
+
