@@ -14,6 +14,8 @@ worktree 環境で `mise run dev` を正しく起動するワークフロー。
 
 サーバーが起動するとエージェントはブロックされるが、ユーザーが確認後に Ctrl+C で停止すれば自動的に再開するため問題ない。
 
+また、wt コマンドで node_modulesはコピーされないため、worktree での起動前にルートで一度 `bun install` を実行しておく必要がある。
+
 ## Procedure
 
 ### 1. 作業中の worktree パスを特定する
@@ -23,7 +25,7 @@ git wt --json
 ```
 
 現在編集中のファイルパスか、直近の作業コンテキストから対象の worktree ディレクトリを特定する。
-例: `/path/to/repo/.git/wt/<branch-name>/`
+例: `/path/to/repo/.wt/<branch-name>/`
 
 ### 2. `isBackground=false` でサーバーを起動する
 

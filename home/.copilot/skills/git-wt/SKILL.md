@@ -48,20 +48,11 @@ git wt -D <branch|path>           # 強制削除
 
 > ポイント: `git wt` は worktree 間の `cd` を自動で行う（Shell Integration が必要。後述）。  
 > エージェントが `run_in_terminal` でコマンドを実行する場合は、パスを明示的に変更するか `--nocd` でパスを取得してから `cd` すること。
+- worktree を閉じる前に、対象ブランチは non-fast-forward merge で取り込むことを推奨（`git merge --no-ff <branch>`）
 
 ---
 
 ## 推奨設定
-
-### basedir を `.git/wt` に変更（推奨）
-
-デフォルトの `.wt`（リポジトリ内）では、Claude Code などのツールが設定ファイルを二重読みしたり、Linter が誤スキャンすることがある。`.git/wt` に置くとほとんどのツールが無視する。
-
-```sh
-git config wt.basedir ".git/wt"
-# または全リポジトリ共通（global）
-git config --global wt.basedir ".git/wt"
-```
 
 ### zsh Shell Integration セットアップ
 
