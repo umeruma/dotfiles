@@ -93,6 +93,15 @@ wt() {
   git wt "$(printf '%s\n' "$line" | awk '{print $(NF-1)}')"
 }
 
+wr() {
+  # git-wt で管理されているディレクトリを fzy で選択して削除
+  local line
+  line="$(git wt | tail -n +2 | fzy)" || return
+  [[ -n "$line" ]] || return
+  local dir="$(printf '%s\n' "$line" | awk '{print $(NF-1)}')"
+  git wt -d "$dir"
+}
+
 # lazygit (git UI)
 export XDG_CONFIG_HOME="$HOME/.config"
 alias lg="lazygit"
