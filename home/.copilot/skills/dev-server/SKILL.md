@@ -25,7 +25,7 @@ git wt --json
 ```
 
 現在編集中のファイルパスか、直近の作業コンテキストから対象の worktree ディレクトリを特定する。
-例: `/path/to/repo/.wt/<branch-name>/`
+例: `/path/to/repo/.git/wt/<branch-name>/`
 
 ### 2. `isBackground=false` でサーバーを起動する
 
