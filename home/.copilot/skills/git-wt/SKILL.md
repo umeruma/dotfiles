@@ -1,5 +1,5 @@
 ---
-name: git-wt
+name: wt
 description: "git wt（k1LoW/git-wt）を使ってgit worktreeを作成・切り替え・削除するワークフロー。Use when: worktreeで並行作業する, ブランチを切り替える, feature branch per task, worktree管理, 並列タスク実行, git worktree list/add/remove。エージェントが複数ブランチを横断して自律的にタスクを実行する場合にも使用する。"
 argument-hint: "<branch|worktree|path> | list | delete"
 ---
