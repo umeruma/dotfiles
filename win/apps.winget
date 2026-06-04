@@ -30,3 +30,24 @@ properties:
       settings:
         id: Unity.UnityHub
         source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Zen Browser
+      settings:
+        id: Zen-Team.Zen-Browser
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Gyazo
+      settings:
+        id: Nota.Gyazo
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: 1Password
+      settings:
+        id: AgileBits.1Password
+        source: winget
