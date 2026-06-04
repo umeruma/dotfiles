@@ -13,20 +13,24 @@ run = "zsh script/list.zsh"
 [tasks.clean]
 description = "Remove deployed symlinks from $HOME"
 run = "zsh script/clean.zsh"
+run_windows = "pwsh -NoProfile -File script/clean-windows.ps1"
 
 [tasks.prepare-subdirs]
 description = "Ensure required subdirectories exist (from .deploy_subdir)"
 hide = true
 run = "zsh script/prepare-subdirs.zsh"
+run_windows = "pwsh -NoProfile -File script/prepare-subdirs-windows.ps1"
 
 [tasks.deploy]
 description = "Deploy dotfiles to $HOME via stow"
 depends = ["clean", "prepare-subdirs"]
 run = "zsh script/deploy.zsh"
+run_windows = "pwsh -NoProfile -File script/deploy.ps1"
 
 [tasks.install-apps]
-description = "Install apps via Brewfile (Linux/macOS)"
+description = "Install apps (Brewfile on Unix, win/apps.winget on Windows)"
 run = "zsh script/install-apps.zsh"
+run_windows = "pwsh -NoProfile -File script/install-apps.ps1"
 
 [tasks.defaults]
 description = "Apply macOS defaults"

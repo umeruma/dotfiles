@@ -1,0 +1,103 @@
+---
+title: Windows
+---
+
+## Overview
+
+Windows setup uses:
+
+- **[PSDotFiles](https://github.com/ralish/PSDotFiles)** to symlink [`home-win/`](https://github.com/umeruma/dotfiles/tree/main/home-win) into `$HOME`
+- **[WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)** files under [`win/`](https://github.com/umeruma/dotfiles/tree/main/win) for package installation
+
+macOS and Linux continue to use GNU Stow with [`home/`](https://github.com/umeruma/dotfiles/tree/main/home).
+
+## install-win
+
+This repository is installed at `~/Codes/dotfiles`.
+
+Review the script before running:  
+[https://dot.umeru.ma/install-win](https://dot.umeru.ma/install-win)
+
+In **PowerShell** (Windows PowerShell 5.1 is OK for the bootstrap; it will re-launch in PowerShell 7):
+
+```powershell
+irm https://dot.umeru.ma/install-win | iex
+```
+
+What it does:
+
+1. Installs PowerShell 7 if needed
+2. Clones the repo to `~/Codes/dotfiles`
+3. Runs `winget configure` with [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) (PowerShell 7, Git, mise)
+4. Installs the **PSDotFiles** module from the PowerShell Gallery
+5. Runs `mise run deploy` to link `home-win/`
+
+## Deploy dotfiles
+
+From the repo root in **PowerShell 7**:
+
+```
+cd $env:USERPROFILE\Codes\dotfiles
+mise run deploy
+```
+
+This runs `Install-DotFiles home-win` via [`script/deploy.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/deploy.ps1).
+
+Remove symlinks:
+
+```
+mise run clean
+```
+
+## Install applications
+
+GUI and other apps are listed in [`win/apps.winget`](https://github.com/umeruma/dotfiles/blob/main/win/apps.winget):
+
+```
+mise run install-apps
+```
+
+Edit that file to add or remove packages. Each entry uses `Microsoft.WinGet.DSC/WinGetPackage` with a winget package `id`.
+
+Preview a configuration file:
+
+```
+winget configure show -f win/apps.winget
+```
+
+Requires **WinGet v1.6.2631** or later for `winget configure`.
+
+## PowerShell profile and mise
+
+[`home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1) sets:
+
+- `$env:DOTFILES`
+- `dot` to jump to the repo
+- `mise activate pwsh` on shell start
+
+Use **PowerShell 7** (`pwsh`). mise activation on Windows PowerShell 5.1 is not supported; see [mise PowerShell discussion](https://github.com/jdx/mise/discussions/6733).
+
+## Developer Mode (symlinks)
+
+PSDotFiles creates symbolic links. Enable **Developer Mode**:
+
+**Settings → System → For developers → Developer Mode**
+
+Or run the deploy shell as Administrator.
+
+If `$PROFILE` already exists, back it up before the first deploy. On conflict, PSDotFiles reports an error; resolve manually or use PSDotFiles `-WhatIf` first:
+
+```powershell
+$DotFilesPath = "$HOME\Codes\dotfiles"
+Import-Module PSDotFiles
+Install-DotFiles home-win -WhatIf
+```
+
+## `home/` vs `home-win/`
+
+| Directory   | Used on        | Tool        |
+|------------|----------------|-------------|
+| `home/`    | macOS, Linux   | GNU Stow    |
+| `home-win/`| Windows        | PSDotFiles  |
+
+Keep Windows-specific files in `home-win/` so mac-only tools (Karabiner, Ghostty, etc.) are not deployed on Windows.

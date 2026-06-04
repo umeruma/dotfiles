@@ -1,0 +1,164 @@
+#Requires -Version 5.1
+<#
+.SYNOPSIS
+  Bootstrap dotfiles on Windows (PowerShell 7, mise, PSDotFiles, home-win deploy).
+
+.DESCRIPTION
+  Clone to ~/Codes/dotfiles, apply win/bootstrap.winget, install PSDotFiles,
+  then run mise run deploy. Install GUI apps separately with: mise run install-apps
+
+  Review this script before running:
+    irm https://dot.umeru.ma/install-win | iex
+#>
+$ErrorActionPreference = 'Stop'
+
+$DotDirectory = Join-Path $HOME 'Codes/dotfiles'
+$RemoteUrl = 'https://github.com/umeruma/dotfiles.git'
+$PwshPath = Join-Path ${env:ProgramFiles} 'PowerShell/7/pwsh.exe'
+
+function Test-CommandExists {
+  param([string]$Name)
+  return $null -ne (Get-Command $Name -ErrorAction SilentlyContinue)
+}
+
+function Ensure-PowerShell7 {
+  if ($PSVersionTable.PSVersion.Major -ge 7) {
+    return
+  }
+
+  if (-not (Test-CommandExists winget)) {
+    throw 'PowerShell 7 is required. Install winget and Microsoft.PowerShell, then re-run this script.'
+  }
+
+  Write-Host 'Installing PowerShell 7...'
+  & winget install --id Microsoft.PowerShell --exact --accept-package-agreements --accept-source-agreements --disable-interactivity
+  if ($LASTEXITCODE -ne 0) {
+    throw "winget install Microsoft.PowerShell failed (exit $LASTEXITCODE)"
+  }
+
+  if (-not (Test-Path $PwshPath)) {
+    throw "PowerShell 7 was installed but not found at: $PwshPath"
+  }
+
+  Write-Host 'Re-launching with pwsh...'
+  & $PwshPath -NoProfile -File $PSCommandPath
+  exit $LASTEXITCODE
+}
+
+function Ensure-Repository {
+  $parent = Split-Path -Parent $DotDirectory
+  if (-not (Test-Path $parent)) {
+    New-Item -ItemType Directory -Force -Path $parent | Out-Null
+  }
+
+  if (Test-Path $DotDirectory) {
+    Write-Host "DOTFILES already installed at $DotDirectory"
+    return
+  }
+
+  if (-not (Test-CommandExists git)) {
+    if (Test-CommandExists winget) {
+      Write-Host 'Installing Git for Windows...'
+      & winget install --id Git.Git --exact --accept-package-agreements --accept-source-agreements --disable-interactivity
+      if ($LASTEXITCODE -ne 0) {
+        throw "winget install Git.Git failed (exit $LASTEXITCODE)"
+      }
+      $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path', 'User')
+    } else {
+      throw 'git is required to clone dotfiles'
+    }
+  }
+
+  Write-Host "Cloning dotfiles to $DotDirectory..."
+  & git clone --filter=blob:none --depth 1 --recurse-submodules --shallow-submodules $RemoteUrl $DotDirectory
+  if ($LASTEXITCODE -ne 0) {
+    throw 'git clone failed'
+  }
+}
+
+function Invoke-BootstrapWinget {
+  param([string]$RepoRoot)
+
+  $config = Join-Path $RepoRoot 'win/bootstrap.winget'
+  if (-not (Test-Path $config)) {
+    throw "Bootstrap configuration not found: $config"
+  }
+
+  if (-not (Test-CommandExists winget)) {
+    throw 'winget is required. Install App Installer from the Microsoft Store.'
+  }
+
+  Write-Host "Applying bootstrap packages ($config)..."
+  & winget configure -f $config --accept-configuration-agreements --disable-interactivity
+  if ($LASTEXITCODE -ne 0) {
+    throw "winget configure failed (exit $LASTEXITCODE)"
+  }
+
+  $machinePath = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
+  $userPath = [System.Environment]::GetEnvironmentVariable('Path', 'User')
+  $env:Path = "$machinePath;$userPath"
+}
+
+function Ensure-PSDotFiles {
+  if (Get-Module -ListAvailable -Name PSDotFiles) {
+    Write-Host 'PSDotFiles is installed'
+    return
+  }
+
+  Write-Host 'Installing PSDotFiles from PowerShell Gallery...'
+  Set-PSRepository -Name PSGallery -InstallationPolicy Trusted -ErrorAction SilentlyContinue
+  Install-Module -Name PSDotFiles -Scope CurrentUser -Force -AllowClobber
+}
+
+function Write-DeveloperModeWarningIfNeeded {
+  try {
+    $key = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -ErrorAction Stop
+    if ($key.AllowDevelopmentWithoutDevLicense -eq 1) {
+      return
+    }
+  } catch {
+    # ignore
+  }
+
+  Write-Warning @"
+Developer Mode may not be enabled. Enable it for symlink creation:
+  Settings -> System -> For developers -> Developer Mode
+"@
+}
+
+function Invoke-Deploy {
+  param([string]$RepoRoot)
+
+  Set-Location $RepoRoot
+  $env:DOTFILES = $RepoRoot
+
+  if (-not (Test-CommandExists mise)) {
+    throw 'mise not found on PATH after bootstrap. Open a new terminal or log out/in, then run: mise run deploy'
+  }
+
+  Write-Host 'Running mise run deploy...'
+  & mise run deploy
+  if ($LASTEXITCODE -ne 0) {
+    throw "mise run deploy failed (exit $LASTEXITCODE)"
+  }
+}
+
+# --- main ---
+Ensure-PowerShell7
+
+Write-Host ''
+Write-Host 'Start to setup DOTFILES (Windows)'
+Write-Host ''
+
+Ensure-Repository
+Set-Location $DotDirectory
+
+Invoke-BootstrapWinget -RepoRoot $DotDirectory
+Ensure-PSDotFiles
+Write-DeveloperModeWarningIfNeeded
+Invoke-Deploy -RepoRoot $DotDirectory
+
+Write-Host ''
+Write-Host 'Done. Open a new PowerShell 7 window and run: mise doctor'
+Write-Host 'To install GUI apps: cd $env:DOTFILES; mise run install-apps'
+Write-Host ''
