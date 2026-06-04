@@ -6,17 +6,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const websiteRoot = path.resolve(__dirname, "..");
 const repoRoot = path.resolve(websiteRoot, "..");
 
-const src = path.join(repoRoot, "install");
-const dest = path.join(websiteRoot, "public", "install");
+const copies = [
+  { src: "install", dest: "install" },
+  { src: "install-win", dest: "install-win" },
+];
 
-/**
- * Copy install script to website public directory
- */
-fs.mkdirSync(path.dirname(dest), { recursive: true });
-if (!fs.existsSync(src)) {
-  console.error("install not found:", src);
-  process.exit(1);
+for (const { src: srcName, dest: destName } of copies) {
+  const src = path.join(repoRoot, srcName);
+  const dest = path.join(websiteRoot, "public", destName);
+
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  if (!fs.existsSync(src)) {
+    console.error("not found:", src);
+    process.exit(1);
+  }
+  fs.copyFileSync(src, dest);
+  console.log("copied:", src, "->", dest);
 }
-fs.copyFileSync(src, dest);
-
-console.log("copied:", src, "->", dest);
