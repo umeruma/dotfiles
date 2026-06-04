@@ -12,11 +12,16 @@ if (-not (Get-Module -ListAvailable -Name PSDotFiles)) {
 
 Import-Module PSDotFiles
 
-$DotFilesPath = $repo
+$Global:DotFilesPath = $repo
 Write-Host '==> Remove home-win/ symlinks from home directory.'
 
 try {
-  Remove-DotFiles home-win -Verbose -ErrorAction Stop
+  $component = Get-DotFiles -Path $repo -Autodetect | Where-Object Name -eq 'home-win'
+  if (-not $component) {
+    throw 'PSDotFiles component not found: home-win'
+  }
+
+  $component | Remove-DotFiles -Verbose -ErrorAction Stop
 } catch {
   Write-Host "  (skip) $($_.Exception.Message)"
 }
