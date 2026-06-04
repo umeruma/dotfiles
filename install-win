@@ -14,7 +14,8 @@ $ErrorActionPreference = 'Stop'
 
 $DotDirectory = Join-Path $HOME 'Codes/dotfiles'
 $RemoteUrl = 'https://github.com/umeruma/dotfiles.git'
-$PwshPath = Join-Path ${env:ProgramFiles} 'PowerShell/7/pwsh.exe'
+$ProgramFilesRoot = if ($env:ProgramW6432) { $env:ProgramW6432 } else { $env:ProgramFiles }
+$PwshPath = Join-Path $ProgramFilesRoot 'PowerShell\7\pwsh.exe'
 
 function Test-CommandExists {
   param([string]$Name)
