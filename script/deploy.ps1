@@ -15,6 +15,11 @@ if (-not (Get-Module -ListAvailable -Name PSDotFiles)) {
 
 Import-Module PSDotFiles
 
-$DotFilesPath = $repo
+$Global:DotFilesPath = $repo
 Write-Host '==> Deploy home-win/ to home directory via PSDotFiles.'
-Install-DotFiles home-win -Verbose
+$component = Get-DotFiles -Path $repo -Autodetect | Where-Object Name -eq 'home-win'
+if (-not $component) {
+  throw 'PSDotFiles component not found: home-win'
+}
+
+$component | Install-DotFiles -Verbose

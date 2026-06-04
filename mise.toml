@@ -1,14 +1,17 @@
 [tasks.help]
 description = "List available tasks"
 run = "zsh script/help.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task help is not supported on Windows.'; exit 1\""
 
 [tasks.update]
 description = "Fetch latest changes (including submodules)"
 run = "zsh script/update.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task update is not supported on Windows.'; exit 1\""
 
 [tasks.list]
 description = "Show dotfiles to deploy"
 run = "zsh script/list.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task list is not supported on Windows.'; exit 1\""
 
 [tasks.clean]
 description = "Remove deployed symlinks from $HOME"
@@ -35,18 +38,22 @@ run_windows = "pwsh -NoProfile -File script/install-apps.ps1"
 [tasks.defaults]
 description = "Apply macOS defaults"
 run = "zsh script/defaults.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task defaults is not supported on Windows.'; exit 1\""
 
 [tasks.theme]
 description = "Install Terminal theme (macOS)"
 run = "zsh script/theme.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task theme is not supported on Windows.'; exit 1\""
 
 [tasks.gc1-build]
 description = "Build git-credential-1password and deploy to bin/"
 run = "zsh tools/build-git-credential-1password.sh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task gc1-build is not supported on Windows.'; exit 1\""
 
 [tasks.gc1-update]
 description = "Update git-credential-1password submodule and rebuild"
 run = "cd tools/git-credential-1password && git pull && cd - > /dev/null && zsh tools/build-git-credential-1password.sh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task gc1-update is not supported on Windows.'; exit 1\""
 
 [tools]
 go = "latest"
