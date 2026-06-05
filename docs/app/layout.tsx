@@ -1,10 +1,19 @@
 import '@/app/global.css';
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import { Inter } from 'next/font/google';
+import type { Metadata } from 'next';
 
 const inter = Inter({
   subsets: ['latin'],
 });
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | dotfiles',
+    default: 'dotfiles',
+  },
+  description: 'dotfiles documentation',
+};
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
