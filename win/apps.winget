@@ -19,6 +19,20 @@ properties:
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
+        description: Claude
+      settings:
+        id: Anthropic.Claude
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Claude Code
+      settings:
+        id: Anthropic.ClaudeCode
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
         description: Slack
       settings:
         id: SlackTechnologies.Slack
