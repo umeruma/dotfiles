@@ -17,9 +17,9 @@ Import-Module PSDotFiles
 
 $Global:DotFilesPath = $repo
 Write-Host '==> Deploy home-win/ to home directory via PSDotFiles.'
-$component = Get-DotFiles -Path $repo -Autodetect | Where-Object Name -eq 'home-win'
+$component = Get-DotFiles -Path $repo -Autodetect -ErrorAction SilentlyContinue | Where-Object Name -eq 'home-win'
 if (-not $component) {
   throw 'PSDotFiles component not found: home-win'
 }
 
-$component | Install-DotFiles -Verbose
+$component | Install-DotFiles -Verbose -ErrorAction Stop

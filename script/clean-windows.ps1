@@ -16,7 +16,7 @@ $Global:DotFilesPath = $repo
 Write-Host '==> Remove home-win/ symlinks from home directory.'
 
 try {
-  $component = Get-DotFiles -Path $repo -Autodetect | Where-Object Name -eq 'home-win'
+  $component = Get-DotFiles -Path $repo -Autodetect -ErrorAction SilentlyContinue | Where-Object Name -eq 'home-win'
   if (-not $component) {
     throw 'PSDotFiles component not found: home-win'
   }
