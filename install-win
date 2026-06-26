@@ -115,7 +115,7 @@ function Ensure-Repository {
   }
 
   Write-Host "Cloning dotfiles to $DotDirectory..."
-  & git clone --filter=blob:none --depth 1 --recurse-submodules --shallow-submodules $RemoteUrl $DotDirectory
+  & git clone --filter=blob:none --depth 1 $RemoteUrl $DotDirectory
   if ($LASTEXITCODE -ne 0) {
     throw 'git clone failed'
   }
