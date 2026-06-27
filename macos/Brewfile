@@ -27,6 +27,8 @@ brew "ripgrep"
 cask "1password"
 cask "1password-cli"
 cask "alt-tab"
+# Menu bar icon organiser
+cask "bartender"
 cask "cleanmymac"
 cask "claude"
 cask "claude-code"
@@ -42,11 +44,11 @@ cask "hammerspoon"
 cask "handbrake-app"
 cask "karabiner-elements"
 cask "loopback"
+# Free and open-source RSS reader
+cask "netnewswire"
 cask "ngrok"
 cask "notion"
-cask "orbstack"
 cask "raycast"
-cask "soundsource"
 cask "transmit"
 cask "visual-studio-code"
 cask "elgato-wave-link"
@@ -56,13 +58,10 @@ mas "Apple Configurator", id: 1037126344
 mas "CotEditor", id: 1024640650
 mas "Craft", id: 1487937127
 mas "Day One", id: 1055511498
-mas "Developer", id: 640199958
 mas "Dropover", id: 1355679052
-mas "Hidden Bar", id: 1452453066
 mas "iPreview", id: 1519213509
 mas "Keka", id: 470158793
 mas "MeetingBar", id: 1532419400
 mas "OpenIn", id: 1643649331
-mas "Reeder", id: 1529448980
 mas "Slack", id: 803453959
 mas "WorldWideWeb", id: 1621370168
