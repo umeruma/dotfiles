@@ -8,6 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://dot.umeru.ma'),
   title: {
     template: '%s | dotfiles',
     default: 'dotfiles',
