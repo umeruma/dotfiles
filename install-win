@@ -14,10 +14,33 @@ $ErrorActionPreference = 'Stop'
 
 $DotDirectory = Join-Path $HOME 'Codes/dotfiles'
 $RemoteUrl = 'https://github.com/umeruma/dotfiles.git'
+$script:Relaunched = $false
 
 function Test-CommandExists {
   param([string]$Name)
   return $null -ne (Get-Command $Name -ErrorAction SilentlyContinue)
+}
+
+function Assert-WingetAvailable {
+  if (Test-CommandExists winget) {
+    return
+  }
+
+  Write-Host ''
+  Write-Host 'winget (App Installer) was not found.' -ForegroundColor Yellow
+  Write-Host 'winget is the prerequisite for this setup: Git, PowerShell 7 and mise' -ForegroundColor Yellow
+  Write-Host 'are installed automatically through winget once it is available.' -ForegroundColor Yellow
+  Write-Host ''
+  Write-Host 'Install "App Installer" from the Microsoft Store, then re-run this script.'
+  Write-Host 'Opening the Microsoft Store page...'
+
+  try {
+    Start-Process 'ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1' | Out-Null
+  } catch {
+    Write-Host 'Could not open the Store automatically. Search for "App Installer" in the Microsoft Store.'
+  }
+
+  throw 'winget is required. Install App Installer from the Microsoft Store, then re-run: irm https://dot.umeru.ma/install-win | iex'
 }
 
 function Resolve-PwshPath {
@@ -44,7 +67,9 @@ function Invoke-ScriptInPwsh {
     '$ErrorActionPreference = ''Stop'''
     ('$DotDirectory = ''' + $escapedDotDirectory + '''')
     ('$RemoteUrl = ''' + $escapedRemoteUrl + '''')
+    '$script:Relaunched = $false'
     "function Test-CommandExists {`n$(${function:Test-CommandExists}.ToString())`n}"
+    "function Assert-WingetAvailable {`n$(${function:Assert-WingetAvailable}.ToString())`n}"
     "function Resolve-PwshPath {`n$(${function:Resolve-PwshPath}.ToString())`n}"
     "function Invoke-ScriptInPwsh {`n$(${function:Invoke-ScriptInPwsh}.ToString())`n}"
     "function Ensure-PowerShell7 {`n$(${function:Ensure-PowerShell7}.ToString())`n}"
@@ -59,7 +84,9 @@ function Invoke-ScriptInPwsh {
 
   $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($scriptText))
   & $PwshPath -NoProfile -EncodedCommand $encoded
-  exit $LASTEXITCODE
+  if ($LASTEXITCODE -ne 0) {
+    throw "dotfiles bootstrap (PowerShell 7) failed with exit code $LASTEXITCODE"
+  }
 }
 
 function Ensure-PowerShell7 {
@@ -88,6 +115,7 @@ function Ensure-PowerShell7 {
 
   Write-Host 'Re-launching with pwsh...'
   Invoke-ScriptInPwsh -PwshPath $pwshPath
+  $script:Relaunched = $true
 }
 
 function Ensure-Repository {
@@ -189,7 +217,11 @@ function Invoke-Deploy {
 }
 
 function Invoke-Main {
+  Assert-WingetAvailable
   Ensure-PowerShell7
+  if ($script:Relaunched) {
+    return
+  }
 
   Write-Host ''
   Write-Host 'Start to setup DOTFILES (Windows)'
@@ -204,8 +236,16 @@ function Invoke-Main {
   Invoke-Deploy -RepoRoot $DotDirectory
 
   Write-Host ''
-  Write-Host 'Done. Open a new PowerShell 7 window and run: mise doctor'
-  Write-Host 'To install GUI apps: cd $env:DOTFILES; mise run install-apps'
+  Write-Host '============================================================' -ForegroundColor Green
+  Write-Host '  DOTFILES setup complete!' -ForegroundColor Green
+  Write-Host '============================================================' -ForegroundColor Green
+  Write-Host ''
+  Write-Host '  NEXT STEP - install your GUI apps:' -ForegroundColor Cyan
+  Write-Host ''
+  Write-Host '      cd $env:DOTFILES; mise run install-apps' -ForegroundColor White
+  Write-Host ''
+  Write-Host '  (Open a new PowerShell 7 window and run "mise doctor" to verify.)'
+  Write-Host '============================================================' -ForegroundColor Green
   Write-Host ''
 }
 
