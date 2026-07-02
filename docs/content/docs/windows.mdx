@@ -11,6 +11,12 @@ Windows setup uses:
 
 macOS and Linux continue to use GNU Stow with [`home/`](https://github.com/umeruma/dotfiles/tree/main/home).
 
+## Prerequisites
+
+On a fresh or reset Windows, install **App Installer** (winget) from the Microsoft Store first. winget is the one prerequisite you must provide yourself — **Git**, **PowerShell 7** and **mise** are all installed automatically by the script through winget.
+
+If winget is missing when you run install-win, the script opens the App Installer Store page for you and stops with instructions. Install App Installer, then re-run the command.
+
 ## install-win
 
 This repository is installed at `~/Codes/dotfiles`.
@@ -39,6 +45,8 @@ What it does:
 3. Runs `winget configure` with [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) (PowerShell 7, Git, mise)
 4. Installs the **PSDotFiles** module from the PowerShell Gallery
 5. Runs `mise run deploy` to link `home-win/`
+
+When started from Windows PowerShell 5.1 the script re-launches itself in PowerShell 7 to finish the work. Your terminal stays open after it completes; it ends with a prominent banner pointing you to `mise run install-apps` for GUI apps.
 
 ## Deploy dotfiles
 
