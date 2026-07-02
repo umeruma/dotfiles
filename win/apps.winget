@@ -65,3 +65,10 @@ properties:
       settings:
         id: AgileBits.1Password
         source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Kanata (keyboard remapper)
+      settings:
+        id: jtroo.kanata_gui
+        source: winget

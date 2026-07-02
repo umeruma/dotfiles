@@ -1,0 +1,38 @@
+;; Kanata config - HHKB HYBRID Type-S (US layout)
+;; Two input methods installed: English (US) IME + Japanese Microsoft IME.
+;; Left Win  tap -> switch to English (US) IME
+;; Right Win tap -> switch to Japanese IME, then Kana (IME on)
+;; Held / combined with other keys -> behaves as the original Win key.
+;;
+;; Requires Windows "input language hot keys" (Start-Process "ms-settings:typing"
+;; -> Advanced keyboard settings -> Input language hot keys):
+;;   To Japanese - Microsoft IME  = Left Alt+Shift+1
+;;   To English (United States)   = Left Alt+Shift+2
+;; These directly SELECT a language (not the toggle), so switching is deterministic.
+;;
+;; Reference: https://blog.naa0yama.com/p/01w11-uhbda8wz/
+
+(defcfg
+  process-unmapped-keys yes
+  log-layer-changes no
+)
+
+(defsrc
+  lmet rmet
+)
+
+(defalias
+  ;; 0x1A = 26 (Eisu/英数), 0x16 = 22 (Kana/かな)
+  ;; 50 = 50ms delay so the IME has switched before the code is sent.
+  lwin (tap-hold 200 200 (macro A-S-2) lmet)
+  rwin (tap-hold 200 200 (macro A-S-1 50 (arbitrary-code 22)) rmet)
+
+  ;; Alternative for Left Win: stay in Japanese IME and send Eisu (英数 direct
+  ;; input) instead of switching to the English (US) IME. Swap the @lwin line
+  ;; in the layer to @lwin-jp if you prefer this.
+  lwin-jp (tap-hold 200 200 (macro A-S-1 50 (arbitrary-code 26)) lmet)
+)
+
+(deflayer default
+  @lwin @rwin
+)

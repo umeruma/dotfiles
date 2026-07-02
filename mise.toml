@@ -35,6 +35,11 @@ description = "Install apps (Brewfile on Unix, win/apps.winget on Windows)"
 run = "zsh script/install-apps.zsh"
 run_windows = "pwsh -NoProfile -File script/install-apps.ps1"
 
+[tasks.setup-kanata]
+description = "Create kanata autostart shortcut (Windows)"
+run = "echo 'Task setup-kanata is only supported on Windows.'; exit 1"
+run_windows = "pwsh -NoProfile -File script/setup-kanata.ps1"
+
 [tasks.defaults]
 description = "Apply macOS defaults"
 run = "zsh script/defaults.zsh"
