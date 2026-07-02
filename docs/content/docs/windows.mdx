@@ -83,6 +83,53 @@ winget configure show -f win/apps.winget
 
 Requires **WinGet v1.6.2631** or later for `winget configure`.
 
+## Kanata (keyboard remapper)
+
+[Kanata](https://github.com/jtroo/kanata) is installed through [`win/apps.winget`](https://github.com/umeruma/dotfiles/blob/main/win/apps.winget) (`jtroo.kanata_gui`). It is a portable zip package; winget registers the GUI binary as the command alias `kanata_windows_gui_winIOv2_x64` under `%LOCALAPPDATA%\Microsoft\WinGet\Links`, so no manual download is needed.
+
+The config lives in [`home-win/Documents/kanata/kanata.kbd`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/kanata/kanata.kbd) and is symlinked to `~\Documents\kanata\kanata.kbd` by PSDotFiles. It targets an HHKB (US layout) with **two input methods installed** (English (US) IME + Japanese Microsoft IME):
+
+- **Left Win tap** → switch to the English (US) IME
+- **Right Win tap** → switch to the Japanese IME, then turn Kana on
+- Held or combined with other keys → the Win keys behave normally
+
+### Input language hot keys (required)
+
+Kanata cannot select a specific IME directly — Windows only exposes cycle shortcuts (`Win+Space` / `Alt+Shift`). The config instead sends per-language switch hot keys, so you must assign them once:
+
+```powershell
+Start-Process "ms-settings:typing"
+```
+
+Then **Advanced keyboard settings → Input language hot keys** (opens the classic *Text Services and Input Languages → Advanced Key Settings* dialog) and set:
+
+| Action | Key sequence |
+|---|---|
+| Switch to **Japanese - Microsoft IME** | `Left Alt+Shift+1` |
+| Switch to **English (United States)** | `Left Alt+Shift+2` |
+
+![Advanced Key Settings dialog with per-language switch hot keys assigned](https://i.gyazo.com/bfcd161911640184eb11aaee778d8b52.png)
+
+These must match `A-S-1` / `A-S-2` in [`kanata.kbd`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/kanata/kanata.kbd). If they conflict with app shortcuts, pick a different digit (e.g. `Ctrl+Shift+1/2` → `C-S-1` / `C-S-2`) in both places.
+
+On Windows 11 24H2 the old `rundll32 ... input.dll ... {HOTKEYS}` invocation often does nothing; use the `ms-settings:typing` route above instead.
+
+### Autostart
+
+To launch kanata automatically on login, create the Startup shortcut once (after `install-apps` and `deploy`):
+
+```
+mise run setup-kanata
+```
+
+This writes `Kanata.lnk` into the Startup folder, pointing at the winget-installed exe with `--cfg ~\Documents\kanata\kanata.kbd` (started minimized to the system tray). Start it immediately without logging out:
+
+```powershell
+Start-Process "$([Environment]::GetFolderPath('Startup'))\Kanata.lnk"
+```
+
+The `winIOv2` variant uses Windows LLHOOK + SendInput and needs no driver or admin rights. It will not affect windows running elevated (UAC); if you need remapping there too, run kanata via Task Scheduler at logon with highest privileges instead of the Startup shortcut.
+
 ## PowerShell profile and mise
 
 [`home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1) sets:
