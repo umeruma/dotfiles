@@ -6,6 +6,7 @@
 * https://github.com/zen-browser/docs/blob/main/src/app/global.css
 */
 :root {
+  color-scheme: light;
   --color-fd-background: #F2F0E3;
   --color-fd-foreground: #2E2E2E;
   --color-fd-primary: #F76F53;
@@ -23,6 +24,7 @@
 }
  
 .dark {
+  color-scheme: dark;
   --color-fd-background: #1F1F1F;
   --color-fd-foreground: #D1CFC0;
   --color-fd-primary: #F76F53;
@@ -37,6 +39,10 @@
   --color-fd-popover: #1F1F1F;
   --color-fd-popover-foreground: #D1CFC0;
   --color-fd-border: #2E2E2E;
+}
+
+html {
+  background-color: var(--color-fd-background);
 }
 
 aside {
