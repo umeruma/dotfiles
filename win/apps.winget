@@ -72,3 +72,10 @@ properties:
       settings:
         id: jtroo.kanata_gui
         source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Elgato Wave Link
+      settings:
+        id: Elgato.WaveLink
+        source: winget
