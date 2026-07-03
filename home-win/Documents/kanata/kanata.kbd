@@ -24,13 +24,17 @@
 (defalias
   ;; 0x1A = 26 (Eisu/英数), 0x16 = 22 (Kana/かな)
   ;; 50 = 50ms delay so the IME has switched before the code is sent.
-  lwin (tap-hold 200 200 (macro A-S-2) lmet)
-  rwin (tap-hold 200 200 (macro A-S-1 50 (arbitrary-code 22)) rmet)
+  ;; tap-hold-press: the moment another key is pressed, resolve to the hold
+  ;; action (lmet/rmet) immediately. This makes Win+S / Win+Space feel as snappy
+  ;; as Karabiner. Plain tap-hold only decides on timeout/release, so fast
+  ;; Win-combos were being mis-fired as taps (language switch).
+  lwin (tap-hold-press 200 200 (macro A-S-2) lmet)
+  rwin (tap-hold-press 200 200 (macro A-S-1 50 (arbitrary-code 22)) rmet)
 
   ;; Alternative for Left Win: stay in Japanese IME and send Eisu (英数 direct
   ;; input) instead of switching to the English (US) IME. Swap the @lwin line
   ;; in the layer to @lwin-jp if you prefer this.
-  lwin-jp (tap-hold 200 200 (macro A-S-1 50 (arbitrary-code 26)) lmet)
+  lwin-jp (tap-hold-press 200 200 (macro A-S-1 50 (arbitrary-code 26)) lmet)
 )
 
 (deflayer default
