@@ -75,6 +75,20 @@ properties:
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
+        description: Notion
+      settings:
+        id: Notion.Notion
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Notion Calendar
+      settings:
+        id: Notion.NotionCalendar
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
         description: Elgato Wave Link
       settings:
         id: Elgato.WaveLink
