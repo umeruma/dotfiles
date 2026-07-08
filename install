@@ -17,9 +17,17 @@ install() {
 	# Create ~/Codes directory if it doesn't exist
 	mkdir -p "${HOME}/Codes"
 	
-	# Clone the dotfiles repo if it doesn't exist
+	# Clone the dotfiles repo if it doesn't exist; otherwise pull latest
 	if [ -d "${DOT_DIRECTORY}" ]; then
 		echo "DOTFILES have already been installed at ${DOT_DIRECTORY}"
+		if is_exist "git"; then
+			echo "Pulling latest changes..."
+			cd "${DOT_DIRECTORY}"
+			git pull origin main
+		else
+			echo "git required"
+			exit 1
+		fi
 	else 
 		if is_exist "git"; then
 			echo "Cloning dotfiles to ${DOT_DIRECTORY}..."
