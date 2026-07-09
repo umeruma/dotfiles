@@ -1,3 +1,16 @@
+[settings]
+# Required for `mise bootstrap` (packages, login shell, etc.)
+experimental = true
+
+[bootstrap.user]
+login_shell = "/bin/zsh"
+
+# Runs at the end of `mise bootstrap` (after packages / user / tools).
+[tasks.bootstrap]
+description = "Deploy dotfiles (stow on Unix, PSDotFiles on Windows)"
+run = "mise run deploy"
+run_windows = "mise run deploy"
+
 [tasks.help]
 description = "List available tasks"
 run = "zsh script/help.zsh"
@@ -49,4 +62,3 @@ run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task defaults is not suppo
 description = "Install Terminal theme (macOS)"
 run = "zsh script/theme.zsh"
 run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task theme is not supported on Windows.'; exit 1\""
-
