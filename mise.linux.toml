@@ -1,0 +1,7 @@
+# Loaded on Linux only (merged with mise.toml).
+# Replaces init/init-linux.sh + ensures stow for deploy.
+
+[bootstrap.packages]
+"apt:build-essential" = "latest"
+"apt:zsh" = "latest"
+"apt:stow" = "latest"
