@@ -28,7 +28,8 @@ This document is a guide for safe and productive collaboration between AI agents
 - Only change global OS/tool settings with explicit consent
 
 ## Coding and Structure Guidelines
-- Use GNU Stow for symlink deployment
+- Use GNU Stow for symlink deployment of `home/` (`mise run deploy`)
+- Fresh Unix setup converges via `mise bootstrap` (see `docs/content/docs/mise-bootstrap.mdx`)
 - Before deploy, read `/.deploy_subdir` and create required directories with `mkdir -p`
 - Use `README.md` as an entry point; put detailed steps/background in `docs/`
 - Follow existing style (frontmatter, naming, hierarchy) when creating files
@@ -39,15 +40,18 @@ This document is a guide for safe and productive collaboration between AI agents
 
 ## How to Request (Human → Agent)
 - State what you want to do and where (e.g., "Add AGENTS.md", "Add to docs")
-- Indicate consistency with existing implementation (e.g., use stow, use justfile recipes)
+- Indicate consistency with existing implementation (e.g., use stow, use mise tasks)
 - Specify output language (Japanese/English) and location (README or docs)
 
 ## Repository-Specific Knowledge
-- Main operations are summarized in the root `justfile`
+- Main operations are mise tasks in root `mise.toml` (`mise tasks` / `mise run …`)
+- Machine bootstrap (packages, login shell, deploy) uses `mise bootstrap`
+- `.miserc.toml` sets `auto_env = true` so `mise.linux.toml` / `mise.macos.toml` load
 - Documentation is managed as MDX in `docs/content/docs` and published on the site
 - Navigation is auto-completed by `meta.json` (usually just add a page)
 
 ## References
 - GNU Stow: https://www.gnu.org/software/stow/
-- just: https://github.com/casey/just
+- mise: https://mise.jdx.dev/
+- mise bootstrap: https://mise.jdx.dev/bootstrap.html
 - sheldon: https://github.com/rossmacarthur/sheldon

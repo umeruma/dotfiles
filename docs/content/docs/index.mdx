@@ -3,7 +3,7 @@ title: dotfiles
 ---
 
 
-## install (macOS)
+## install (macOS / Linux)
 This dotfiles repository is designed to be installed at `~/Codes/dotfiles`.
 
 Review the contents of the script before running it:  
@@ -15,6 +15,8 @@ Open Terminal.app, and run:
 bash -c "$(curl -fsSL https://dot.umeru.ma/install)"
 ```
 This will clone the repository to `~/Codes/dotfiles` and set up your dotfiles. If the repository already exists, it pulls the latest changes before continuing.
+
+After cloning, the installer installs mise (if needed) and runs [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) to converge OS packages, login shell, and `mise run deploy`. Details: [mise bootstrap](/mise-bootstrap).
 
 Notes on bash and curl options:
 
@@ -112,9 +114,10 @@ then looks like this:
 
 ## tech stack
 
-- [mise](https://mise.jdx.dev/) as task runner
+- [mise](https://mise.jdx.dev/) as task runner and machine bootstrap
 - [sheldon](https://github.com/rossmacarthur/sheldon#readme) as zsh plugin manager
-- [Homebrew](https://docs.brew.sh/Manpage) as package manager
+- [Homebrew](https://docs.brew.sh/Manpage) as package manager (Brewfile / `install-apps`)
+- [GNU Stow](https://www.gnu.org/software/stow/) for symlink deploy of `home/`
 
 ## website
 

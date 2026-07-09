@@ -1,0 +1,5 @@
+# Early-init settings (read before mise.toml).
+# Enables mise.linux.toml / mise.macos.toml / mise.unix.toml discovery.
+# See https://mise.jdx.dev/configuration/environments.html
+
+auto_env = true
