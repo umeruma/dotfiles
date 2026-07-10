@@ -25,7 +25,7 @@ After that, declarative machine state lives in:
 | Phase | Config | This repo |
 | --- | --- | --- |
 | packages | `[bootstrap.packages]` in `mise.linux.toml` | Linux: `apt:build-essential`, `apt:zsh`. |
-| dotfiles | `[dotfiles]` in `mise.toml` / `mise.macos.toml` | Declarative symlink allowlist for `home/` (per-file entries for runtime-write dirs, whole-dir for static config). |
+| dotfiles | `[dotfiles]` in `mise.dotfiles.toml` / `mise.macos.toml` | Declarative symlink allowlist for `home/` (per-file entries for runtime-write dirs, whole-dir for static config). |
 | macOS defaults | `[bootstrap.macos.*]` / `[bootstrap.macos.defaults]` in `mise.macos.toml` | Dock, Finder, keyboard, and scalar preferences (arrays / PlistBuddy are not migrated). |
 | user | `[bootstrap.user]` | `login_shell = "/bin/zsh"` (replaces the old `chsh` block in `install`) |
 | task | `[tasks.bootstrap]` | Runs `mise run deploy` (idempotent re-apply of `[dotfiles]` on Unix, PSDotFiles on Windows) |

@@ -28,7 +28,7 @@ This document is a guide for safe and productive collaboration between AI agents
 - Only change global OS/tool settings with explicit consent
 
 ## Coding and Structure Guidelines
-- Symlinks for `home/` are declared in `[dotfiles]` (`mise.toml` / `mise.macos.toml`); deploy with `mise run deploy`
+- Symlinks for `home/` are declared in `[dotfiles]` (`mise.dotfiles.toml` / `mise.macos.toml`); deploy with `mise run deploy`
 - Dirs that receive runtime writes (karabiner, micro, lazygit, hammerspoon) get per-file entries — never whole-dir symlinks
 - Fresh Unix setup converges via `mise bootstrap` (see `docs/content/docs/mise-bootstrap.mdx`)
 - Use `README.md` as an entry point; put detailed steps/background in `docs/`

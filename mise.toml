@@ -66,35 +66,3 @@ run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task theme is not supporte
 description = "Install Doom Emacs core and sync packages"
 run = "zsh script/setup-doom.zsh"
 run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task setup-doom is not supported on Windows.'; exit 1\""
-
-# Declarative symlink allowlist (applied by `mise dotfiles apply` /
-# `mise bootstrap`). Dirs that receive runtime writes (logs, state)
-# get per-file entries so app state stays out of the repo.
-[dotfiles]
-# shell / git
-"~/.zshenv" = { source = "home/.zshenv", mode = "symlink" }
-"~/.zprofile" = { source = "home/.zprofile", mode = "symlink" }
-"~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
-"~/.gitconfig" = { source = "home/.gitconfig", mode = "symlink" }
-# static config dirs (whole-dir links; new repo files show up automatically)
-"~/.config/doom" = { source = "home/.config/doom", mode = "symlink" }
-"~/.config/ghostty" = { source = "home/.config/ghostty", mode = "symlink" }
-"~/.config/sheldon" = { source = "home/.config/sheldon", mode = "symlink" }
-# runtime-write dirs: per-file links only
-"~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
-"~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
-"~/.config/micro/plug/editorconfig" = { source = "home/.config/micro/plug/editorconfig", mode = "symlink" }
-# AI agents — single source of truth: home/.agents.
-# Cursor and Copilot both read ~/.agents/skills natively, so per-skill
-# links there cover both tools. Claude Code only reads ~/.claude/skills,
-# so it gets its own per-skill entries. Per-skill (not whole-dir) links
-# because skill installers (e.g. vercel-labs/skills) write into
-# ~/.agents/skills at runtime, and machine-local skills must coexist.
-"~/.claude/CLAUDE.md" = { source = "home/.claude/CLAUDE.md", mode = "symlink" }
-"~/.copilot/instructions/global.instructions.md" = { source = "home/.agents/instructions/global.instructions.md", mode = "symlink" }
-"~/.agents/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
-"~/.agents/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
-"~/.agents/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
-"~/.claude/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
-"~/.claude/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
-"~/.claude/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }

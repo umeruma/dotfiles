@@ -60,7 +60,7 @@ dot && mise run deploy
 
 ### How it works
 
-Symlinks are managed declaratively by mise's `[dotfiles]` sections in [`mise.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.toml) (cross-platform) and [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) (macOS-only). Each entry is an explicit allowlist item:
+Symlinks are managed declaratively by mise's `[dotfiles]` sections in [`mise.dotfiles.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.dotfiles.toml) (cross-platform; loaded via `env = ["dotfiles"]` in `.miserc.toml`) and [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) (macOS-only). Each entry is an explicit allowlist item:
 
 ```toml
 [dotfiles]
