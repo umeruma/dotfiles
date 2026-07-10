@@ -58,42 +58,26 @@ To deploy your dotfiles to your home directory, simply run:
 dot && mise run deploy
 ```
 
-### Pre-create subdirectories
+### How it works
 
-Before deploying with GNU Stow, this repository can automatically create any required subdirectories in your home directory, based on a plain text list in `.deploy_subdir`.
+Symlinks are managed declaratively by mise's `[dotfiles]` sections in [`mise.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.toml) (cross-platform) and [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) (macOS-only). Each entry is an explicit allowlist item:
 
-**How it works:**
-- Reads `.deploy_subdir` line by line
-	- Ignores blank lines and lines starting with `#`
-	- Trims whitespace
-- Runs `mkdir -p "$HOME/<path>"` for each valid line
-- Then deploys `home/` using Stow
+```toml
+[dotfiles]
+"~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
+```
 
-This process runs automatically as part of `mise run deploy` via the `prepare-subdirs` task dependency.
+Directories that receive runtime writes (logs, state — e.g. `~/.config/karabiner`, `~/.config/micro`, `~/.config/lazygit`) are linked **per file**, so app state stays local and never leaks into the repo. Purely static config dirs (`~/.config/doom`, `~/.config/ghostty`, `~/.config/sheldon`) are linked as whole directories.
 
-#### Usage
-1. Add the directories you need to `.deploy_subdir` (one path per line):
+Useful commands:
 
-		```
-		# editors
-		.config/micro
-		.config/nvim
+```
+mise dotfiles status   # show applied / differs / missing per entry
+mise run clean         # remove every symlink pointing into home/ (incl. dangling)
+dottrack <path>        # start tracking an existing file (adds entry + relinks)
+```
 
-		# tools
-		.local/share/fzf
-		```
-
-2. Deploy your dotfiles:
-
-		```
-		mise run deploy
-		```
-
-This ensures all listed directories (e.g. `~/.config/micro`) exist before Stow creates symlinks, making deployment more reliable.
-
-**Notes:**
-- Implementation is in `script/prepare-subdirs.zsh` and wired up in `mise.toml` as the hidden `prepare-subdirs` task (a dependency of `deploy`)
-- Input is tolerant of whitespace and comments
+Agent skills (`home/.agents/skills/`) are a single source of truth shared by Claude Code (`~/.claude/skills`), Cursor (`~/.cursor/skills`), and GitHub Copilot (`~/.copilot/skills`) via three symlink entries per skill.
 
 ## macOS defaults
 
@@ -120,7 +104,7 @@ then looks like this:
 - [mise](https://mise.jdx.dev/) as task runner and machine bootstrap
 - [sheldon](https://github.com/rossmacarthur/sheldon#readme) as zsh plugin manager
 - [Homebrew](https://docs.brew.sh/Manpage) as package manager (Brewfile / `install-apps`)
-- [GNU Stow](https://www.gnu.org/software/stow/) for symlink deploy of `home/`
+- [mise `[dotfiles]`](https://mise.jdx.dev/bootstrap.html) for declarative symlink deploy of `home/`
 
 ## website
 

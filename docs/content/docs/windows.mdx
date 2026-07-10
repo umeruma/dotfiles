@@ -9,7 +9,7 @@ Windows setup uses:
 - **[PSDotFiles](https://github.com/ralish/PSDotFiles)** to symlink [`home-win/`](https://github.com/umeruma/dotfiles/tree/main/home-win) into `$HOME`
 - **[WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)** files under [`win/`](https://github.com/umeruma/dotfiles/tree/main/win) for package installation
 
-macOS and Linux continue to use GNU Stow with [`home/`](https://github.com/umeruma/dotfiles/tree/main/home).
+macOS and Linux use mise's declarative `[dotfiles]` allowlist with [`home/`](https://github.com/umeruma/dotfiles/tree/main/home).
 
 ## Prerequisites
 
@@ -160,7 +160,7 @@ Install-DotFiles home-win -WhatIf
 
 | Directory   | Used on        | Tool        |
 |------------|----------------|-------------|
-| `home/`    | macOS, Linux   | GNU Stow    |
+| `home/`    | macOS, Linux   | mise `[dotfiles]` |
 | `home-win/`| Windows        | PSDotFiles  |
 
 Keep Windows-specific files in `home-win/` so mac-only tools (Karabiner, Ghostty, etc.) are not deployed on Windows.

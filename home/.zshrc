@@ -143,7 +143,6 @@ dottrack() {
   fi
 
   local target="$HOME/$1"
-  local dest="$DOTFILES_HOME/home/$1"
 
   # ホームディレクトリに存在するか確認
   if [[ ! -e "$target" ]]; then
@@ -151,14 +150,11 @@ dottrack() {
     return 1
   fi
 
-  # 親ディレクトリを作成
-  mkdir -p "$(dirname "$dest")"
+  # [dotfiles] にエントリ追加 + 実体を home/ へコピー
+  mise -C "$DOTFILES_HOME" dotfiles add --local --yes --source "home/$1" "$target"
 
-  # ファイル/ディレクトリを移動
-  mv "$target" "$dest"
+  # 元ファイルを symlink に置換（内容同一なので --force 不要）
+  mise -C "$DOTFILES_HOME" dotfiles apply --yes
 
-  # stow でシンボリックリンクを作成
-  stow -d "$DOTFILES_HOME" -t "$HOME" home
-
-  echo "✓ Tracked: $1"
+  echo "✓ Tracked: $1 (entry added to mise.toml [dotfiles])"
 }
