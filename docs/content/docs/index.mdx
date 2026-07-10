@@ -96,11 +96,14 @@ This ensures all listed directories (e.g. `~/.config/micro`) exist before Stow c
 - Input is tolerant of whitespace and comments
 
 ## macOS defaults
-To update macOS defaults setting, run:
+
+macOS preferences are applied by `mise bootstrap` from [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) (`[bootstrap.macos.*]` and `[bootstrap.macos.defaults]`). Re-run bootstrap to converge, or inspect drift:
 
 ```
-dot && mise run defaults
+dot && mise bootstrap macos defaults status
 ```
+
+Details: [mise bootstrap](/mise-bootstrap).
 
 ## macOS Terminal theme
 To apply theme for macOS Terminal, run:

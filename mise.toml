@@ -53,11 +53,6 @@ description = "Create kanata autostart shortcut (Windows)"
 run = "echo 'Task setup-kanata is only supported on Windows.'; exit 1"
 run_windows = "pwsh -NoProfile -File script/setup-kanata.ps1"
 
-[tasks.defaults]
-description = "Apply macOS defaults"
-run = "zsh script/defaults.zsh"
-run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task defaults is not supported on Windows.'; exit 1\""
-
 [tasks.theme]
 description = "Install Terminal theme (macOS)"
 run = "zsh script/theme.zsh"
