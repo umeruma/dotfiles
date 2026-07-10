@@ -59,6 +59,9 @@ local -a prune_dirs=(
   "$HOME/.agents/skills/commit"
   "$HOME/.agents/skills/dev-server"
   "$HOME/.agents/skills/git-wt"
+  "$HOME/.agents/skills"
+  "$HOME/.agents/instructions"
+  "$HOME/.agents"
 )
 
 local d

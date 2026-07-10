@@ -19,16 +19,14 @@
 "~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
 "~/.config/micro/plug/editorconfig" = { source = "home/.config/micro/plug/editorconfig", mode = "symlink" }
 # AI agents — single source of truth: home/.agents.
-# Cursor and Copilot both read ~/.agents/skills natively, so per-skill
-# links there cover both tools. Claude Code only reads ~/.claude/skills,
-# so it gets its own per-skill entries. Per-skill (not whole-dir) links
-# because skill installers (e.g. vercel-labs/skills) write into
-# ~/.agents/skills at runtime, and machine-local skills must coexist.
+# ~/.agents is linked whole-dir on purpose: Cursor and Copilot read
+# ~/.agents/skills natively, and skill installers (npx skills) write
+# installed skills + .skill-lock.json through the link into the repo,
+# so installs are tracked by git. Claude Code only reads
+# ~/.claude/skills, so repo-authored skills get per-skill entries there.
+"~/.agents" = { source = "home/.agents", mode = "symlink" }
 "~/.claude/CLAUDE.md" = { source = "home/.claude/CLAUDE.md", mode = "symlink" }
 "~/.copilot/instructions/global.instructions.md" = { source = "home/.agents/instructions/global.instructions.md", mode = "symlink" }
-"~/.agents/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
-"~/.agents/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
-"~/.agents/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
 "~/.claude/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
 "~/.claude/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
 "~/.claude/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
