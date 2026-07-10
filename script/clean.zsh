@@ -44,6 +44,7 @@ local -a prune_dirs=(
   "$HOME/.config/doom"
   "$HOME/.config/ghostty"
   "$HOME/.config/sheldon"
+  "$HOME/.config/micro/plug/editorconfig/help"
   "$HOME/.config/micro/plug/editorconfig"
   "$HOME/.config/karabiner/assets/complex_modifications"
   "$HOME/.claude/skills/commit"

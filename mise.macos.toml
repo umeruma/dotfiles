@@ -1,8 +1,4 @@
 # Loaded on macOS only (merged with mise.toml).
-# stow is required by `mise run deploy` before optional Brewfile install-apps.
-
-[bootstrap.packages]
-"brew:stow" = "latest"
 
 [bootstrap.macos.dock]
 autohide = true

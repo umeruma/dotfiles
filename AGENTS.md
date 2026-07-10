@@ -28,9 +28,9 @@ This document is a guide for safe and productive collaboration between AI agents
 - Only change global OS/tool settings with explicit consent
 
 ## Coding and Structure Guidelines
-- Use GNU Stow for symlink deployment of `home/` (`mise run deploy`)
+- Symlinks for `home/` are declared in `[dotfiles]` (`mise.toml` / `mise.macos.toml`); deploy with `mise run deploy`
+- Dirs that receive runtime writes (karabiner, micro, lazygit, hammerspoon) get per-file entries — never whole-dir symlinks
 - Fresh Unix setup converges via `mise bootstrap` (see `docs/content/docs/mise-bootstrap.mdx`)
-- Before deploy, read `/.deploy_subdir` and create required directories with `mkdir -p`
 - Use `README.md` as an entry point; put detailed steps/background in `docs/`
 - Follow existing style (frontmatter, naming, hierarchy) when creating files
 
@@ -40,7 +40,7 @@ This document is a guide for safe and productive collaboration between AI agents
 
 ## How to Request (Human → Agent)
 - State what you want to do and where (e.g., "Add AGENTS.md", "Add to docs")
-- Indicate consistency with existing implementation (e.g., use stow, use mise tasks)
+- Indicate consistency with existing implementation (e.g., use `[dotfiles]` entries, use mise tasks)
 - Specify output language (Japanese/English) and location (README or docs)
 
 ## Repository-Specific Knowledge
@@ -51,7 +51,6 @@ This document is a guide for safe and productive collaboration between AI agents
 - Navigation is auto-completed by `meta.json` (usually just add a page)
 
 ## References
-- GNU Stow: https://www.gnu.org/software/stow/
 - mise: https://mise.jdx.dev/
 - mise bootstrap: https://mise.jdx.dev/bootstrap.html
 - sheldon: https://github.com/rossmacarthur/sheldon
