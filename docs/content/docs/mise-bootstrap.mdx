@@ -25,6 +25,7 @@ After that, declarative machine state lives in:
 | Phase | Config | This repo |
 | --- | --- | --- |
 | packages | `[bootstrap.packages]` in `mise.linux.toml` / `mise.macos.toml` | Linux: `apt:build-essential`, `apt:zsh`, `apt:stow`. macOS: `brew:stow`. |
+| macOS defaults | `[bootstrap.macos.*]` / `[bootstrap.macos.defaults]` in `mise.macos.toml` | Dock, Finder, keyboard, and scalar preferences (arrays / PlistBuddy are not migrated). |
 | user | `[bootstrap.user]` | `login_shell = "/bin/zsh"` (replaces the old `chsh` block in `install`) |
 | task | `[tasks.bootstrap]` | Runs `mise run deploy` (stow on Unix) |
 
@@ -42,6 +43,13 @@ Status of missing pieces:
 dot && mise bootstrap status --missing
 ```
 
+macOS defaults drift (macOS only):
+
+```
+dot && mise bootstrap macos defaults status
+dot && mise bootstrap macos defaults apply --dry-run --yes
+```
+
 ## What stays outside bootstrap (for now)
 
 These are intentional — either Windows-specific, interactive, or still richer than bootstrap's declarative surface:
@@ -51,7 +59,6 @@ These are intentional — either Windows-specific, interactive, or still richer 
 | `install-win` + `win/*.winget` | Windows uses winget / PSDotFiles; mise bootstrap packages do not cover winget |
 | GNU Stow + `home/` | Works today; `[dotfiles]` can replace stow later (allowlist of symlinks) |
 | `macos/Brewfile` / `linux/Brewfile` via `mise run install-apps` | Large cask/mas set; can migrate gradually to `brew:` / `brew-cask:` / `mas:` in `[bootstrap.packages]` |
-| `macos/defaults.sh` via `mise run defaults` | Complex Dock / PlistBuddy logic; curated `[bootstrap.macos.*]` covers only a subset |
 | Xcode CLT | Interactive `xcode-select --install` |
 
 ## Gradual migration ideas
@@ -60,8 +67,7 @@ Once you are comfortable with experimental bootstrap:
 
 1. **Packages** — move Brewfile formulae/casks into `[bootstrap.packages]` (`brew:jq`, `brew-cask:ghostty`, `mas:803453959`, …) and drop `brew bundle` for those entries. mise can install brew/cask bottles without a local Homebrew install for many packages.
 2. **Dotfiles** — replace stow with `[dotfiles]` + `dotfiles.root`, e.g. `"~/.zshrc" = { mode = "symlink" }`. Allowlist is safer than stow's ignore list, but more entries to maintain.
-3. **macOS defaults** — move simple `defaults write` keys into `[bootstrap.macos.defaults]` / curated Dock/Finder/keyboard sections; keep PlistBuddy / Dock app arrays in a hook or `defaults` task.
-4. **Shell activation** — optional `[bootstrap.mise_shell_activate]` if you want mise to manage the `eval "$(mise activate zsh)"` snippet instead of keeping it in `.zshrc`.
+3. **Shell activation** — optional `[bootstrap.mise_shell_activate]` if you want mise to manage the `eval "$(mise activate zsh)"` snippet instead of keeping it in `.zshrc`.
 
 `settings.experimental = true` is set in this repo's `mise.toml` because `mise bootstrap` is still marked experimental.
 
@@ -70,6 +76,5 @@ Once you are comfortable with experimental bootstrap:
 ```
 mise run deploy        # symlink home/ (also the bootstrap task)
 mise run install-apps  # Brewfile / winget apps (opt-in)
-mise run defaults      # macOS defaults.sh
 mise run theme         # Terminal.app theme
 ```

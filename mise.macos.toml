@@ -3,3 +3,69 @@
 
 [bootstrap.packages]
 "brew:stow" = "latest"
+
+[bootstrap.macos.dock]
+autohide = true
+tilesize = 75
+show_recents = false
+mru_spaces = false
+
+[bootstrap.macos.finder]
+show_pathbar = true
+show_status_bar = true
+preferred_view_style = "list"
+
+[bootstrap.macos.keyboard]
+key_repeat = 2
+initial_key_repeat = 15
+
+[bootstrap.macos.defaults."com.apple.dock"]
+"autohide-delay" = 0
+"autohide-time-modifier" = 0
+
+[bootstrap.macos.defaults."NSGlobalDomain"]
+AppleAccentColor = 3
+AppleHighlightColor = "0.752941 0.964706 0.678431 Green"
+NSTableViewDefaultSizeMode = 3
+AppleReduceDesktopTinting = 1
+AppleShowScrollBars = "WhenScrolling"
+AppleLocale = "en_JP"
+AppleMeasurementUnits = "Centimeters"
+AppleMetricUnits = true
+AppleTemperatureUnit = "Celsius"
+AppleICUForce24HourTime = true
+"com.apple.springing.enabled" = true
+"com.apple.springing.delay" = 0.1
+AppleShowAllExtensions = true
+NSNavPanelExpandedStateForSaveMode = true
+PMPrintingExpandedStateForPrint = true
+"com.apple.trackpad.forceClick" = false
+"com.apple.trackpad.scaling" = 2.0
+"com.apple.mouse.doubleClickThreshold" = 0.5
+"com.apple.mouse.scaling" = 3.0
+"com.apple.sound.beep.flash" = 0
+"com.apple.sound.beep.sound" = "/System/Library/Sounds/Bottle.aiff"
+
+[bootstrap.macos.defaults."com.apple.SoftwareUpdate"]
+AutomaticallyInstallMacOSUpdates = false
+AutomaticCheckEnabled = false
+AutomaticDownload = false
+CriticalUpdateInstall = false
+ConfigDataInstall = false
+
+[bootstrap.macos.defaults."com.apple.commerce"]
+AutoUpdate = false
+
+[bootstrap.macos.defaults."com.apple.systemuiserver"]
+"NSStatusItem Visible Siri" = false
+"NSStatusItem Visible com.apple.menuextra.volume" = true
+
+[bootstrap.macos.defaults."com.apple.finder"]
+NewWindowTarget = "PfHm"
+
+[bootstrap.hooks.post-defaults]
+run = [
+  "killall Dock 2>/dev/null || true",
+  "killall Finder 2>/dev/null || true",
+  "killall SystemUIServer 2>/dev/null || true",
+]
