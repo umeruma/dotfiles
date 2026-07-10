@@ -77,7 +77,7 @@ mise run clean         # remove every symlink pointing into home/ (incl. danglin
 dottrack <path>        # start tracking an existing file (adds entry + relinks)
 ```
 
-Agent skills (`home/.agents/skills/`) are a single source of truth shared by Claude Code (`~/.claude/skills`), Cursor (`~/.cursor/skills`), and GitHub Copilot (`~/.copilot/skills`) via three symlink entries per skill.
+Agent skills (`home/.agents/skills/`) are a single source of truth shared by all agents: Cursor and GitHub Copilot read `~/.agents/skills/` natively, and Claude Code gets per-skill links in `~/.claude/skills/`. Links are per skill (not whole-dir) so skills installed by other tools (e.g. `npx skills`) coexist without touching the repo.
 
 ## macOS defaults
 

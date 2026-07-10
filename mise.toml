@@ -84,15 +84,17 @@ run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task setup-doom is not sup
 "~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
 "~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
 "~/.config/micro/plug/editorconfig" = { source = "home/.config/micro/plug/editorconfig", mode = "symlink" }
-# AI agents — single source of truth: home/.agents (shared by Claude Code / Cursor / Copilot)
+# AI agents — single source of truth: home/.agents.
+# Cursor and Copilot both read ~/.agents/skills natively, so per-skill
+# links there cover both tools. Claude Code only reads ~/.claude/skills,
+# so it gets its own per-skill entries. Per-skill (not whole-dir) links
+# because skill installers (e.g. vercel-labs/skills) write into
+# ~/.agents/skills at runtime, and machine-local skills must coexist.
 "~/.claude/CLAUDE.md" = { source = "home/.claude/CLAUDE.md", mode = "symlink" }
 "~/.copilot/instructions/global.instructions.md" = { source = "home/.agents/instructions/global.instructions.md", mode = "symlink" }
+"~/.agents/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
+"~/.agents/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
+"~/.agents/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
 "~/.claude/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
 "~/.claude/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
 "~/.claude/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
-"~/.cursor/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
-"~/.cursor/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
-"~/.cursor/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
-"~/.copilot/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
-"~/.copilot/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
-"~/.copilot/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
