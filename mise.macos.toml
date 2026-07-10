@@ -63,6 +63,14 @@ AutoUpdate = false
 [bootstrap.macos.defaults."com.apple.finder"]
 NewWindowTarget = "PfHm"
 
+# macOS-only dotfiles. Hammerspoon is per-file so runtime Spoons/ stays
+# local; karabiner.json is per-file so automatic_backups/ stays local.
+[dotfiles]
+"~/.hammerspoon/init.lua" = { source = "home/.hammerspoon/init.lua", mode = "symlink" }
+"~/.hammerspoon/hide_menubar_for_meeting.lua" = { source = "home/.hammerspoon/hide_menubar_for_meeting.lua", mode = "symlink" }
+"~/.config/karabiner/karabiner.json" = { source = "home/.config/karabiner/karabiner.json", mode = "symlink" }
+"~/.config/karabiner/assets/complex_modifications" = { source = "home/.config/karabiner/assets/complex_modifications", mode = "symlink" }
+
 [bootstrap.hooks.post-defaults]
 run = [
   "killall Dock 2>/dev/null || true",
