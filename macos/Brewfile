@@ -1,4 +1,10 @@
 # brew "eza"
+
+# Doom Emacs — see `mise run setup-doom` / docs/doom-emacs
+brew "emacs"      # required (GNU Emacs 27.1+)
+brew "ripgrep"    # required (project search)
+brew "fd"         # recommended (file indexing for consult/vertico)
+
 brew "diffr"
 brew "ffmpeg"
 brew "fzy"
@@ -22,8 +28,6 @@ brew "stow"
 brew "websocat"
 brew "pkgx"
 brew "rclone"
-brew "k1LoW/tap/git-wt"
-brew "ripgrep"
 cask "1password"
 cask "1password-cli"
 cask "alt-tab"

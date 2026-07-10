@@ -57,3 +57,8 @@ run_windows = "pwsh -NoProfile -File script/setup-kanata.ps1"
 description = "Install Terminal theme (macOS)"
 run = "zsh script/theme.zsh"
 run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task theme is not supported on Windows.'; exit 1\""
+
+[tasks.setup-doom]
+description = "Install Doom Emacs core and sync packages"
+run = "zsh script/setup-doom.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task setup-doom is not supported on Windows.'; exit 1\""

@@ -1,0 +1,69 @@
+---
+title: Doom Emacs
+---
+
+[Doom Emacs](https://github.com/doomemacs/core) is managed separately from the core repo:
+
+| Path | Role |
+| --- | --- |
+| `~/.config/emacs` | Doom core ([doomemacs/core](https://github.com/doomemacs/core)), cloned by `mise run setup-doom` |
+| `~/.config/doom` | Private config (`init.el`, `config.el`, `packages.el`), deployed from this repo via stow |
+
+## Prerequisites
+
+Installed via `mise run install-apps` (macOS Brewfile):
+
+- `emacs`
+- `ripgrep`
+- `fd`
+
+## Setup
+
+```bash
+mise run deploy        # symlink ~/.config/doom from dotfiles
+mise run install-apps  # if emacs is not installed yet
+mise run setup-doom    # clone core (if needed) and run doom install
+```
+
+`setup-doom` is idempotent: it skips cloning if `~/.config/emacs` already exists, initializes the `sources/doom+` submodule if needed, then runs `doom sync --force --env`.
+
+First sync usually takes **5–15 minutes** (many git clones). If it hangs with no output for longer, check that `sources/doom+/modules` exists and that no other `doom`/`emacs` process is waiting for input.
+
+## Daily use
+
+- Launch: `emacs`
+- After editing `init.el` or `packages.el`: `doom sync`
+- macOS GUI: env snapshot is generated during setup (`doom install --env`); re-run `doom sync --env` if `PATH` changes
+- Troubleshoot: `doom doctor`
+
+The `doom` CLI is on `PATH` via `~/.zprofile` (`~/.config/emacs/bin`).
+
+## Customize
+
+Edit files under `home/.config/doom/` in this repo, then:
+
+```bash
+mise run deploy
+doom sync
+```
+
+Module list: `SPC h d h` inside Emacs, or see [Doom docs](https://github.com/doomemacs/core/tree/master/docs).
+
+## Learning (Emacs / Doom)
+
+This dotfiles setup enables **Evil** (Vim-style keys). The leader key is **`SPC`** (space).
+
+| Resource | What it covers |
+| --- | --- |
+| [Doom: Getting Started](https://github.com/doomemacs/core/blob/master/docs/getting_started.org) | Install follow-up, daily workflow, config basics |
+| [Doom: FAQ](https://github.com/doomemacs/core/blob/master/docs/faq.org) | Common questions and fixes |
+| [Doom documentation site](https://docs.doomemacs.org/) | Searchable module / API docs |
+| [GNU Emacs guided tour](https://www.gnu.org/software/emacs/tour/) | What Emacs is (editor-agnostic intro) |
+| [Emacs built-in tutorial](https://www.gnu.org/software/emacs/manual/html_node/emacs/Tutorial.html) | Classic keybindings (`C-h t` inside Emacs) |
+
+Useful commands after launch:
+
+- `SPC h b b` — list keybindings
+- `SPC h d h` — Doom help / module index
+- `C-h t` — Emacs tutorial (non-Vim keys)
+- `M-x` — run any command by name (`SPC :` in Evil mode)
