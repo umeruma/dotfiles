@@ -106,6 +106,11 @@ wr() {
 export XDG_CONFIG_HOME="$HOME/.config"
 alias lg="lazygit"
 
+# Cursor IDE (Editor Window; skip Agents/Glass on launch)
+# Note: `cu` is taken by /usr/bin/cu (serial dial-up), so use `cur` instead.
+alias cursor='cursor --classic'
+alias cs='cursor --classic'
+
 # -------------------------
 # Aliases & small functions
 # -------------------------
