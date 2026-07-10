@@ -151,7 +151,7 @@ dottrack() {
   fi
 
   # [dotfiles] にエントリ追加 + 実体を home/ へコピー
-  mise -C "$DOTFILES_HOME" dotfiles add --local --yes --source "home/$1" "$target"
+  mise -C "$DOTFILES_HOME" dotfiles add --path "$DOTFILES_HOME/mise.dotfiles.toml" --yes --source "home/$1" "$target"
 
   # 元ファイルを symlink に置換（内容同一なので --force 不要）
   mise -C "$DOTFILES_HOME" dotfiles apply --yes
