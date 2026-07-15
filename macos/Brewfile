@@ -55,6 +55,7 @@ cask "raycast"
 cask "transmit"
 cask "visual-studio-code"
 cask "elgato-wave-link"
+# Assign keys, and then decorate and label them
 cask "elgato-stream-deck"
 cask "xcodes-app"
 mas "Apple Configurator", id: 1037126344
