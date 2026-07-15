@@ -71,8 +71,13 @@ export ENHANCD_FILTER="fzy --prompt '❯ '"
 export ENHANCD_DOT_SHOW_FULLPATH=1
 
 # sheldon (plugin manager)
-# Ensure SHELDON is installed; this eval is interactive-only
+# enhancd is profile-gated (interactive only); skip it in AI agent shells.
 if command -v sheldon >/dev/null 2>&1; then
+    if is_agent_shell; then
+        unset SHELDON_PROFILE
+    else
+        export SHELDON_PROFILE=interactive
+    fi
     eval "$(sheldon source)"
 fi
 

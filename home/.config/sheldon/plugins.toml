@@ -38,9 +38,11 @@ github = "sindresorhus/pure"
 use = ["async.zsh", "pure.zsh"]
 
 # https://github.com/b4b4r07/enhancd
+# Interactive shells only (see is_agent_shell in ~/.zshenv).
 [plugins.enhancd]
 github = "b4b4r07/enhancd"
 use = ["init.sh"]
+profiles = ["interactive"]
 
 # https://github.com/zsh-users/zsh-syntax-highlighting
 [plugins.zsh-syntax-highlighting]
