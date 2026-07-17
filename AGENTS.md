@@ -39,15 +39,15 @@ This document is a guide for safe and productive collaboration between AI agents
 
 ## How to Request (Human → Agent)
 - State what you want to do and where (e.g., "Add AGENTS.md", "Add to docs")
-- Indicate consistency with existing implementation (e.g., use stow, use justfile recipes)
+- Indicate consistency with existing implementation (e.g., use stow, use mise tasks)
 - Specify output language (Japanese/English) and location (README or docs)
 
 ## Repository-Specific Knowledge
-- Main operations are summarized in the root `justfile`
+- Main operations are summarized in the root `mise.toml`
 - Documentation is managed as MDX in `docs/content/docs` and published on the site
 - Navigation is auto-completed by `meta.json` (usually just add a page)
 
 ## References
 - GNU Stow: https://www.gnu.org/software/stow/
-- just: https://github.com/casey/just
+- mise: https://mise.jdx.dev/
 - sheldon: https://github.com/rossmacarthur/sheldon

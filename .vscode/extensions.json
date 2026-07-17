@@ -2,7 +2,6 @@
     "recommendations": [
         "shellomo.enhanced-toml",
         "editorconfig.editorconfig",
-        "artlaman.chalice-icon-theme",
-        "nefrob.vscode-just-syntax"
+        "artlaman.chalice-icon-theme"
     ]
 }
