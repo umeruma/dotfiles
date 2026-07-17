@@ -44,23 +44,6 @@ install() {
 		bash ./init/init-macos.sh
 	fi
 
-	# Check if just is installed; if not, download and install to ./bin/just
-	echo ""
-	if is_exist ./bin/just; then
-		echo "just is installed"
-		./bin/just --version || { echo "just command not working"; exit 1; }
-	else
-		# create ./bin
-		mkdir -p ./bin
-
-		# download and extract just to ./bin/just
-		curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to ./bin
-
-		# just should now be executable
-		./bin/just --version || { echo "just install failed"; exit 1; }
-		echo "just install succeeded"
-	fi
-
 	# Check if Homebrew is installed; if not, install it
 	echo ""
 	if type brew >/dev/null 2>&1; then
@@ -82,8 +65,11 @@ install() {
 		curl -sL https://mise.run | sh
 	fi
 
-	# Run just deploy to create symlinks and install packages
-	./bin/just deploy
+	# mise.run installs to ~/.local/bin; ensure it is on PATH for this session
+	export PATH="${HOME}/.local/bin:${PATH}"
+
+	# Run mise run deploy to create symlinks and install packages
+	mise run deploy
 
 	# Change default shell to /bin/zsh if not already
 	echo ""
@@ -95,7 +81,7 @@ install() {
 	fi
 
 	echo ""
-	echo "If you want to install apps, run: just install-apps"
+	echo "If you want to install apps, run: mise run install-apps"
 }
 
 install
