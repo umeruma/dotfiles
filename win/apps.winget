@@ -75,6 +75,13 @@ properties:
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
+        description: Raycast
+      settings:
+        id: 9PFXXSHC64H3
+        source: msstore
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
         description: Notion
       settings:
         id: Notion.Notion
@@ -85,6 +92,13 @@ properties:
         description: Notion Calendar
       settings:
         id: Notion.NotionCalendar
+        source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Figma
+      settings:
+        id: Figma.Figma
         source: winget
 
     - resource: Microsoft.WinGet.DSC/WinGetPackage
