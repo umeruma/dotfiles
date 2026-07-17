@@ -126,6 +126,15 @@ function Ensure-Repository {
 
   if (Test-Path $DotDirectory) {
     Write-Host "DOTFILES already installed at $DotDirectory"
+    if (-not (Test-CommandExists git)) {
+      throw 'git is required to update dotfiles'
+    }
+    Set-Location $DotDirectory
+    Write-Host 'Pulling latest changes...'
+    & git pull origin main
+    if ($LASTEXITCODE -ne 0) {
+      throw 'git pull failed'
+    }
     return
   }
 

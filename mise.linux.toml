@@ -1,0 +1,6 @@
+# Loaded on Linux only (merged with mise.toml).
+# Replaces init/init-linux.sh.
+
+[bootstrap.packages]
+"apt:build-essential" = "latest"
+"apt:zsh" = "latest"

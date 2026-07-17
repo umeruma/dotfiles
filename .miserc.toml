@@ -1,0 +1,9 @@
+# Early-init settings (read before mise.toml).
+# Enables mise.linux.toml / mise.macos.toml / mise.unix.toml discovery.
+# See https://mise.jdx.dev/configuration/environments.html
+
+auto_env = true
+
+# Always-on env so the cross-platform [dotfiles] allowlist can live in
+# its own file (mise.dotfiles.toml) instead of cluttering mise.toml.
+env = ["dotfiles"]

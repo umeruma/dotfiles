@@ -3,7 +3,7 @@ title: dotfiles
 ---
 
 
-## install (macOS)
+## install (macOS / Linux)
 This dotfiles repository is designed to be installed at `~/Codes/dotfiles`.
 
 Review the contents of the script before running it:  
@@ -14,7 +14,9 @@ Open Terminal.app, and run:
 ```
 bash -c "$(curl -fsSL https://dot.umeru.ma/install)"
 ```
-This will clone the repository to `~/Codes/dotfiles` and set up your dotfiles.
+This will clone the repository to `~/Codes/dotfiles` and set up your dotfiles. If the repository already exists, it pulls the latest changes before continuing.
+
+After cloning, the installer installs mise (if needed) and runs [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) to converge OS packages, login shell, and `mise run deploy`. Details: [mise bootstrap](/mise-bootstrap).
 
 Notes on bash and curl options:
 
@@ -56,49 +58,36 @@ To deploy your dotfiles to your home directory, simply run:
 dot && mise run deploy
 ```
 
-### Pre-create subdirectories
+### How it works
 
-Before deploying with GNU Stow, this repository can automatically create any required subdirectories in your home directory, based on a plain text list in `.deploy_subdir`.
+Symlinks are managed declaratively by mise's `[dotfiles]` sections in [`mise.dotfiles.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.dotfiles.toml) (cross-platform; loaded via `env = ["dotfiles"]` in `.miserc.toml`) and [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) (macOS-only). Each entry is an explicit allowlist item:
 
-**How it works:**
-- Reads `.deploy_subdir` line by line
-	- Ignores blank lines and lines starting with `#`
-	- Trims whitespace
-- Runs `mkdir -p "$HOME/<path>"` for each valid line
-- Then deploys `home/` using Stow
+```toml
+[dotfiles]
+"~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
+```
 
-This process runs automatically as part of `mise run deploy` via the `prepare-subdirs` task dependency.
+Directories that receive runtime writes (logs, state — e.g. `~/.config/karabiner`, `~/.config/micro`, `~/.config/lazygit`) are linked **per file**, so app state stays local and never leaks into the repo. Purely static config dirs (`~/.config/doom`, `~/.config/ghostty`, `~/.config/sheldon`) are linked as whole directories.
 
-#### Usage
-1. Add the directories you need to `.deploy_subdir` (one path per line):
+Useful commands:
 
-		```
-		# editors
-		.config/micro
-		.config/nvim
+```
+mise dotfiles status   # show applied / differs / missing per entry
+mise run clean         # remove every symlink pointing into home/ (incl. dangling)
+dottrack <path>        # start tracking an existing file (adds entry + relinks)
+```
 
-		# tools
-		.local/share/fzf
-		```
-
-2. Deploy your dotfiles:
-
-		```
-		mise run deploy
-		```
-
-This ensures all listed directories (e.g. `~/.config/micro`) exist before Stow creates symlinks, making deployment more reliable.
-
-**Notes:**
-- Implementation is in `script/prepare-subdirs.zsh` and wired up in `mise.toml` as the hidden `prepare-subdirs` task (a dependency of `deploy`)
-- Input is tolerant of whitespace and comments
+Agent skills (`home/.agents/skills/`) are a single source of truth shared by all agents: `~/.agents` is one whole-dir link (Cursor and GitHub Copilot read `~/.agents/skills/` natively), and Claude Code gets per-skill links in `~/.claude/skills/`. The whole-dir link is deliberate: skills installed with `npx skills` and its `.skill-lock.json` land inside the repo through the link, so installs are tracked by git.
 
 ## macOS defaults
-To update macOS defaults setting, run:
+
+macOS preferences are applied by `mise bootstrap` from [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) (`[bootstrap.macos.*]` and `[bootstrap.macos.defaults]`). Re-run bootstrap to converge, or inspect drift:
 
 ```
-dot && mise run defaults
+dot && mise bootstrap macos defaults status
 ```
+
+Details: [mise bootstrap](/mise-bootstrap).
 
 ## macOS Terminal theme
 To apply theme for macOS Terminal, run:
@@ -112,9 +101,10 @@ then looks like this:
 
 ## tech stack
 
-- [mise](https://mise.jdx.dev/) as task runner
+- [mise](https://mise.jdx.dev/) as task runner and machine bootstrap
 - [sheldon](https://github.com/rossmacarthur/sheldon#readme) as zsh plugin manager
-- [Homebrew](https://docs.brew.sh/Manpage) as package manager
+- [Homebrew](https://docs.brew.sh/Manpage) as package manager (Brewfile / `install-apps`)
+- [mise `[dotfiles]`](https://mise.jdx.dev/bootstrap.html) for declarative symlink deploy of `home/`
 
 ## website
 

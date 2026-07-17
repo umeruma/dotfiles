@@ -71,8 +71,13 @@ export ENHANCD_FILTER="fzy --prompt '❯ '"
 export ENHANCD_DOT_SHOW_FULLPATH=1
 
 # sheldon (plugin manager)
-# Ensure SHELDON is installed; this eval is interactive-only
+# enhancd is profile-gated (interactive only); skip it in AI agent shells.
 if command -v sheldon >/dev/null 2>&1; then
+    if is_agent_shell; then
+        unset SHELDON_PROFILE
+    else
+        export SHELDON_PROFILE=interactive
+    fi
     eval "$(sheldon source)"
 fi
 
@@ -106,6 +111,11 @@ wr() {
 export XDG_CONFIG_HOME="$HOME/.config"
 alias lg="lazygit"
 
+# Cursor IDE (Editor Window; skip Agents/Glass on launch)
+# Note: `cu` is taken by /usr/bin/cu (serial dial-up), so use `cur` instead.
+alias cursor='cursor --classic'
+alias cs='cursor --classic'
+
 # -------------------------
 # Aliases & small functions
 # -------------------------
@@ -138,7 +148,6 @@ dottrack() {
   fi
 
   local target="$HOME/$1"
-  local dest="$DOTFILES_HOME/home/$1"
 
   # ホームディレクトリに存在するか確認
   if [[ ! -e "$target" ]]; then
@@ -146,14 +155,11 @@ dottrack() {
     return 1
   fi
 
-  # 親ディレクトリを作成
-  mkdir -p "$(dirname "$dest")"
+  # [dotfiles] にエントリ追加 + 実体を home/ へコピー
+  mise -C "$DOTFILES_HOME" dotfiles add --path "$DOTFILES_HOME/mise.dotfiles.toml" --yes --source "home/$1" "$target"
 
-  # ファイル/ディレクトリを移動
-  mv "$target" "$dest"
+  # 元ファイルを symlink に置換（内容同一なので --force 不要）
+  mise -C "$DOTFILES_HOME" dotfiles apply --yes
 
-  # stow でシンボリックリンクを作成
-  stow -d "$DOTFILES_HOME" -t "$HOME" home
-
-  echo "✓ Tracked: $1"
+  echo "✓ Tracked: $1 (entry added to mise.toml [dotfiles])"
 }

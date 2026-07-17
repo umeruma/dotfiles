@@ -13,13 +13,34 @@ is_exist() {
 	type "$1" > /dev/null 2>&1
 }
 
+ensure_mise_on_path() {
+	# mise.run installs to ~/.local/bin by default
+	if [ -d "${HOME}/.local/bin" ]; then
+		export PATH="${HOME}/.local/bin:${PATH}"
+	fi
+	# Homebrew mise (if present)
+	if [ -x /opt/homebrew/bin/mise ]; then
+		export PATH="/opt/homebrew/bin:${PATH}"
+	elif [ -x /usr/local/bin/mise ]; then
+		export PATH="/usr/local/bin:${PATH}"
+	fi
+}
+
 install() {
 	# Create ~/Codes directory if it doesn't exist
 	mkdir -p "${HOME}/Codes"
 	
-	# Clone the dotfiles repo if it doesn't exist
+	# Clone the dotfiles repo if it doesn't exist; otherwise pull latest
 	if [ -d "${DOT_DIRECTORY}" ]; then
 		echo "DOTFILES have already been installed at ${DOT_DIRECTORY}"
+		if is_exist "git"; then
+			echo "Pulling latest changes..."
+			cd "${DOT_DIRECTORY}"
+			git pull origin main
+		else
+			echo "git required"
+			exit 1
+		fi
 	else 
 		if is_exist "git"; then
 			echo "Cloning dotfiles to ${DOT_DIRECTORY}..."
@@ -35,16 +56,14 @@ install() {
 	echo ""
 
 	cd "${DOT_DIRECTORY}"
-	
-	if [ "$uname_s" = "Linux" ]; then
-		bash ./init/init-linux.sh
-	fi
 
+	# macOS: Command Line Tools (interactive; not covered by mise bootstrap)
 	if [ "$uname_s" = "Darwin" ]; then
 		bash ./init/init-macos.sh
 	fi
 
-	# Check if Homebrew is installed; if not, install it
+	# Homebrew is still used by `mise run install-apps` (Brewfile) and shellenv in .zprofile.
+	# CLI/GUI packages can gradually move to [bootstrap.packages] (brew: / brew-cask: / mas:).
 	echo ""
 	if type brew >/dev/null 2>&1; then
 		echo "brew is installed";
@@ -58,27 +77,27 @@ install() {
 
 	# Check if mise is installed; if not, install it
 	echo ""
+	ensure_mise_on_path
 	if type mise >/dev/null 2>&1; then
-		echo "mise is installed";
+		echo "mise is installed ($(mise --version))";
 	else
 		echo "Installing mise..."
 		curl -sL https://mise.run | sh
+		ensure_mise_on_path
 	fi
 
-	# mise.run installs to ~/.local/bin; ensure it is on PATH for this session
-	export PATH="${HOME}/.local/bin:${PATH}"
+	if ! type mise >/dev/null 2>&1; then
+		echo "error: mise not found on PATH after install"
+		echo "hint: add ~/.local/bin to PATH and re-run"
+		exit 1
+	fi
 
-	# Run mise run deploy to create symlinks and install packages
-	mise run deploy
-
-	# Change default shell to /bin/zsh if not already
+	# Trust this repo's mise.toml, then converge packages / login shell / deploy.
+	# See https://mise.jdx.dev/bootstrap.html
 	echo ""
-	if [ "$SHELL" = "/bin/zsh" ]; then
-		echo "Using /bin/zsh"
-	else
-		echo "Change default shell to /bin/zsh"
-		chsh -s /bin/zsh
-	fi
+	echo "Running mise bootstrap..."
+	mise trust --yes
+	mise bootstrap --yes --update
 
 	echo ""
 	echo "If you want to install apps, run: mise run install-apps"
