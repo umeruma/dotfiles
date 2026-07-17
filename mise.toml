@@ -1,3 +1,18 @@
+[settings]
+# Required for `mise bootstrap` (packages, login shell, etc.)
+experimental = true
+
+[bootstrap.user]
+login_shell = "/bin/zsh"
+
+# Runs at the end of `mise bootstrap` (after packages / user / tools).
+# On Unix `mise bootstrap` also applies [dotfiles] natively at step 3;
+# running deploy again here is idempotent and keeps Windows covered.
+[tasks.bootstrap]
+description = "Deploy dotfiles ([dotfiles] on Unix, PSDotFiles on Windows)"
+run = "mise run deploy"
+run_windows = "mise run deploy"
+
 [tasks.help]
 description = "List available tasks"
 run = "zsh script/help.zsh"
@@ -10,7 +25,7 @@ run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task update is not support
 
 [tasks.list]
 description = "Show dotfiles to deploy"
-run = "zsh script/list.zsh"
+run = "mise dotfiles status"
 run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task list is not supported on Windows.'; exit 1\""
 
 [tasks.clean]
@@ -19,15 +34,17 @@ run = "zsh script/clean.zsh"
 run_windows = "pwsh -NoProfile -File script/clean-windows.ps1"
 
 [tasks.prepare-subdirs]
-description = "Ensure required subdirectories exist (from .deploy_subdir)"
+description = "Ensure required subdirectories exist (Windows, from .deploy_subdir-windows)"
 hide = true
-run = "zsh script/prepare-subdirs.zsh"
+run = "true"
 run_windows = "pwsh -NoProfile -File script/prepare-subdirs-windows.ps1"
 
+# `clean` runs first so entries removed from [dotfiles] don't leave
+# stale links behind; apply then relinks everything in the allowlist.
 [tasks.deploy]
-description = "Deploy dotfiles to $HOME via stow"
+description = "Deploy dotfiles to $HOME (mise [dotfiles] on Unix, PSDotFiles on Windows)"
 depends = ["clean", "prepare-subdirs"]
-run = "zsh script/deploy.zsh"
+run = "mise dotfiles apply -y"
 run_windows = "pwsh -NoProfile -File script/deploy.ps1"
 
 [tasks.install-apps]
@@ -40,13 +57,12 @@ description = "Create kanata autostart shortcut (Windows)"
 run = "echo 'Task setup-kanata is only supported on Windows.'; exit 1"
 run_windows = "pwsh -NoProfile -File script/setup-kanata.ps1"
 
-[tasks.defaults]
-description = "Apply macOS defaults"
-run = "zsh script/defaults.zsh"
-run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task defaults is not supported on Windows.'; exit 1\""
-
 [tasks.theme]
 description = "Install Terminal theme (macOS)"
 run = "zsh script/theme.zsh"
 run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task theme is not supported on Windows.'; exit 1\""
 
+[tasks.setup-doom]
+description = "Install Doom Emacs core and sync packages"
+run = "zsh script/setup-doom.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task setup-doom is not supported on Windows.'; exit 1\""

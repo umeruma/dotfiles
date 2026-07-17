@@ -8,6 +8,8 @@
 bash -c "$(curl -fsSL https://dot.umeru.ma/install)"
 ```
 
+This clones to `~/Codes/dotfiles`, installs mise if needed, then runs `mise bootstrap` (packages, login shell, deploy). Optional GUI/CLI apps: `mise run install-apps`.
+
 ### Windows
 
 On a fresh / reset Windows, install **App Installer** (winget) from the Microsoft Store first — it is the prerequisite for everything else. Git, PowerShell 7 and mise are then installed automatically by the script. (If winget is missing, the script opens the Store page for you and stops so you can install it.)

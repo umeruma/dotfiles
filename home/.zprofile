@@ -21,6 +21,11 @@ fi
 # Add local bin
 path=("$HOME/.local/bin" $path)
 
+# Doom Emacs CLI
+if [[ -d "$HOME/.config/emacs/bin" ]]; then
+  path=("$HOME/.config/emacs/bin" $path)
+fi
+
 # Homebrew: put binaries on PATH and export common envs
 if [[ -d "/opt/homebrew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"

@@ -1,4 +1,10 @@
 # brew "eza"
+
+# Doom Emacs — see `mise run setup-doom` / docs/doom-emacs
+brew "emacs"      # required (GNU Emacs 27.1+)
+brew "ripgrep"    # required (project search)
+brew "fd"         # recommended (file indexing for consult/vertico)
+
 brew "diffr"
 brew "ffmpeg"
 brew "fzy"
@@ -18,12 +24,9 @@ brew "mkcert"
 brew "rust"
 brew "sheldon"
 brew "shellcheck"
-brew "stow"
 brew "websocat"
 brew "pkgx"
 brew "rclone"
-brew "k1LoW/tap/git-wt"
-brew "ripgrep"
 cask "1password"
 cask "1password-cli"
 cask "alt-tab"
@@ -52,6 +55,7 @@ cask "raycast"
 cask "transmit"
 cask "visual-studio-code"
 cask "elgato-wave-link"
+# Assign keys, and then decorate and label them
 cask "elgato-stream-deck"
 cask "xcodes-app"
 mas "Apple Configurator", id: 1037126344
