@@ -1,0 +1,88 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import { config } from "virtual:nimbus/config";
+
+const installCmd = 'bash -c "$(curl -fsSL https://dot.umeru.ma/install)"';
+
+const cards = [
+  { href: "/overview", title: "Overview", blurb: "Install + deploy on macOS / Linux" },
+  { href: "/windows", title: "Windows", blurb: "install-win, PSDotFiles, winget" },
+  { href: "/mise-bootstrap", title: "mise bootstrap", blurb: "Declarative machine setup" },
+  { href: "/doom-emacs", title: "Doom Emacs", blurb: "Core + private config" },
+];
+---
+
+<BaseLayout title={config.title} description={config.description}>
+  <div class="flex flex-col min-h-screen">
+    <Header showSidebar={false} />
+    <main class="flex-1 mx-auto max-w-2xl w-full px-6 py-24">
+      <h1
+        class="text-foreground leading-tight"
+        style="font-size: var(--nb-h1-size); font-weight: var(--nb-h1-weight); letter-spacing: var(--nb-h1-tracking);"
+      >
+        {config.title}
+      </h1>
+      <p class="mt-2 text-[1.0625rem] text-muted-foreground leading-relaxed">
+        {config.description}
+      </p>
+
+      <p class="mt-6 text-sm text-muted-foreground">Install on macOS / Linux:</p>
+      <div class="relative mt-2">
+        <pre class="overflow-x-auto rounded-lg border border-border bg-card p-4 pr-12 text-sm"><code data-install-cmd>{installCmd}</code></pre>
+        <button
+          type="button"
+          data-copy-install
+          class="absolute right-2 top-2 inline-flex cursor-pointer items-center rounded-md bg-transparent p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+        >
+          <Icon name="ph:copy" class="w-4 h-4" data-copy-icon is:inline />
+          <Icon name="ph:check" class="hidden w-4 h-4 text-success" data-check-icon is:inline />
+          <span class="sr-only" data-copy-label aria-live="polite">Copy install command</span>
+        </button>
+      </div>
+      <p class="mt-3 text-sm">
+        <a href="/overview" class="text-primary hover:underline">Read the full overview →</a>
+      </p>
+
+      <div class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {cards.map((card) => (
+          <a
+            href={card.href}
+            class="block rounded-lg border border-border p-4 transition-colors hover:border-border-strong no-underline"
+          >
+            <div class="font-medium text-foreground">{card.title}</div>
+            <div class="mt-0.5 text-sm text-muted-foreground">{card.blurb}</div>
+          </a>
+        ))}
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>("[data-copy-install]");
+  const code = document.querySelector<HTMLElement>("[data-install-cmd]");
+  const copyIcon = btn?.querySelector<SVGElement>("[data-copy-icon]");
+  const checkIcon = btn?.querySelector<SVGElement>("[data-check-icon]");
+  const label = btn?.querySelector<HTMLElement>("[data-copy-label]");
+  let resetTimer: number | undefined;
+
+  btn?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(code?.textContent ?? "");
+      copyIcon?.classList.add("hidden");
+      checkIcon?.classList.remove("hidden");
+      if (label) label.textContent = "Copied";
+    } catch {
+      if (label) label.textContent = "Couldn't copy";
+      return;
+    }
+    if (resetTimer) window.clearTimeout(resetTimer);
+    resetTimer = window.setTimeout(() => {
+      copyIcon?.classList.remove("hidden");
+      checkIcon?.classList.add("hidden");
+      if (label) label.textContent = "Copy install command";
+    }, 1500);
+  });
+</script>

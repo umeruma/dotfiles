@@ -1,6 +1,11 @@
-/_next/static/*
-  Cache-Control: public,max-age=31536000,immutable
+# Cloudflare Workers static-asset headers.
 
+# Astro emits content-hashed assets under /_astro/* — safe to cache forever.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Serve the installers as plain text (so `curl`/`irm` and browsers render them
+# instead of downloading), always revalidated so a new script ships instantly.
 /install
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=0, must-revalidate
