@@ -47,6 +47,4 @@ Windows 側は IME を直接選択する API がないため、**言語ごとの
 
 補足: 左 Win を「English (US) IME への切り替え」ではなく「日本語 IME のまま英数（直接入力）にする」動作にしたい場合は、`kanata.kbd` 内の `@lwin-jp` エイリアスに差し替える。
 
-### 制約: IME を自前管理するアプリでは効かない
-
-Blender の Text Editor / Python Console のように IME を自前管理しているアプリでは、この切り替えは効かない（Text Editor は IME 未対応の既知の制限: [#84081](https://projects.blender.org/blender/blender/issues/84081)）。kanata の不具合ではなく手動切り替えでも同じ。外部エディタで書いて貼り付ければ OK。
+なお、Blender の Script Editor など一部のアプリでは kanata のマップが効かないことがある。
