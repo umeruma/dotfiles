@@ -20,6 +20,7 @@ brew "lazygit"
 brew "lftp"
 brew "mas"
 brew "micro"
+brew "mole"       # CLI companion to mole-app (mo clean, mo purge, …)
 brew "mkcert"
 brew "rust"
 brew "sheldon"
@@ -47,6 +48,8 @@ cask "hammerspoon"
 cask "handbrake-app"
 cask "karabiner-elements"
 cask "loopback"
+# Native Mac app — cleanup, app management, disk analysis (https://mole.fit)
+cask "mole-app"
 # Free and open-source RSS reader
 cask "netnewswire"
 cask "ngrok"
