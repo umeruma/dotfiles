@@ -9,7 +9,7 @@ sidebar:
 
 [HHKB ANSI layout](https://hhkb.io/layout/)
 
-IME 切り替えの設定（macOS: Karabiner / Windows: kanata）は [ANSI Layout Keyboard & IME Switch](/ime-switching) を参照。
+IME 切り替えの設定（macOS: Karabiner / Windows: kanata）は [IME Switching](/setup-hard/ime-switching/) を参照。
 
 <img width="320" alt="" src="https://i.gyazo.com/1eaad11921cce165baed6c8b222f77cc.jpg"/>
 

@@ -1,13 +1,13 @@
 ---
-title: ANSI Layout Keyboard & IME Switch
+title: IME Switching
 description: US 配列（HHKB）での日本語/英語 IME 切り替えを macOS は Karabiner、Windows は kanata で実現する設定。
 sidebar:
-  order: 5
+  order: 1
 ---
 
 ## 方針
 
-キーボードは [HHKB の US（ANSI）配列](/setup-hard) を使っているため、JIS 配列の「英数」「かな」キーが物理的に存在しない。そこで両 OS とも **修飾キーの単押し（tap）** に IME 切り替えを割り当てて、同じ操作感に揃えている:
+キーボードは [HHKB の US（ANSI）配列](/setup-hard/) を使っているため、JIS 配列の「英数」「かな」キーが物理的に存在しない。そこで両 OS とも **修飾キーの単押し（tap）** に IME 切り替えを割り当てて、同じ操作感に揃えている:
 
 | 操作 | macOS | Windows |
 | --- | --- | --- |
