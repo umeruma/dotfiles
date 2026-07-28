@@ -1,9 +1,10 @@
 # brew "eza"
 
-# Doom Emacs — see `mise run setup-doom` / docs/doom-emacs
-brew "emacs"      # required (GNU Emacs 27.1+)
-brew "ripgrep"    # required (project search)
-brew "fd"         # recommended (file indexing for consult/vertico)
+# Editor / agent stack — see docs/editor-stack
+brew "neovim"     # LazyVim (config in home/.config/nvim)
+brew "herdr"      # agent multiplexer (https://herdr.dev)
+brew "ripgrep"    # required (LazyVim grep, project search)
+brew "fd"         # required (LazyVim file picker)
 
 brew "diffr"
 brew "ffmpeg"

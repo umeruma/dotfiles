@@ -1,0 +1,61 @@
+---
+title: Editor Stack
+description: LazyVim・lazygit・herdr を組み合わせたターミナル中心の編集環境。
+sidebar:
+  order: 4
+---
+
+役割が重ならない 3 つを組み合わせている:
+
+| Tool | Role | Config |
+| --- | --- | --- |
+| [LazyVim](https://www.lazyvim.org/) | Neovim ディストリビューション（エディタ） | `home/.config/nvim` |
+| [lazygit](https://github.com/jesseduffield/lazygit) | Git の TUI | `home/.config/lazygit/config.yml` |
+| [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ | `home/.config/herdr/config.toml` |
+
+herdr は tmux のエージェント版で、Claude Code や Codex を PTY セッションとして常駐させ、状態（作業中 / 待ち / 完了）を一覧しながら切り替える。サーバー側で生き続けるので、ターミナルを閉じても SSH で attach し直せる。
+
+## Prerequisites
+
+`mise run install-apps`（macOS Brewfile）でインストールされる:
+
+- `neovim`
+- `herdr`
+- `lazygit`
+- `ripgrep`、`fd`（LazyVim の grep / ファイル検索に必須）
+
+## Setup
+
+```bash
+mise run install-apps
+mise run deploy
+nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
+```
+
+`nvim` の初回起動でも同じ同期が走るので、headless での実行は省略してもよい。
+
+## How it is linked
+
+`~/.config/nvim` は**ディレクトリごと**リンクしている。LazyVim が `lazy-lock.json` をリンク越しにリポジトリへ書き戻すため、プラグインのバージョンが git で追跡される。プラグイン本体は `~/.local/share/nvim`、セッション状態は `~/.local/state/nvim` に入るのでリポジトリは汚れない。
+
+`~/.config/herdr` はログ・ソケット・`session.json` が同じディレクトリに書かれるので、`config.toml` だけを**ファイル単位**でリンクしている（`~/.config/lazygit` と同じ扱い）。
+
+## herdr config
+
+設定なしでも動く。このリポジトリでは 3 点だけ変えている:
+
+- `theme.name = "terminal"` — Ghostty のテーマ（Birds Of Paradise）にそのまま追従させる
+- `experimental.switch_ascii_input_source_in_prefix` — prefix（`ctrl+b`）を押している間だけ macOS の入力ソースを ASCII に切り替える。日本語入力中でも prefix コマンドが通る
+- `experimental.reveal_hidden_cursor_for_cjk_ime` — Claude Code / Codex のように自前でカーソルを描く TUI で、IME の候補ウィンドウがカーソルを追従するようにする。`cjk_ime_agents` で対象を絞っているのは、全面適用すると Neovim のノーマルモードでカーソルが二重に見えるため
+
+コメント付きのデフォルト全文は `herdr --default-config`、設定の検証は `herdr config check`、起動中のサーバーへの反映は `herdr server reload-config`。
+
+## Daily use
+
+```bash
+herdr        # セッションを起動 / attach（prefix は ctrl+b、ヘルプは prefix+?）
+nvim         # LazyVim（リーダーキーは space）
+lazygit      # Git TUI
+```
+
+LazyVim のプラグイン追加は `home/.config/nvim/lua/plugins/` に `.lua` を置くだけでよい（`example.lua` が雛形）。`lazy-lock.json` の差分はそのままコミットする。

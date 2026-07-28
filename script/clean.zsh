@@ -41,8 +41,8 @@ done
 # whole-dir [dotfiles] entries can be applied in their place.
 local -a prune_dirs=(
   "$HOME/.config/ghostty/shaders"
-  "$HOME/.config/doom"
   "$HOME/.config/ghostty"
+  "$HOME/.config/nvim"
   "$HOME/.config/sheldon"
   "$HOME/.config/micro/plug/editorconfig/help"
   "$HOME/.config/micro/plug/editorconfig"

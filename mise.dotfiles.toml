@@ -11,10 +11,14 @@
 "~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
 "~/.gitconfig" = { source = "home/.gitconfig", mode = "symlink" }
 # static config dirs (whole-dir links; new repo files show up automatically)
-"~/.config/doom" = { source = "home/.config/doom", mode = "symlink" }
 "~/.config/ghostty" = { source = "home/.config/ghostty", mode = "symlink" }
 "~/.config/sheldon" = { source = "home/.config/sheldon", mode = "symlink" }
+# ~/.config/nvim is linked whole-dir on purpose: LazyVim writes lazy-lock.json
+# back through the link into the repo, so plugin versions stay tracked by git.
+# Plugin payloads live in ~/.local/share/nvim, session state in ~/.local/state/nvim.
+"~/.config/nvim" = { source = "home/.config/nvim", mode = "symlink" }
 # runtime-write dirs: per-file links only
+"~/.config/herdr/config.toml" = { source = "home/.config/herdr/config.toml", mode = "symlink" }
 "~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
 "~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
 "~/.config/micro/plug/editorconfig" = { source = "home/.config/micro/plug/editorconfig", mode = "symlink" }

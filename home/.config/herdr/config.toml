@@ -1,0 +1,25 @@
+onboarding = false
+# herdr — agent multiplexer (https://herdr.dev)
+# Print the full commented defaults with `herdr --default-config`.
+# Apply edits to a running server with `herdr server reload-config`.
+# Only this file is symlinked: herdr writes logs, sockets and session.json
+# into the same directory, so ~/.config/herdr itself stays local.
+
+[theme]
+# Follow the host terminal palette (Ghostty: Birds Of Paradise) instead of
+# a bundled scheme, so herdr matches whatever the terminal is themed with.
+name = "terminal"
+
+[experimental]
+# Prefix mode expects ASCII keys. Switch the macOS input source while it is
+# active so ctrl+b chords still register with a Japanese IME turned on.
+switch_ascii_input_source_in_prefix = true
+
+# Agent TUIs paint their own cursor, which leaves the IME candidate window
+# stranded. Reveal the real cursor for those panes only — applying it
+# everywhere would draw a second cursor in vim normal mode.
+reveal_hidden_cursor_for_cjk_ime = true
+cjk_ime_agents = ["claude", "codex"]
+
+[ui]
+agent_panel_sort = "spaces"

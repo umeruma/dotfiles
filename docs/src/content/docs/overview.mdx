@@ -69,7 +69,9 @@ symlink は mise の `[dotfiles]` セクションで宣言的に管理してい�
 "~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
 ```
 
-実行時に書き込みが発生するディレクトリ（ログや状態。例: `~/.config/karabiner`、`~/.config/micro`、`~/.config/lazygit`）は**ファイル単位**でリンクし、アプリの状態がリポジトリに漏れないようにしている。純粋に静的な設定ディレクトリ（`~/.config/doom`、`~/.config/ghostty`、`~/.config/sheldon`）はディレクトリごとリンクする。
+実行時に書き込みが発生するディレクトリ（ログや状態。例: `~/.config/karabiner`、`~/.config/micro`、`~/.config/lazygit`、`~/.config/herdr`）は**ファイル単位**でリンクし、アプリの状態がリポジトリに漏れないようにしている。純粋に静的な設定ディレクトリ（`~/.config/ghostty`、`~/.config/sheldon`）はディレクトリごとリンクする。
+
+`~/.config/nvim` は例外で、書き込みが発生するがディレクトリごとリンクしている。LazyVim が `lazy-lock.json` をリンク越しにリポジトリへ書き戻し、プラグインのバージョンが git で追跡されるため。詳細: [Editor Stack](/editor-stack)
 
 よく使うコマンド:
 
