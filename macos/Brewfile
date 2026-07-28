@@ -5,6 +5,7 @@ brew "neovim"     # LazyVim (config in home/.config/nvim)
 brew "herdr"      # agent multiplexer (https://herdr.dev)
 brew "ripgrep"    # required (LazyVim grep, project search)
 brew "fd"         # required (LazyVim file picker)
+brew "tree-sitter-cli"  # required (nvim-treesitter parser builds)
 
 brew "diffr"
 brew "ffmpeg"
