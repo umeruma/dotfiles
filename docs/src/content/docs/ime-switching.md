@@ -43,7 +43,7 @@ Windows には英数・かなキー相当の仕組みがないので、[kanata](
 - **右 Win 単押し** → `Alt+Shift+1` を送信 → 日本語 IME に切り替え、50ms 待ってから かなキー（scan code 22）を送信して IME を ON
 - `tap-hold-press` を使っているので、他のキーが押された瞬間に hold（通常の Win キー）へ確定する。`Win+S` などの組み合わせが誤って IME 切り替えにならず、Karabiner と同じ感覚で使える
 
-Windows 側は IME を直接選択する API がないため、**言語ごとの切り替えホットキー**（`Alt+Shift+1` / `Alt+Shift+2`）を OS 側で一度割り当てておく必要がある。この手順・自動起動（スタートアップ登録）・注意点は [Windows ページの Kanata セクション](/windows)にまとめてある。
+Windows 側は IME を直接選択する API がないため、**言語ごとの切り替えホットキー**（`Alt+Shift+1` / `Alt+Shift+2`）を OS 側で一度割り当てておく必要がある。この手順・自動起動（スタートアップ登録）・注意点は [Windows ページの Input language hot keys](/windows/#input-language-hot-keys-required) にまとめてある。
 
 補足: 左 Win を「English (US) IME への切り替え」ではなく「日本語 IME のまま英数（直接入力）にする」動作にしたい場合は、`kanata.kbd` 内の `@lwin-jp` エイリアスに差し替える。
 
