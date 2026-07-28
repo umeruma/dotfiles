@@ -1,5 +1,5 @@
 ---
-title: US 配列と IME 切り替え
+title: ANSI Layout Keyboard & IME Switch
 description: US 配列（HHKB）での日本語/英語 IME 切り替えを macOS は Karabiner、Windows は kanata で実現する設定。
 sidebar:
   order: 5
