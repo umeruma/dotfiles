@@ -1,68 +1,68 @@
 ---
 title: Windows
-description: PowerShell setup with install-win, PSDotFiles, winget, and Kanata.
+description: install-win、PSDotFiles、winget、Kanata による PowerShell セットアップ。
 sidebar:
   order: 2
 ---
 
 ## Overview
 
-Windows setup uses:
+Windows のセットアップでは以下を使う:
 
-- **[PSDotFiles](https://github.com/ralish/PSDotFiles)** to symlink [`home-win/`](https://github.com/umeruma/dotfiles/tree/main/home-win) into `$HOME`
-- **[WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)** files under [`win/`](https://github.com/umeruma/dotfiles/tree/main/win) for package installation
+- **[PSDotFiles](https://github.com/ralish/PSDotFiles)** — [`home-win/`](https://github.com/umeruma/dotfiles/tree/main/home-win) を `$HOME` に symlink する
+- **[WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)** — [`win/`](https://github.com/umeruma/dotfiles/tree/main/win) 以下のファイルでパッケージをインストールする
 
-macOS and Linux use mise's declarative `[dotfiles]` allowlist with [`home/`](https://github.com/umeruma/dotfiles/tree/main/home).
+macOS / Linux では mise の宣言的な `[dotfiles]` allowlist と [`home/`](https://github.com/umeruma/dotfiles/tree/main/home) を使う。
 
 ## Prerequisites
 
-On a fresh or reset Windows, install **App Installer** (winget) from the Microsoft Store first. winget is the one prerequisite you must provide yourself — **Git**, **PowerShell 7** and **mise** are all installed automatically by the script through winget.
+新規またはリセット直後の Windows では、まず Microsoft Store から **App Installer**（winget）を入れる。自分で用意する必要があるのは winget だけで、**Git**・**PowerShell 7**・**mise** はすべてスクリプトが winget 経由で自動インストールする。
 
-If winget is missing when you run install-win, the script opens the App Installer Store page for you and stops with instructions. Install App Installer, then re-run the command.
+install-win 実行時に winget がない場合、スクリプトが App Installer の Store ページを開いて案内を表示して停止する。App Installer を入れてからコマンドを再実行する。
 
 ## install-win
 
-This repository is installed at `~/Codes/dotfiles`.
+このリポジトリは `~/Codes/dotfiles` に配置する。
 
-Review the script before running:  
+実行前にスクリプトを確認する:  
 [https://dot.umeru.ma/install-win](https://dot.umeru.ma/install-win)
 
-Before running install-win, enable **Developer Mode** (required for symlink creation).
+install-win の前に **開発者モード** を有効にする（symlink 作成に必要）。
 
-Open the Settings page directly:
+設定ページを直接開くには:
 
 ```powershell
 Start-Process "ms-settings:developers"
 ```
 
-In **PowerShell** (Windows PowerShell 5.1 is OK for the bootstrap; it will re-launch in PowerShell 7):
+**PowerShell** で実行（ブートストラップは Windows PowerShell 5.1 でも OK。途中で PowerShell 7 で再起動する）:
 
 ```powershell
 irm https://dot.umeru.ma/install-win | iex
 ```
 
-What it does:
+やっていること:
 
-1. Installs PowerShell 7 if needed
-2. Clones the repo to `~/Codes/dotfiles` (or pulls latest if it already exists)
-3. Runs `winget configure` with [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) (PowerShell 7, Git, mise)
-4. Installs the **PSDotFiles** module from the PowerShell Gallery
-5. Runs `mise run deploy` to link `home-win/`
+1. 必要なら PowerShell 7 をインストール
+2. リポジトリを `~/Codes/dotfiles` に clone（既存なら最新を pull）
+3. [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) で `winget configure` を実行（PowerShell 7、Git、mise）
+4. PowerShell Gallery から **PSDotFiles** モジュールをインストール
+5. `mise run deploy` で `home-win/` をリンク
 
-When started from Windows PowerShell 5.1 the script re-launches itself in PowerShell 7 to finish the work. Your terminal stays open after it completes; it ends with a prominent banner pointing you to `mise run install-apps` for GUI apps.
+Windows PowerShell 5.1 から始めた場合、スクリプトは PowerShell 7 で自分自身を再起動して残りを実行する。完了後もターミナルは開いたままで、最後に GUI アプリ用の `mise run install-apps` を案内するバナーが表示される。
 
 ## Deploy dotfiles
 
-From the repo root in **PowerShell 7**:
+**PowerShell 7** でリポジトリのルートから:
 
 ```
 cd $env:USERPROFILE\Codes\dotfiles
 mise run deploy
 ```
 
-This runs `Install-DotFiles home-win` via [`script/deploy.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/deploy.ps1).
+これは [`script/deploy.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/deploy.ps1) 経由で `Install-DotFiles home-win` を実行する。
 
-Remove symlinks:
+symlink を削除するには:
 
 ```
 mise run clean
@@ -70,88 +70,90 @@ mise run clean
 
 ## Install applications
 
-GUI and other apps are listed in [`win/apps.winget`](https://github.com/umeruma/dotfiles/blob/main/win/apps.winget):
+GUI などのアプリは [`win/apps.winget`](https://github.com/umeruma/dotfiles/blob/main/win/apps.winget) に列挙している:
 
 ```
 mise run install-apps
 ```
 
-Edit that file to add or remove packages. Each entry uses `Microsoft.WinGet.DSC/WinGetPackage` with a winget package `id`.
+パッケージの追加・削除はこのファイルを編集する。各エントリは `Microsoft.WinGet.DSC/WinGetPackage` に winget パッケージの `id` を指定する形式。
 
-Preview a configuration file:
+設定ファイルのプレビュー:
 
 ```
 winget configure show -f win/apps.winget
 ```
 
-Requires **WinGet v1.6.2631** or later for `winget configure`.
+`winget configure` には **WinGet v1.6.2631** 以降が必要。
 
 ## Kanata (keyboard remapper)
 
-[Kanata](https://github.com/jtroo/kanata) is installed through [`win/apps.winget`](https://github.com/umeruma/dotfiles/blob/main/win/apps.winget) (`jtroo.kanata_gui`). It is a portable zip package; winget registers the GUI binary as the command alias `kanata_windows_gui_winIOv2_x64` under `%LOCALAPPDATA%\Microsoft\WinGet\Links`, so no manual download is needed.
+macOS の Karabiner と揃えた IME 切り替えの全体像は [US 配列と IME 切り替え](/ime-switching) を参照。
 
-The config lives in [`home-win/Documents/kanata/kanata.kbd`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/kanata/kanata.kbd) and is symlinked to `~\Documents\kanata\kanata.kbd` by PSDotFiles. It targets an HHKB (US layout) with **two input methods installed** (English (US) IME + Japanese Microsoft IME):
+[Kanata](https://github.com/jtroo/kanata) は [`win/apps.winget`](https://github.com/umeruma/dotfiles/blob/main/win/apps.winget)（`jtroo.kanata_gui`）でインストールする。ポータブル zip パッケージで、winget が GUI バイナリを `%LOCALAPPDATA%\Microsoft\WinGet\Links` 配下のコマンドエイリアス `kanata_windows_gui_winIOv2_x64` として登録するため、手動ダウンロードは不要。
 
-- **Left Win tap** → switch to the English (US) IME
-- **Right Win tap** → switch to the Japanese IME, then turn Kana on
-- Held or combined with other keys → the Win keys behave normally
+設定は [`home-win/Documents/kanata/kanata.kbd`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/kanata/kanata.kbd) にあり、PSDotFiles が `~\Documents\kanata\kanata.kbd` に symlink する。HHKB（US 配列）+ **2 つの入力方式**（English (US) IME + 日本語 Microsoft IME）を前提にしている:
+
+- **左 Win タップ** → English (US) IME に切り替え
+- **右 Win タップ** → 日本語 IME に切り替えてかなを ON
+- 長押しや他キーとの組み合わせ → Win キーは通常どおり動作
 
 ### Input language hot keys (required)
 
-Kanata cannot select a specific IME directly — Windows only exposes cycle shortcuts (`Win+Space` / `Alt+Shift`). The config instead sends per-language switch hot keys, so you must assign them once:
+Kanata は特定の IME を直接選択できない — Windows が公開しているのは循環切り替えのショートカット（`Win+Space` / `Alt+Shift`）だけ。そこで設定では言語ごとの切り替えホットキーを送信しているため、一度だけ割り当てが必要:
 
 ```powershell
 Start-Process "ms-settings:typing"
 ```
 
-Then **Advanced keyboard settings → Input language hot keys** (opens the classic *Text Services and Input Languages → Advanced Key Settings* dialog) and set:
+**キーボードの詳細設定 → 入力言語のホットキー**（クラシックな *テキスト サービスと入力言語 → キーの詳細設定* ダイアログが開く）で以下を設定する:
 
 | Action | Key sequence |
 |---|---|
-| Switch to **Japanese - Microsoft IME** | `Left Alt+Shift+1` |
-| Switch to **English (United States)** | `Left Alt+Shift+2` |
+| **日本語 - Microsoft IME** へ切り替え | `左Alt+Shift+1` |
+| **英語 (米国)** へ切り替え | `左Alt+Shift+2` |
 
-![Advanced Key Settings dialog with per-language switch hot keys assigned](https://i.gyazo.com/bfcd161911640184eb11aaee778d8b52.png)
+![言語ごとの切り替えホットキーを割り当てたキーの詳細設定ダイアログ](https://i.gyazo.com/bfcd161911640184eb11aaee778d8b52.png)
 
-These must match `A-S-1` / `A-S-2` in [`kanata.kbd`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/kanata/kanata.kbd). If they conflict with app shortcuts, pick a different digit (e.g. `Ctrl+Shift+1/2` → `C-S-1` / `C-S-2`) in both places.
+これらは [`kanata.kbd`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/kanata/kanata.kbd) の `A-S-1` / `A-S-2` と一致させる必要がある。アプリのショートカットと衝突する場合は、両方で別の数字（例: `Ctrl+Shift+1/2` → `C-S-1` / `C-S-2`）に変える。
 
-On Windows 11 24H2 the old `rundll32 ... input.dll ... {HOTKEYS}` invocation often does nothing; use the `ms-settings:typing` route above instead.
+Windows 11 24H2 では旧来の `rundll32 ... input.dll ... {HOTKEYS}` 呼び出しが効かないことが多いので、上記の `ms-settings:typing` 経由を使う。
 
 ### Autostart
 
-To launch kanata automatically on login, create the Startup shortcut once (after `install-apps` and `deploy`):
+ログイン時に kanata を自動起動するには、（`install-apps` と `deploy` の後に）一度だけスタートアップのショートカットを作成する:
 
 ```
 mise run setup-kanata
 ```
 
-This writes `Kanata.lnk` into the Startup folder, pointing at the winget-installed exe with `--cfg ~\Documents\kanata\kanata.kbd` (started minimized to the system tray). Start it immediately without logging out:
+これはスタートアップフォルダに `Kanata.lnk` を作成し、winget でインストールした exe を `--cfg ~\Documents\kanata\kanata.kbd` 付きで指す（最小化してシステムトレイに常駐）。ログアウトせずすぐ起動するには:
 
 ```powershell
 Start-Process "$([Environment]::GetFolderPath('Startup'))\Kanata.lnk"
 ```
 
-The `winIOv2` variant uses Windows LLHOOK + SendInput and needs no driver or admin rights. It will not affect windows running elevated (UAC); if you need remapping there too, run kanata via Task Scheduler at logon with highest privileges instead of the Startup shortcut.
+`winIOv2` バリアントは Windows の LLHOOK + SendInput を使うため、ドライバも管理者権限も不要。ただし管理者権限（UAC）で動くウィンドウには効かない。そこでもリマップしたい場合は、スタートアップショートカットの代わりにタスクスケジューラでログオン時に最上位特権で起動する。
 
 ## PowerShell profile and mise
 
-[`home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1) sets:
+[`home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1) で以下を設定している:
 
 - `$env:DOTFILES`
-- `dot` to jump to the repo
-- `mise activate pwsh` on shell start
+- `dot` でリポジトリに移動
+- シェル起動時に `mise activate pwsh`
 
-Use **PowerShell 7** (`pwsh`). mise activation on Windows PowerShell 5.1 is not supported; see [mise PowerShell discussion](https://github.com/jdx/mise/discussions/6733).
+**PowerShell 7**（`pwsh`）を使うこと。Windows PowerShell 5.1 での mise activation はサポートされない。[mise PowerShell discussion](https://github.com/jdx/mise/discussions/6733) を参照。
 
 ## Developer Mode (symlinks)
 
-PSDotFiles creates symbolic links. Enable **Developer Mode**:
+PSDotFiles はシンボリックリンクを作成する。**開発者モード** を有効にする:
 
-**Settings → System → For developers → Developer Mode**
+**設定 → システム → 開発者向け → 開発者モード**
 
-Or run the deploy shell as Administrator.
+またはデプロイ用シェルを管理者として実行する。
 
-If `$PROFILE` already exists, back it up before the first deploy. On conflict, PSDotFiles reports an error; resolve manually or use PSDotFiles `-WhatIf` first:
+`$PROFILE` がすでに存在する場合は、最初のデプロイ前にバックアップする。競合時は PSDotFiles がエラーを報告するので、手動で解決するか、先に PSDotFiles の `-WhatIf` で確認する:
 
 ```powershell
 $DotFilesPath = "$HOME\Codes\dotfiles"
@@ -166,4 +168,4 @@ Install-DotFiles home-win -WhatIf
 | `home/`    | macOS, Linux   | mise `[dotfiles]` |
 | `home-win/`| Windows        | PSDotFiles  |
 
-Keep Windows-specific files in `home-win/` so mac-only tools (Karabiner, Ghostty, etc.) are not deployed on Windows.
+Windows 専用のファイルは `home-win/` に置き、mac 専用ツール（Karabiner、Ghostty など）が Windows にデプロイされないようにする。

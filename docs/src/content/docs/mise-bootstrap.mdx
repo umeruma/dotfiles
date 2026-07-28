@@ -1,53 +1,53 @@
 ---
 title: mise bootstrap
-description: How fresh-machine setup converges via mise bootstrap on macOS and Linux.
+description: macOS / Linux の新規マシンセットアップを mise bootstrap で収束させる仕組み。
 sidebar:
   order: 3
 ---
 
 ## Overview
 
-Fresh-machine setup on macOS / Linux is driven by [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html).
+macOS / Linux の新規マシンセットアップは [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) が主役。
 
-The curl installer (`install`) still handles the chicken-and-egg steps that must happen **before** mise exists:
+curl インストーラー（`install`）は、mise が存在する **前** に必要な鶏卵問題のステップだけを担当する:
 
-1. Clone (or pull) this repo to `~/Codes/dotfiles`
-2. Install Xcode Command Line Tools on macOS (`init/init-macos.sh`)
-3. Install Homebrew (still used by Brewfile / `install-apps`)
-4. Install mise itself (`curl https://mise.run | sh`)
-5. Run `mise trust` + `mise bootstrap --yes --update`
+1. このリポジトリを `~/Codes/dotfiles` に clone（または pull）
+2. macOS では Xcode Command Line Tools をインストール（`init/init-macos.sh`）
+3. Homebrew をインストール（Brewfile / `install-apps` で引き続き使用）
+4. mise 自体をインストール（`curl https://mise.run | sh`）
+5. `mise trust` + `mise bootstrap --yes --update` を実行
 
-After that, declarative machine state lives in:
+以降、宣言的なマシン状態は以下に置く:
 
-- [`.miserc.toml`](https://github.com/umeruma/dotfiles/blob/main/.miserc.toml) — early-init (`auto_env = true` so OS-specific configs load)
-- [`mise.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.toml) — shared bootstrap user/task + mise tasks
-- [`mise.linux.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.linux.toml) / [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) — OS packages
+- [`.miserc.toml`](https://github.com/umeruma/dotfiles/blob/main/.miserc.toml) — early-init（`auto_env = true` で OS 別設定を読み込む）
+- [`mise.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.toml) — 共通の bootstrap user/task と mise タスク
+- [`mise.linux.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.linux.toml) / [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) — OS パッケージ
 
 ## What `mise bootstrap` does here
 
 | Phase | Config | This repo |
 | --- | --- | --- |
-| packages | `[bootstrap.packages]` in `mise.linux.toml` | Linux: `apt:build-essential`, `apt:zsh`. |
-| dotfiles | `[dotfiles]` in `mise.dotfiles.toml` / `mise.macos.toml` | Declarative symlink allowlist for `home/` (per-file entries for runtime-write dirs, whole-dir for static config). |
-| macOS defaults | `[bootstrap.macos.*]` / `[bootstrap.macos.defaults]` in `mise.macos.toml` | Dock, Finder, keyboard, and scalar preferences (arrays / PlistBuddy are not migrated). |
-| user | `[bootstrap.user]` | `login_shell = "/bin/zsh"` (replaces the old `chsh` block in `install`) |
-| task | `[tasks.bootstrap]` | Runs `mise run deploy` (idempotent re-apply of `[dotfiles]` on Unix, PSDotFiles on Windows) |
+| packages | `mise.linux.toml` の `[bootstrap.packages]` | Linux: `apt:build-essential`、`apt:zsh` |
+| dotfiles | `mise.dotfiles.toml` / `mise.macos.toml` の `[dotfiles]` | `home/` の宣言的 symlink allowlist（実行時書き込みのある dir はファイル単位、静的な設定 dir はディレクトリごと） |
+| macOS defaults | `mise.macos.toml` の `[bootstrap.macos.*]` / `[bootstrap.macos.defaults]` | Dock・Finder・キーボードなどスカラー値の設定（配列 / PlistBuddy は未移行） |
+| user | `[bootstrap.user]` | `login_shell = "/bin/zsh"`（`install` 内の旧 `chsh` ブロックを置き換え） |
+| task | `[tasks.bootstrap]` | `mise run deploy` を実行（Unix では `[dotfiles]`、Windows では PSDotFiles の冪等な再適用） |
 
-Re-running is safe: declarative phases converge; the `bootstrap` task should stay idempotent.
+再実行しても安全: 宣言的なフェーズは収束するし、`bootstrap` タスクは冪等に保つ。
 
-Preview without changing the machine:
+マシンを変更せずにプレビュー:
 
 ```
 dot && mise bootstrap --dry-run --yes
 ```
 
-Status of missing pieces:
+不足しているものの確認:
 
 ```
 dot && mise bootstrap status --missing
 ```
 
-macOS defaults drift (macOS only):
+macOS defaults の差分（macOS のみ）:
 
 ```
 dot && mise bootstrap macos defaults status
@@ -56,28 +56,28 @@ dot && mise bootstrap macos defaults apply --dry-run --yes
 
 ## What stays outside bootstrap (for now)
 
-These are intentional — either Windows-specific, interactive, or still richer than bootstrap's declarative surface:
+以下は意図的に bootstrap の外にある — Windows 専用、対話的、あるいは bootstrap の宣言的な仕組みより既存の方がリッチなもの:
 
 | Piece | Why |
 | --- | --- |
-| `install-win` + `win/*.winget` | Windows uses winget / PSDotFiles; mise bootstrap packages do not cover winget |
-| `macos/Brewfile` / `linux/Brewfile` via `mise run install-apps` | Deliberate: `brew bundle add` / `brew bundle cleanup` provide the add-and-track workflow; bootstrap keeps only deploy-critical packages |
-| Xcode CLT | Interactive `xcode-select --install` |
+| `install-win` + `win/*.winget` | Windows は winget / PSDotFiles を使う。mise bootstrap のパッケージ機構は winget をカバーしない |
+| `macos/Brewfile` / `linux/Brewfile`（`mise run install-apps` 経由） | 意図的: `brew bundle add` / `brew bundle cleanup` の追加・追跡ワークフローが便利なため。bootstrap にはデプロイに必須のパッケージだけ残す |
+| Xcode CLT | 対話的な `xcode-select --install` |
 
 ## Gradual migration ideas
 
-Once you are comfortable with experimental bootstrap:
+experimental な bootstrap に慣れてきたら:
 
-1. **Shell activation** — optional `[bootstrap.mise_shell_activate]` if you want mise to manage the `eval "$(mise activate zsh)"` snippet instead of keeping it in `.zshrc`.
+1. **Shell activation** — `.zshrc` に書いている `eval "$(mise activate zsh)"` を mise 管理にしたければ、オプションの `[bootstrap.mise_shell_activate]` を使う
 
-(Done: macOS defaults → `[bootstrap.macos.defaults]`; stow → `[dotfiles]`. Not planned: Brewfile → `[bootstrap.packages]` — the `brew bundle` workflow is a feature, not a gap.)
+（完了済み: macOS defaults → `[bootstrap.macos.defaults]`、stow → `[dotfiles]`。予定なし: Brewfile → `[bootstrap.packages]` — `brew bundle` ワークフローは欠点ではなく機能なので）
 
-`settings.experimental = true` is set in this repo's `mise.toml` because `mise bootstrap` is still marked experimental.
+`mise bootstrap` はまだ experimental 扱いのため、このリポジトリの `mise.toml` では `settings.experimental = true` を設定している。
 
 ## Related commands
 
 ```
-mise run deploy        # symlink home/ (also the bootstrap task)
-mise run install-apps  # Brewfile / winget apps (opt-in)
-mise run theme         # Terminal.app theme
+mise run deploy        # home/ を symlink（bootstrap タスクの実体でもある）
+mise run install-apps  # Brewfile / winget アプリ（opt-in）
+mise run theme         # Terminal.app テーマ
 ```

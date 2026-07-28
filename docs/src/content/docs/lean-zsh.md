@@ -1,8 +1,8 @@
 ---
 title: Lean zsh
-description: Reading and inspiration behind this lean zsh configuration.
+description: この lean な zsh 設定の参考資料とインスピレーション元。
 sidebar:
-  order: 6
+  order: 7
 ---
 
 reading:

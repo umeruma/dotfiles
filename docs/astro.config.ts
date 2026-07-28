@@ -35,8 +35,8 @@ const nimbusConfig = defineNimbusConfig({
   site: "https://dot.umeru.ma",
   // Used for <title>, the home H1, the header brand, and OG cards.
   title: "dotfiles",
-  description: "umeruma's dotfiles — install and deploy on macOS, Linux, and Windows.",
-  locale: "en",
+  description: "umeruma の dotfiles — macOS / Linux / Windows へのインストールとデプロイ。",
+  locale: "ja",
   github: "https://github.com/umeruma/dotfiles",
   socialImageAlt: "dotfiles documentation preview",
 });

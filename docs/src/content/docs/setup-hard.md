@@ -1,13 +1,15 @@
 ---
 title: Setup Hardware
-description: Keyboard, mouse, and audio gear used with this setup.
+description: このセットアップで使っているキーボード・マウス・オーディオ機材。
 sidebar:
-  order: 5
+  order: 6
 ---
 
 ## keyboard: 
 
 [HHKB ANSI layout](https://hhkb.io/layout/)
+
+IME 切り替えの設定（macOS: Karabiner / Windows: kanata）は [US 配列と IME 切り替え](/ime-switching) を参照。
 
 <img width="320" alt="" src="https://i.gyazo.com/1eaad11921cce165baed6c8b222f77cc.jpg"/>
 

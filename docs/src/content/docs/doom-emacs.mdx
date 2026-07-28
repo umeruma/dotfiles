@@ -1,20 +1,20 @@
 ---
 title: Doom Emacs
-description: How Doom Emacs core and private config are managed in this repo.
+description: このリポジトリでの Doom Emacs core と private config の管理方法。
 sidebar:
   order: 4
 ---
 
-[Doom Emacs](https://github.com/doomemacs/core) is managed separately from the core repo:
+[Doom Emacs](https://github.com/doomemacs/core) は core と設定を分けて管理している:
 
 | Path | Role |
 | --- | --- |
-| `~/.config/emacs` | Doom core ([doomemacs/core](https://github.com/doomemacs/core)), cloned by `mise run setup-doom` |
-| `~/.config/doom` | Private config (`init.el`, `config.el`, `packages.el`), deployed from this repo via mise `[dotfiles]` |
+| `~/.config/emacs` | Doom core（[doomemacs/core](https://github.com/doomemacs/core)）。`mise run setup-doom` が clone する |
+| `~/.config/doom` | Private config（`init.el`、`config.el`、`packages.el`）。このリポジトリから mise `[dotfiles]` でデプロイ |
 
 ## Prerequisites
 
-Installed via `mise run install-apps` (macOS Brewfile):
+`mise run install-apps`（macOS Brewfile）でインストールされる:
 
 - `emacs`
 - `ripgrep`
@@ -23,50 +23,50 @@ Installed via `mise run install-apps` (macOS Brewfile):
 ## Setup
 
 ```bash
-mise run deploy        # symlink ~/.config/doom from dotfiles
-mise run install-apps  # if emacs is not installed yet
-mise run setup-doom    # clone core (if needed) and run doom install
+mise run deploy        # dotfiles から ~/.config/doom を symlink
+mise run install-apps  # emacs が未インストールの場合
+mise run setup-doom    # core を clone（必要なら）して doom install を実行
 ```
 
-`setup-doom` is idempotent: it skips cloning if `~/.config/emacs` already exists, initializes the `sources/doom+` submodule if needed, then runs `doom sync --force --env`.
+`setup-doom` は冪等: `~/.config/emacs` が既にあれば clone をスキップし、必要なら `sources/doom+` submodule を初期化してから `doom sync --force --env` を実行する。
 
-First sync usually takes **5–15 minutes** (many git clones). If it hangs with no output for longer, check that `sources/doom+/modules` exists and that no other `doom`/`emacs` process is waiting for input.
+初回の sync は通常 **5〜15 分** かかる（大量の git clone が走るため）。それ以上出力なしで止まっている場合は、`sources/doom+/modules` が存在するか、他の `doom` / `emacs` プロセスが入力待ちになっていないかを確認する。
 
 ## Daily use
 
-- Launch: `emacs`
-- After editing `init.el` or `packages.el`: `doom sync`
-- macOS GUI: env snapshot is generated during setup (`doom install --env`); re-run `doom sync --env` if `PATH` changes
-- Troubleshoot: `doom doctor`
+- 起動: `emacs`
+- `init.el` や `packages.el` を編集したら: `doom sync`
+- macOS GUI: 環境スナップショットはセットアップ時に生成される（`doom install --env`）。`PATH` が変わったら `doom sync --env` を再実行
+- トラブルシュート: `doom doctor`
 
-The `doom` CLI is on `PATH` via `~/.zprofile` (`~/.config/emacs/bin`).
+`doom` CLI は `~/.zprofile`（`~/.config/emacs/bin`）で `PATH` に入る。
 
 ## Customize
 
-Edit files under `home/.config/doom/` in this repo, then:
+このリポジトリの `home/.config/doom/` 以下を編集して:
 
 ```bash
 mise run deploy
 doom sync
 ```
 
-Module list: `SPC h d h` inside Emacs, or see [Doom docs](https://github.com/doomemacs/core/tree/master/docs).
+モジュール一覧: Emacs 内で `SPC h d h`、または [Doom docs](https://github.com/doomemacs/core/tree/master/docs) を参照。
 
 ## Learning (Emacs / Doom)
 
-This dotfiles setup enables **Evil** (Vim-style keys). The leader key is **`SPC`** (space).
+この dotfiles では **Evil**（Vim スタイルのキー操作）を有効にしている。リーダーキーは **`SPC`**（スペース）。
 
 | Resource | What it covers |
 | --- | --- |
-| [Doom: Getting Started](https://github.com/doomemacs/core/blob/master/docs/getting_started.org) | Install follow-up, daily workflow, config basics |
-| [Doom: FAQ](https://github.com/doomemacs/core/blob/master/docs/faq.org) | Common questions and fixes |
-| [Doom documentation site](https://docs.doomemacs.org/) | Searchable module / API docs |
-| [GNU Emacs guided tour](https://www.gnu.org/software/emacs/tour/) | What Emacs is (editor-agnostic intro) |
-| [Emacs built-in tutorial](https://www.gnu.org/software/emacs/manual/html_node/emacs/Tutorial.html) | Classic keybindings (`C-h t` inside Emacs) |
+| [Doom: Getting Started](https://github.com/doomemacs/core/blob/master/docs/getting_started.org) | インストール後の流れ、日常のワークフロー、設定の基本 |
+| [Doom: FAQ](https://github.com/doomemacs/core/blob/master/docs/faq.org) | よくある質問と対処 |
+| [Doom documentation site](https://docs.doomemacs.org/) | 検索できるモジュール / API ドキュメント |
+| [GNU Emacs guided tour](https://www.gnu.org/software/emacs/tour/) | Emacs とは何か（エディタ非依存の入門） |
+| [Emacs built-in tutorial](https://www.gnu.org/software/emacs/manual/html_node/emacs/Tutorial.html) | クラシックなキーバインド（Emacs 内で `C-h t`） |
 
-Useful commands after launch:
+起動後に便利なコマンド:
 
-- `SPC h b b` — list keybindings
-- `SPC h d h` — Doom help / module index
-- `C-h t` — Emacs tutorial (non-Vim keys)
-- `M-x` — run any command by name (`SPC :` in Evil mode)
+- `SPC h b b` — キーバインド一覧
+- `SPC h d h` — Doom のヘルプ / モジュール索引
+- `C-h t` — Emacs チュートリアル（非 Vim キー）
+- `M-x` — 任意のコマンドを名前で実行（Evil モードでは `SPC :`）

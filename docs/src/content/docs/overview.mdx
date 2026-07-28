@@ -1,49 +1,49 @@
 ---
 title: dotfiles
-description: Install and deploy umeruma's dotfiles on macOS, Linux, and Windows.
+description: umeruma の dotfiles を macOS / Linux / Windows にインストール・デプロイする。
 sidebar:
   order: 1
 ---
 
 ## install (macOS / Linux)
-This dotfiles repository is designed to be installed at `~/Codes/dotfiles`.
+この dotfiles リポジトリは `~/Codes/dotfiles` に配置する前提で作られている。
 
-Review the contents of the script before running it:  
+実行前にスクリプトの中身を確認する:  
 [https://dot.umeru.ma/install](https://dot.umeru.ma/install)
 
-Open Terminal.app, and run:
+Terminal.app を開いて実行:
 
 ```
 bash -c "$(curl -fsSL https://dot.umeru.ma/install)"
 ```
-This will clone the repository to `~/Codes/dotfiles` and set up your dotfiles. If the repository already exists, it pulls the latest changes before continuing.
+リポジトリを `~/Codes/dotfiles` に clone して dotfiles をセットアップする。すでに存在する場合は最新を pull してから続行する。
 
-After cloning, the installer installs mise (if needed) and runs [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) to converge OS packages, login shell, and `mise run deploy`. Details: [mise bootstrap](/mise-bootstrap).
+clone 後、インストーラーは（必要なら）mise を入れて [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) を実行し、OS パッケージ・ログインシェル・`mise run deploy` を収束させる。詳細: [mise bootstrap](/mise-bootstrap)
 
-Notes on bash and curl options:
+bash と curl のオプションのメモ:
 
 bash:
-- `-c`: Execute the given string as a bash command (e.g., `bash -c "echo hello"` outputs `hello`).
+- `-c`: 渡した文字列を bash コマンドとして実行する（例: `bash -c "echo hello"` は `hello` を出力）
 
 curl:
-- `-f` (`--fail`): Fail silently on server errors (no output, exit non-zero).
-- `-s` (`--silent`): Silent mode — do not show progress meter or error messages.
-- `-S` (`--show-error`): When used with `-s`, show error messages on failure (since `-s` alone is fully silent).
-- `-L` (`--location`): Follow HTTP redirects automatically.
+- `-f` (`--fail`): サーバーエラー時に静かに失敗する（出力なし・非ゼロ終了）
+- `-s` (`--silent`): サイレントモード。進捗やエラーメッセージを表示しない
+- `-S` (`--show-error`): `-s` と併用時、失敗時のエラーメッセージだけは表示する
+- `-L` (`--location`): HTTP リダイレクトを自動で追う
 
 
 ## install (Windows)
 
-See [Windows](/windows) for PowerShell setup (`install-win`, PSDotFiles, winget).
+PowerShell でのセットアップ（`install-win`、PSDotFiles、winget）は [Windows](/windows) を参照。
 
 ## jump to dotfiles
 
-In Terminal, you can quickly jump to the dotfiles directory by running:
+ターミナルからは以下で dotfiles ディレクトリにすぐ移動できる:
 ```
 dot 
 ```
 
-.zshenv & .zshrc contains:
+.zshenv と .zshrc に以下がある:
 ```
 # on .zshenv
 export DOTFILES="$HOME/Codes/dotfiles"
@@ -54,7 +54,7 @@ alias dot='cd $DOTFILES'
 
 ## Deploy dotfiles
 
-To deploy your dotfiles to your home directory, simply run:
+dotfiles をホームディレクトリにデプロイするには:
 
 ```
 dot && mise run deploy
@@ -62,51 +62,51 @@ dot && mise run deploy
 
 ### How it works
 
-Symlinks are managed declaratively by mise's `[dotfiles]` sections in [`mise.dotfiles.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.dotfiles.toml) (cross-platform; loaded via `env = ["dotfiles"]` in `.miserc.toml`) and [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) (macOS-only). Each entry is an explicit allowlist item:
+symlink は mise の `[dotfiles]` セクションで宣言的に管理している。[`mise.dotfiles.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.dotfiles.toml)（クロスプラットフォーム。`.miserc.toml` の `env = ["dotfiles"]` で読み込む）と [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml)（macOS 専用）の 2 つで、各エントリは明示的な allowlist になっている:
 
 ```toml
 [dotfiles]
 "~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
 ```
 
-Directories that receive runtime writes (logs, state — e.g. `~/.config/karabiner`, `~/.config/micro`, `~/.config/lazygit`) are linked **per file**, so app state stays local and never leaks into the repo. Purely static config dirs (`~/.config/doom`, `~/.config/ghostty`, `~/.config/sheldon`) are linked as whole directories.
+実行時に書き込みが発生するディレクトリ（ログや状態。例: `~/.config/karabiner`、`~/.config/micro`、`~/.config/lazygit`）は**ファイル単位**でリンクし、アプリの状態がリポジトリに漏れないようにしている。純粋に静的な設定ディレクトリ（`~/.config/doom`、`~/.config/ghostty`、`~/.config/sheldon`）はディレクトリごとリンクする。
 
-Useful commands:
+よく使うコマンド:
 
 ```
-mise dotfiles status   # show applied / differs / missing per entry
-mise run clean         # remove every symlink pointing into home/ (incl. dangling)
-dottrack <path>        # start tracking an existing file (adds entry + relinks)
+mise dotfiles status   # エントリごとに applied / differs / missing を表示
+mise run clean         # home/ を指す symlink をすべて削除（dangling 含む）
+dottrack <path>        # 既存ファイルの追跡を開始（エントリ追加 + リンク）
 ```
 
-Agent skills (`home/.agents/skills/`) are a single source of truth shared by all agents: `~/.agents` is one whole-dir link (Cursor and GitHub Copilot read `~/.agents/skills/` natively), and Claude Code gets per-skill links in `~/.claude/skills/`. The whole-dir link is deliberate: skills installed with `npx skills` and its `.skill-lock.json` land inside the repo through the link, so installs are tracked by git.
+Agent skills（`home/.agents/skills/`）は全エージェント共通の single source of truth: `~/.agents` はディレクトリごと 1 本のリンク（Cursor と GitHub Copilot は `~/.agents/skills/` を直接読む）で、Claude Code には `~/.claude/skills/` にスキル単位のリンクを張る。ディレクトリごとリンクするのは意図的で、`npx skills` でインストールしたスキルと `.skill-lock.json` がリンク越しにリポジトリ内へ入るため、インストールが git で追跡される。
 
 ## macOS defaults
 
-macOS preferences are applied by `mise bootstrap` from [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) (`[bootstrap.macos.*]` and `[bootstrap.macos.defaults]`). Re-run bootstrap to converge, or inspect drift:
+macOS の設定は `mise bootstrap` が [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml)（`[bootstrap.macos.*]` と `[bootstrap.macos.defaults]`）から適用する。再収束させる、または差分を確認するには:
 
 ```
 dot && mise bootstrap macos defaults status
 ```
 
-Details: [mise bootstrap](/mise-bootstrap).
+詳細: [mise bootstrap](/mise-bootstrap)
 
 ## macOS Terminal theme
-To apply theme for macOS Terminal, run:
+macOS の Terminal にテーマを適用するには:
 ```
 dot && mise run theme
 ```
 
-then looks like this:
+適用するとこうなる:
 
 <img alt="" src="https://i.gyazo.com/424031983a2fd63e67958a214050513e.png"/>
 
 ## tech stack
 
-- [mise](https://mise.jdx.dev/) as task runner and machine bootstrap
-- [sheldon](https://github.com/rossmacarthur/sheldon#readme) as zsh plugin manager
-- [Homebrew](https://docs.brew.sh/Manpage) as package manager (Brewfile / `install-apps`)
-- [mise `[dotfiles]`](https://mise.jdx.dev/bootstrap.html) for declarative symlink deploy of `home/`
+- [mise](https://mise.jdx.dev/) — タスクランナー兼マシンブートストラップ
+- [sheldon](https://github.com/rossmacarthur/sheldon#readme) — zsh プラグインマネージャー
+- [Homebrew](https://docs.brew.sh/Manpage) — パッケージマネージャー（Brewfile / `install-apps`）
+- [mise `[dotfiles]`](https://mise.jdx.dev/bootstrap.html) — `home/` の宣言的 symlink デプロイ
 
 ## website
 
