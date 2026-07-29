@@ -7,6 +7,7 @@ brew "ripgrep"    # required (LazyVim grep, project search)
 brew "fd"         # required (LazyVim file picker)
 brew "tree-sitter-cli"  # required (nvim-treesitter parser builds)
 
+brew "crit"       # inline code review for AI agent workflows (https://crit.md)
 brew "diffr"
 brew "ffmpeg"
 brew "fzy"

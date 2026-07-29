@@ -12,6 +12,7 @@ sidebar:
 | [LazyVim](https://www.lazyvim.org/) | Neovim ディストリビューション（エディタ） | `home/.config/nvim` |
 | [lazygit](https://github.com/jesseduffield/lazygit) | Git の TUI | `home/.config/lazygit/config.yml` |
 | [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ | `home/.config/herdr/config.toml` |
+| [Crit](https://crit.md/) | AI エージェント向けのローカルレビューツール | なし（単一バイナリ） |
 
 herdr は tmux のエージェント版で、Claude Code や Codex を PTY セッションとして常駐させ、状態（作業中 / 待ち / 完了）を一覧しながら切り替える。サーバー側で生き続けるので、ターミナルを閉じても SSH で attach し直せる。
 
@@ -24,6 +25,14 @@ herdr は tmux のエージェント版で、Claude Code や Codex を PTY セ�
 - `lazygit`
 - `ripgrep`、`fd`（LazyVim の grep / ファイル検索に必須）
 - `tree-sitter-cli`（nvim-treesitter がパーサーをビルドするのに必要。brew の `tree-sitter` はライブラリのみで CLI は別 formula）
+- `crit`（エージェントの変更をブラウザ UI で行コメントレビューする。`crit <file>` / `crit <url>` で起動）
+
+Crit を Claude Code から `/crit` スラッシュコマンドで使う場合は、プラグインを別途インストールする（プラグイン実体は `~/.claude/plugins` にランタイム管理されるため symlink 対象にはしない）:
+
+```bash
+claude plugin marketplace add tomasz-tomczyk/crit
+claude plugin install crit@crit
+```
 
 ## Setup
 
