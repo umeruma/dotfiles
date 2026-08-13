@@ -5,6 +5,11 @@ font-feature = liga, dlig, clig
 adjust-cell-height = 20%
 mouse-hide-while-typing = true
 
+# Fonts: mise run install-fonts → ~/Library/Fonts/ (Moralerspace Neon + ChaliceIcons)
+# https://github.com/artlaman/chalice-icon-theme (MIT)
+# Must use family name "ChaliceIcons" (not PostScript "ChaliceIcons-Regular")
+font-codepoint-map = U+E000-U+E011=ChaliceIcons
+
 # custom-shader = shaders/cursor_sweep.glsl
 
 keybind = super+r=reload_config

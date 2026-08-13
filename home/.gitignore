@@ -1,0 +1,4 @@
+# Global git excludes (~/.gitignore via excludesfile)
+
+# Neovim
+nvim.log

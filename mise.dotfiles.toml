@@ -10,6 +10,7 @@
 "~/.zprofile" = { source = "home/.zprofile", mode = "symlink" }
 "~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
 "~/.gitconfig" = { source = "home/.gitconfig", mode = "symlink" }
+"~/.gitignore" = { source = "home/.gitignore", mode = "symlink" }
 # static config dirs (whole-dir links; new repo files show up automatically)
 "~/.config/ghostty" = { source = "home/.config/ghostty", mode = "symlink" }
 "~/.config/sheldon" = { source = "home/.config/sheldon", mode = "symlink" }

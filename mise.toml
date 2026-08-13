@@ -62,3 +62,8 @@ description = "Install Terminal theme (macOS)"
 run = "zsh script/theme.zsh"
 run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task theme is not supported on Windows.'; exit 1\""
 
+[tasks.install-fonts]
+description = "Download Moralerspace Neon + ChaliceIcons into ~/Library/Fonts (macOS)"
+run = "zsh script/install-fonts.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task install-fonts is not supported on Windows.'; exit 1\""
+
