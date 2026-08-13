@@ -18,6 +18,10 @@
 # Plugin payloads live in ~/.local/share/nvim, session state in ~/.local/state/nvim.
 "~/.config/nvim" = { source = "home/.config/nvim", mode = "symlink" }
 # runtime-write dirs: per-file links only
+# mise's own global config: declares tools that must resolve outside a project
+# (GUI apps inherit the persistent PATH, not a shell with `mise activate`).
+# Per-file because `mise use -g` rewrites config.toml in place.
+"~/.config/mise/config.toml" = { source = "home/.config/mise/config.toml", mode = "symlink" }
 "~/.config/herdr/config.toml" = { source = "home/.config/herdr/config.toml", mode = "symlink" }
 "~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
 "~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
@@ -30,6 +34,12 @@
 # ~/.claude/skills, so repo-authored skills get per-skill entries there.
 "~/.agents" = { source = "home/.agents", mode = "symlink" }
 "~/.claude/CLAUDE.md" = { source = "home/.claude/CLAUDE.md", mode = "symlink" }
+# Claude Code plugins are declared, not vendored: ~/.claude/plugins holds git
+# clones and version-stamped caches, so only the declaration is tracked here.
+# Claude Code writes back through this link, so settings it manages itself
+# (theme, marketplaces it adds) land in the repo as real changes.
+# Windows keeps its own copy at home-win/.claude/settings.json.
+"~/.claude/settings.json" = { source = "home/.claude/settings.json", mode = "symlink" }
 "~/.copilot/instructions/global.instructions.md" = { source = "home/.agents/instructions/global.instructions.md", mode = "symlink" }
 "~/.claude/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
 "~/.claude/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }

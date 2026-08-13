@@ -1,0 +1,7 @@
+# mise global config. Tools declared here resolve anywhere, not just inside a
+# project with its own mise.toml — GUI apps that inherit the persistent PATH
+# (Claude Code plugin hooks, editors) need that.
+# `mise use -g <tool>@<ver>` writes back through the symlink into this file.
+
+[tools]
+node = "22"

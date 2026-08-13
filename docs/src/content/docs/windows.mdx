@@ -145,6 +145,37 @@ Start-Process "$([Environment]::GetFolderPath('Startup'))\Kanata.lnk"
 
 **PowerShell 7**（`pwsh`）を使うこと。Windows PowerShell 5.1 での mise activation はサポートされない。[mise PowerShell discussion](https://github.com/jdx/mise/discussions/6733) を参照。
 
+## Claude Code plugins
+
+プラグインの実体は `~/.claude/plugins` に入る。中身は marketplace の git clone（`marketplaces/<name>/`）とバージョン付きキャッシュ（`cache/<marketplace>/<plugin>/<version>/`）なので、このディレクトリは追跡しない。追跡するのは宣言だけ。
+
+[`home-win/.claude/settings.json`](https://github.com/umeruma/dotfiles/blob/main/home-win/.claude/settings.json) に marketplace を `extraKnownMarketplaces`、プラグインを `enabledPlugins` で列挙する。`~/.claude` は Claude Code が書き込む実ディレクトリなので、[`.deploy_subdir-windows`](https://github.com/umeruma/dotfiles/blob/main/.deploy_subdir-windows) に `.claude` を入れてディレクトリごとではなくファイル単位で symlink させる。
+
+新しいマシンでは `mise run deploy` と再起動だけでは**途中までしか進まない**。marketplace の登録と `cache/` への先読みまでは走るが、git リポジトリ由来のプラグインは `enabledPlugins` だけでは install が完了しない。マシンごとに一度だけシェルコマンドで仕上げる（`/plugin` スラッシュコマンドは対話ターミナルが必要なので使わない）:
+
+```
+claude plugin install <plugin>@<marketplace>
+claude plugin list
+```
+
+`plugin list` が `Status: enabled` を返せば完了。起動中のセッションに反映するには `/reload-plugins`。
+
+Claude Code は symlink 越しに書き戻すので、アプリ側で変更した設定（テーマ、自動追加される marketplace など）はリポジトリの差分として現れる。プラグインを増やすときは `home-win/.claude/settings.json` と `home/.claude/settings.json` の両方に追記する（`home/` と `home-win/` を分けている方針どおり、意図的に二重管理）。
+
+### hooks を使うプラグインは node が必要
+
+SessionStart などの hook を持つプラグインは `node` を実行する。GUI アプリは**永続ユーザー PATH しか継承しない**ため、`mise activate pwsh` でシェル起動時にだけ通している状態では hook が毎回失敗する。スキルは使えるのに hook だけ効かない、という分かりにくい壊れ方をする。
+
+node のバージョンは [`home-win/.config/mise/config.toml`](https://github.com/umeruma/dotfiles/blob/main/home-win/.config/mise/config.toml) で宣言済みで、deploy が `~/.config/mise/config.toml` に symlink する。プロジェクトの `mise.toml` に `[tools]` を書くのでは届かない — それはそのディレクトリの中でしか解決しないため。
+
+残る手作業は shims を永続 PATH に入れること。マシンごとに一度だけ:
+
+```powershell
+[Environment]::SetEnvironmentVariable('Path', "$env:LOCALAPPDATA\mise\shims;" + [Environment]::GetEnvironmentVariable('Path','User'), 'User')
+```
+
+設定後は GUI アプリを再起動する。`~/.claude/.ponytail-active` のようなプラグイン側の状態ファイルができていれば hook が動いている。
+
 ## Developer Mode (symlinks)
 
 PSDotFiles はシンボリックリンクを作成する。**開発者モード** を有効にする:
