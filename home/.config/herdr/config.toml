@@ -6,7 +6,7 @@ onboarding = false
 # into the same directory, so ~/.config/herdr itself stays local.
 
 [theme]
-# Follow the host terminal palette (Ghostty: Birds Of Paradise) instead of
+# Follow the host terminal palette (Ghostty: cendre) instead of
 # a bundled scheme, so herdr matches whatever the terminal is themed with.
 name = "terminal"
 

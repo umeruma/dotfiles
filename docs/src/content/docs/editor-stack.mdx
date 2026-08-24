@@ -54,7 +54,7 @@ nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
 
 設定なしでも動く。このリポジトリでは 3 点だけ変えている:
 
-- `theme.name = "terminal"` — Ghostty のテーマ（Birds Of Paradise）にそのまま追従させる
+- `theme.name = "terminal"` — Ghostty のテーマ（cendre）にそのまま追従させる
 - `experimental.switch_ascii_input_source_in_prefix` — prefix（`ctrl+b`）を押している間だけ macOS の入力ソースを ASCII に切り替える。日本語入力中でも prefix コマンドが通る
 - `experimental.reveal_hidden_cursor_for_cjk_ime` — Claude Code / Codex のように自前でカーソルを描く TUI で、IME の候補ウィンドウがカーソルを追従するようにする。`cjk_ime_agents` で対象を絞っているのは、全面適用すると Neovim のノーマルモードでカーソルが二重に見えるため
 
