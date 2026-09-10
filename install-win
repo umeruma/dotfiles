@@ -1,11 +1,11 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-  Bootstrap dotfiles on Windows (PowerShell 7, mise, PSDotFiles, home-win deploy).
+  Bootstrap dotfiles on Windows (PowerShell 7, mise, dotfiles deploy).
 
 .DESCRIPTION
-  Clone to ~/Codes/dotfiles, apply win/bootstrap.winget, install PSDotFiles,
-  then run mise run deploy. Install GUI apps separately with: mise run install-apps
+  Clone to ~/Codes/dotfiles, apply win/bootstrap.winget, then run
+  mise run deploy. Install GUI apps separately with: mise run install-apps
 
   Review this script before running:
     irm https://dot.umeru.ma/install-win | iex
@@ -75,7 +75,6 @@ function Invoke-ScriptInPwsh {
     "function Ensure-PowerShell7 {`n$(${function:Ensure-PowerShell7}.ToString())`n}"
     "function Ensure-Repository {`n$(${function:Ensure-Repository}.ToString())`n}"
     "function Invoke-BootstrapWinget {`n$(${function:Invoke-BootstrapWinget}.ToString())`n}"
-    "function Ensure-PSDotFiles {`n$(${function:Ensure-PSDotFiles}.ToString())`n}"
     "function Write-DeveloperModeWarningIfNeeded {`n$(${function:Write-DeveloperModeWarningIfNeeded}.ToString())`n}"
     "function Invoke-Deploy {`n$(${function:Invoke-Deploy}.ToString())`n}"
     "function Invoke-Main {`n$(${function:Invoke-Main}.ToString())`n}"
@@ -181,17 +180,6 @@ function Invoke-BootstrapWinget {
   $env:Path = "$machinePath;$userPath"
 }
 
-function Ensure-PSDotFiles {
-  if (Get-Module -ListAvailable -Name PSDotFiles) {
-    Write-Host 'PSDotFiles is installed'
-    return
-  }
-
-  Write-Host 'Installing PSDotFiles from PowerShell Gallery...'
-  Set-PSRepository -Name PSGallery -InstallationPolicy Trusted -ErrorAction SilentlyContinue
-  Install-Module -Name PSDotFiles -Scope CurrentUser -Force -AllowClobber
-}
-
 function Write-DeveloperModeWarningIfNeeded {
   try {
     $key = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -ErrorAction Stop
@@ -203,7 +191,9 @@ function Write-DeveloperModeWarningIfNeeded {
   }
 
   Write-Warning @"
-Developer Mode may not be enabled. Enable it for symlink creation:
+Developer Mode may not be enabled. Without it, mise dotfiles apply silently
+copies instead of creating symlinks, so edits made in your home directory will
+not flow back into the repo. Enable it:
   Settings -> System -> For developers -> Developer Mode
 "@
 }
@@ -240,7 +230,6 @@ function Invoke-Main {
   Set-Location $DotDirectory
 
   Invoke-BootstrapWinget -RepoRoot $DotDirectory
-  Ensure-PSDotFiles
   Write-DeveloperModeWarningIfNeeded
   Invoke-Deploy -RepoRoot $DotDirectory
 

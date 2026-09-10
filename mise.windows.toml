@@ -1,0 +1,37 @@
+# Loaded on Windows only (merged with mise.toml).
+# Applied by `mise run install-apps` (= `mise bootstrap packages apply`).
+# Requires mise >= 2026.9.3, which added winget as a bootstrap package manager.
+
+[bootstrap.packages]
+"winget:Microsoft.VisualStudioCode" = "latest"
+"winget:Anysphere.Cursor" = "latest"
+"winget:Anthropic.Claude" = "latest"
+"winget:Anthropic.ClaudeCode" = "latest"
+"winget:SlackTechnologies.Slack" = "latest"
+"winget:Unity.UnityHub" = "latest"
+"winget:Zen-Team.Zen-Browser" = "latest"
+"winget:Nota.Gyazo" = "latest"
+"winget:AgileBits.1Password" = "latest"
+"winget:jtroo.kanata_gui" = "latest"
+"winget:Notion.Notion" = "latest"
+"winget:Notion.NotionCalendar" = "latest"
+"winget:Figma.Figma" = "latest"
+"winget:Elgato.WaveLink" = "latest"
+# ponytail: Raycast は msstore 由来の ID。旧 apps.winget では `source: msstore` を
+# 明示していた。winget の暗黙のソース解決に任せている。解決できなければ
+# `winget install --id 9PFXXSHC64H3 --source msstore` を手動で。
+"winget:9PFXXSHC64H3" = "latest"
+
+# Windows-side [dotfiles]. Cross-platform entries live in mise.dotfiles.toml;
+# the first three here override the `home/` sources declared in mise.unix.toml.
+# `mise dotfiles apply` creates missing parent dirs, so no prepare-subdirs step.
+# NOTE: `mode = "symlink"` needs Developer Mode (Settings -> System ->
+# For developers). Without it mise silently copies instead, and edits made in
+# $HOME no longer flow back into this repo.
+
+[dotfiles]
+"~/.gitconfig" = { source = "home-win/.gitconfig", mode = "symlink" }
+"~/.claude/settings.json" = { source = "home-win/.claude/settings.json", mode = "symlink" }
+"~/.config/mise/config.toml" = { source = "home-win/.config/mise/config.toml", mode = "symlink" }
+"~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1" = { source = "home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1", mode = "symlink" }
+"~/Documents/kanata/kanata.kbd" = { source = "home-win/Documents/kanata/kanata.kbd", mode = "symlink" }
