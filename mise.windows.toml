@@ -5,6 +5,7 @@
 [bootstrap.packages]
 "winget:Microsoft.VisualStudioCode" = "latest"
 "winget:Anysphere.Cursor" = "latest"
+"winget:ZedIndustries.Zed" = "latest"
 "winget:Anthropic.Claude" = "latest"
 "winget:Anthropic.ClaudeCode" = "latest"
 "winget:SlackTechnologies.Slack" = "latest"
