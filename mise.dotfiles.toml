@@ -45,3 +45,5 @@
 "~/.claude/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
 "~/.claude/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
 "~/.claude/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
+"~/.claude/skills/dev-crit" = { source = "home/.agents/skills/dev-crit", mode = "symlink" }
+"~/.claude/skills/wt-slots" = { source = "home/.agents/skills/wt-slots", mode = "symlink" }
