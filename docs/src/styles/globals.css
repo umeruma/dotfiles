@@ -74,7 +74,7 @@
 		sans-serif;
 	--nb-font-mono:
 		"JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "Cascadia Code",
-		"Source Code Pro", Menlo, Consolas, monospace;
+		"Source Code Pro", Menlo, Consolas, "Noto Sans JP", monospace;
 	--nb-h1-size: 2.1875rem;
 	--nb-h1-weight: 600;
 	--nb-h1-tracking: -0.025em;
