@@ -5,3 +5,7 @@
 
 [tools]
 node = "22"
+
+[settings]
+trusted_config_paths = ["/Users/umeruma/Codes_DL/", "/Users/umeruma/Codes/"]
+experimental = true
