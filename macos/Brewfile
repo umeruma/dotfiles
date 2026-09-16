@@ -34,8 +34,6 @@ brew "rclone"
 cask "1password"
 cask "1password-cli"
 cask "alt-tab"
-# Menu bar icon organiser
-cask "bartender"
 cask "cleanmymac"
 cask "claude"
 cask "claude-code"
