@@ -66,6 +66,8 @@ NewWindowTarget = "PfHm"
 "~/.hammerspoon/hide_menubar_for_meeting.lua" = { source = "home/.hammerspoon/hide_menubar_for_meeting.lua", mode = "symlink" }
 "~/.config/karabiner/karabiner.json" = { source = "home/.config/karabiner/karabiner.json", mode = "symlink" }
 "~/.config/karabiner/assets/complex_modifications" = { source = "home/.config/karabiner/assets/complex_modifications", mode = "symlink" }
+# lazygit AI commit helper (cursor-agent); config.yml itself is unix-wide.
+"~/.config/lazygit/generate-commit-msg.sh" = { source = "home/.config/lazygit/generate-commit-msg.sh", mode = "symlink" }
 
 [bootstrap.hooks.post-defaults]
 run = [
