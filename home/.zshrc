@@ -116,7 +116,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # Cursor IDE (Editor Window; skip Agents/Glass on launch)
 # Note: `cu` is taken by /usr/bin/cu (serial dial-up), so use `cur` instead.
 alias cursor='cursor --classic'
-alias cs='cursor --classic'
+
+# Cursor CLI agent (brew cask cursor-cli)
+cua() { cursor-agent "$@"; }
 
 # herdr / nvim shortcuts (args pass through; nv defaults to .)
 hr() { herdr "$@"; }
