@@ -25,3 +25,5 @@
 "~/.claude/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
 "~/.claude/skills/dev-crit" = { source = "home/.agents/skills/dev-crit", mode = "symlink" }
 "~/.claude/skills/wt-slots" = { source = "home/.agents/skills/wt-slots", mode = "symlink" }
+# cendre for delta (git include); bat theme is per-OS (config-dir differs).
+"~/.config/delta/cendre.gitconfig" = { source = "extras/delta/cendre.gitconfig", mode = "symlink" }

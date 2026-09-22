@@ -19,3 +19,11 @@ if [[ "$uname_s" == "Darwin" ]]; then
 else
   print -r -- "(skip) theme: not macOS (Windows: mise run theme)"
 fi
+
+# delta syntax highlighting uses bat's theme cache (cendre.tmTheme is deploy-linked).
+if command -v bat >/dev/null 2>&1; then
+  bat cache --build
+  print -r -- "Rebuilt bat theme cache (cendre for delta)."
+else
+  print -r -- "(skip) bat not installed; brew install bat, then re-run: mise run theme"
+fi

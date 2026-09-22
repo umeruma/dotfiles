@@ -20,6 +20,8 @@ brew "imagemagick"
 brew "jq"
 brew "k1LoW/tap/git-wt"
 brew "lazygit"
+brew "git-delta"  # lazygit diff renderer (syntax highlighting)
+brew "bat"        # delta syntax-theme = cendre (bat theme cache)
 brew "lftp"
 brew "mas"
 brew "micro"

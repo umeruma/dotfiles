@@ -9,6 +9,13 @@ promptToReturnFromSubprocess: false
 os:
   editPreset: 'vscode'
 
+# Syntax-highlighted diffs via delta (https://github.com/dandavison/delta).
+# Cycle renderers with `|`. See https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_DiffRenderers.md
+git:
+  diffRenderers:
+    - command: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+
+
 # Files: A = generate via PowerShell helper (see generate-commit-msg.ps1).
 customCommands:
   - key: 'A'

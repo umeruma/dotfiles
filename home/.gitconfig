@@ -26,6 +26,10 @@
   rebase = false
   ff = false
 
+# cendre hard for delta — https://cendretheme.com / extras/delta
+[include]
+  path = ~/.config/delta/cendre.gitconfig
+
 [credential]
   helper = osxkeychain
 

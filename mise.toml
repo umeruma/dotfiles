@@ -60,7 +60,7 @@ run = "echo 'Task setup-kanata is only supported on Windows.'; exit 1"
 run_windows = "pwsh -NoProfile -File script/setup-kanata.ps1"
 
 [tasks.theme]
-description = "Install cendre terminal theme (Terminal.app / Windows Terminal)"
+description = "Install cendre theme (Terminal.app / Windows Terminal + bat cache for delta)"
 run = "zsh script/theme.zsh"
 run_windows = "pwsh -NoProfile -File script/theme-windows.ps1"
 

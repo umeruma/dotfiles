@@ -74,3 +74,12 @@ if (-not $settingsPaths) {
 }
 
 Write-Host "Done. Restart Windows Terminal (not the OS) if it is already open."
+
+# delta syntax highlighting uses bat's theme cache (cendre.tmTheme is deploy-linked).
+$bat = Get-Command bat -ErrorAction SilentlyContinue
+if ($bat) {
+  & $bat.Source cache --build
+  Write-Host "Rebuilt bat theme cache (cendre for delta)."
+} else {
+  Write-Warning "bat not on PATH; install via mise run install-apps, then re-run: mise run theme"
+}
