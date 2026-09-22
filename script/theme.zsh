@@ -13,7 +13,9 @@ cd "$root"
 uname_s=$(uname -s)
 
 if [[ "$uname_s" == "Darwin" ]]; then
-  open ./macos/BirdsOfParadise.terminal
+  # Upstream hard (default) depth — matches Ghostty theme = cendre.
+  # https://github.com/Aejkatappaja/cendre extras/macos-terminal
+  open ./extras/macos-terminal/cendre.terminal
 else
-  print -r -- "(skip) theme: not macOS"
+  print -r -- "(skip) theme: not macOS (Windows: mise run theme)"
 fi

@@ -93,15 +93,16 @@ dot && mise bootstrap macos defaults status
 
 詳細: [mise bootstrap](/mise-bootstrap)
 
-## macOS Terminal theme
-macOS の Terminal にテーマを適用するには:
+## Terminal theme (cendre)
+
+Ghostty（macOS）は deploy 済みの `theme = cendre`。Terminal.app / Windows Terminal は opt-in:
+
 ```
 dot && mise run theme
 ```
 
-適用するとこうなる:
-
-<img alt="" src="https://i.gyazo.com/424031983a2fd63e67958a214050513e.png"/>
+- macOS: [cendre](https://github.com/Aejkatappaja/cendre) の `extras/macos-terminal/cendre.terminal` を開いてプロファイルを取り込む（既定プロファイルへの切替は Terminal.app 側）
+- Windows: 同梱の `extras/windows-terminal/cendre.json` を `%LOCALAPPDATA%\Microsoft\Windows Terminal\Fragments\cendre\` にコピーする（Appearance → Color scheme で `cendre` を選ぶ）
 
 ## tech stack
 

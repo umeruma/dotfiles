@@ -21,3 +21,17 @@ if (-not $miseCommand) {
 if ($miseCommand) {
   (& mise activate pwsh) | Out-String | Invoke-Expression
 }
+
+# Cursor CLI (%LOCALAPPDATA%\cursor-agent) — User PATH may lag until a new login.
+if (-not (Get-Command agent -ErrorAction SilentlyContinue) -and
+    -not (Get-Command cursor-agent -ErrorAction SilentlyContinue)) {
+  $cursorAgentHome = Join-Path $env:LOCALAPPDATA 'cursor-agent'
+  if (Test-Path (Join-Path $cursorAgentHome 'agent.exe')) {
+    $env:Path = "$cursorAgentHome;$env:Path"
+  }
+}
+
+# nv = New-Variable is a built-in PowerShell alias; drop it for LazyVim parity with zsh.
+Remove-Alias nv -Force -ErrorAction SilentlyContinue
+function nv { if ($args.Count) { nvim @args } else { nvim . } }
+function lg { if ($args.Count) { lazygit @args } else { lazygit . } }

@@ -40,9 +40,14 @@ depends = ["clean"]
 run = "mise dotfiles apply -y"
 
 [tasks.install-apps]
-description = "Install apps (Brewfile on Unix, [bootstrap.packages] winget on Windows)"
+description = "Install apps (Brewfile on Unix; winget + Cursor CLI on Windows)"
 run = "zsh script/install-apps.zsh"
-run_windows = "mise bootstrap packages apply -y"
+run_windows = "pwsh -NoProfile -File script/install-apps-windows.ps1"
+
+[tasks.install-cursor-cli]
+description = "Install Cursor CLI (official installer; Windows)"
+run = "echo 'Task install-cursor-cli is only supported on Windows (macOS: brew install --cask cursor-cli).'; exit 1"
+run_windows = "pwsh -NoProfile -File script/install-cursor-cli-windows.ps1"
 
 [tasks.setup-kanata]
 description = "Create kanata autostart shortcut (Windows)"
@@ -50,9 +55,9 @@ run = "echo 'Task setup-kanata is only supported on Windows.'; exit 1"
 run_windows = "pwsh -NoProfile -File script/setup-kanata.ps1"
 
 [tasks.theme]
-description = "Install Terminal theme (macOS)"
+description = "Install cendre terminal theme (Terminal.app / Windows Terminal)"
 run = "zsh script/theme.zsh"
-run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task theme is not supported on Windows.'; exit 1\""
+run_windows = "pwsh -NoProfile -File script/theme-windows.ps1"
 
 [tasks.install-fonts]
 description = "Download Moralerspace Neon + ChaliceIcons into ~/Library/Fonts (macOS)"

@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
+# Windows: linked to %LOCALAPPDATA%\lazygit\ (lazygit's default config dir).
+
+gui:
+  commitHashLength: 0
+
+promptToReturnFromSubprocess: false
+
+os:
+  editPreset: 'vscode'
+
+# Files: A = generate via PowerShell helper (see generate-commit-msg.ps1).
+customCommands:
+  - key: 'A'
+    context: 'files'
+    description: 'AI commit message → open prefilled commit panel'
+    loadingText: 'Generating commit message with Cursor…'
+    command: 'pwsh -NoProfile -File "{{ .Env.LOCALAPPDATA }}/lazygit/generate-commit-msg.ps1"'
+    output: none
