@@ -26,3 +26,6 @@ agent_panel_sort = "spaces"
 # Native restores IME candidate placement; may flicker during heavy output.
 # https://herdr.dev/docs/windows-beta/
 host_cursor = "native"
+
+[terminal]
+default_shell = "pwsh"

@@ -22,5 +22,6 @@ customCommands:
     context: 'files'
     description: 'AI commit message → open prefilled commit panel'
     loadingText: 'Generating commit message with Cursor…'
-    command: 'pwsh -NoProfile -File "{{ .Env.LOCALAPPDATA }}/lazygit/generate-commit-msg.ps1"'
+    # lazygit templates have no .Env — expand LOCALAPPDATA inside pwsh.
+    command: "pwsh -NoProfile -Command \"& (Join-Path $env:LOCALAPPDATA 'lazygit/generate-commit-msg.ps1')\""
     output: none
