@@ -21,7 +21,7 @@ run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task help is not supported
 [tasks.update]
 description = "Fetch latest changes"
 run = "zsh script/update.zsh"
-run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task update is not supported on Windows.'; exit 1\""
+run_windows = "pwsh -NoProfile -File script/update-windows.ps1"
 
 [tasks.list]
 description = "Show dotfiles to deploy"

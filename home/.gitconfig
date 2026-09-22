@@ -24,6 +24,7 @@
   path = ~/Codes_DL/.gitconfig
 [pull]
   rebase = false
+  ff = false
 
 [credential]
   helper = osxkeychain

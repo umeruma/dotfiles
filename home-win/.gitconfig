@@ -2,6 +2,10 @@
 	name = umeruma
 	email = dev@umeru.ma
 
+[pull]
+	rebase = false
+	ff = false
+
 # Work identity: repos under ~/Codes_DL pick up ~/Codes_DL/.gitconfig
 # (not tracked here). Machine-local settings (safe.directory, editor,
 # extra includeIf for other drives) go in ~/.gitconfig.local.
