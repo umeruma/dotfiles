@@ -65,7 +65,7 @@ run = "zsh script/theme.zsh"
 run_windows = "pwsh -NoProfile -File script/theme-windows.ps1"
 
 [tasks.install-fonts]
-description = "Download Moralerspace Neon + ChaliceIcons into ~/Library/Fonts (macOS)"
+description = "Download Moralerspace Neon + ChaliceIcons (macOS Library/Fonts / Windows per-user Fonts)"
 run = "zsh script/install-fonts.zsh"
-run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task install-fonts is not supported on Windows.'; exit 1\""
+run_windows = "pwsh -NoProfile -File script/install-fonts-windows.ps1"
 

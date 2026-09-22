@@ -27,7 +27,7 @@ foreach ($dir in $destDirs) {
   Write-Host "Installed cendre scheme -> $dest"
 }
 
-function Set-WindowsTerminalColorScheme {
+function Set-WindowsTerminalDefaults {
   param(
     [Parameter(Mandatory)][string]$SettingsPath,
     [Parameter(Mandatory)][string]$SchemeName
@@ -41,12 +41,28 @@ function Set-WindowsTerminalColorScheme {
   }
 
   $profiles = $settings.profiles
+  $font = [pscustomobject]@{
+    face     = 'Moralerspace Neon'
+    size     = 12
+    features = [pscustomobject]@{ liga = 1; dlig = 1; clig = 1 }
+  }
+
   if ($null -eq $profiles.defaults) {
-    $profiles | Add-Member -NotePropertyName defaults -NotePropertyValue ([pscustomobject]@{ colorScheme = $SchemeName }) -Force
-  } elseif ($null -eq $profiles.defaults.PSObject.Properties['colorScheme']) {
-    $profiles.defaults | Add-Member -NotePropertyName colorScheme -NotePropertyValue $SchemeName
+    $profiles | Add-Member -NotePropertyName defaults -NotePropertyValue ([pscustomobject]@{
+        colorScheme = $SchemeName
+        font        = $font
+      }) -Force
   } else {
-    $profiles.defaults.colorScheme = $SchemeName
+    if ($null -eq $profiles.defaults.PSObject.Properties['colorScheme']) {
+      $profiles.defaults | Add-Member -NotePropertyName colorScheme -NotePropertyValue $SchemeName
+    } else {
+      $profiles.defaults.colorScheme = $SchemeName
+    }
+    if ($null -eq $profiles.defaults.PSObject.Properties['font']) {
+      $profiles.defaults | Add-Member -NotePropertyName font -NotePropertyValue $font
+    } else {
+      $profiles.defaults.font = $font
+    }
   }
 
   $json = $settings | ConvertTo-Json -Depth 100
@@ -55,7 +71,7 @@ function Set-WindowsTerminalColorScheme {
     $json + [Environment]::NewLine,
     [System.Text.UTF8Encoding]::new($false)
   )
-  Write-Host "Set profiles.defaults.colorScheme='$SchemeName' -> $SettingsPath"
+  Write-Host "Set profiles.defaults colorScheme='$SchemeName' font='Moralerspace Neon' 12 -> $SettingsPath"
 }
 
 $settingsPaths = @(
@@ -69,7 +85,7 @@ if (-not $settingsPaths) {
   Write-Warning "Windows Terminal settings.json not found; scheme fragment installed only. Open Windows Terminal once, then re-run: mise run theme"
 } else {
   foreach ($path in $settingsPaths) {
-    Set-WindowsTerminalColorScheme -SettingsPath $path -SchemeName 'cendre'
+    Set-WindowsTerminalDefaults -SettingsPath $path -SchemeName 'cendre'
   }
 }
 
