@@ -34,8 +34,6 @@ brew "rclone"
 cask "1password"
 cask "1password-cli"
 cask "alt-tab"
-# Menu bar icon organiser
-cask "bartender"
 cask "cleanmymac"
 cask "claude"
 cask "claude-code"
@@ -64,6 +62,7 @@ cask "elgato-wave-link"
 # Assign keys, and then decorate and label them
 cask "elgato-stream-deck"
 cask "xcodes-app"
+cask "zed"
 mas "Apple Configurator", id: 1037126344
 mas "CotEditor", id: 1024640650
 mas "Craft", id: 1487937127

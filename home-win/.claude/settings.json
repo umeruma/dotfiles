@@ -1,6 +1,7 @@
 {
   "enabledPlugins": {
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "figma@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -11,11 +12,12 @@
     },
     "claude-plugins-official": {
       "source": {
-        "source": "git",
-        "url": "https://github.com/anthropics/claude-plugins-official.git"
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
       }
     }
   },
   "theme": "dark",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "inputNeededNotifEnabled": true
 }

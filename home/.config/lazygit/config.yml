@@ -3,5 +3,20 @@
 gui:
   commitHashLength: 0
 
+promptToReturnFromSubprocess: false
+
 os:
   editPreset: 'vscode'
+
+# Files: A = generate (bottom loader via loadingText; centered overlay is not
+# available), write it to .git/LAZYGIT_PENDING_COMMIT (lazygit's own preserved
+# message), then open the commit panel prefilled by injecting `c` via nvim's
+# RPC socket when running inside Neovim. Outside nvim: popup says "press c".
+# The script is linked via mise.macos.toml.
+customCommands:
+  - key: 'A'
+    context: 'files'
+    description: 'AI commit message → open prefilled commit panel'
+    loadingText: 'Generating commit message with Cursor…'
+    command: '$HOME/.config/lazygit/generate-commit-msg.sh'
+    output: none

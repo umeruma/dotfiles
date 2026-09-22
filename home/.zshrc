@@ -107,18 +107,23 @@ wr() {
   git wt -d "$dir"
 }
 
-# lazygit (git UI)
 export XDG_CONFIG_HOME="$HOME/.config"
-alias lg="lazygit"
+
+# -------------------------
+# Aliases & small functions
+# -------------------------
 
 # Cursor IDE (Editor Window; skip Agents/Glass on launch)
 # Note: `cu` is taken by /usr/bin/cu (serial dial-up), so use `cur` instead.
 alias cursor='cursor --classic'
 alias cs='cursor --classic'
 
-# -------------------------
-# Aliases & small functions
-# -------------------------
+# herdr / nvim shortcuts (args pass through; nv defaults to .)
+hr() { herdr "$@"; }
+nv() { nvim "${@:-.}"; }
+
+# lazygit (git UI)
+lg() { lazygit "${@:-.}"; }
 
 # github cli aliases 
 # https://cli.github.com/manual/gh_repo_gitignore_view

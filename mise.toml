@@ -6,12 +6,12 @@ experimental = true
 login_shell = "/bin/zsh"
 
 # Runs at the end of `mise bootstrap` (after packages / user / tools).
-# On Unix `mise bootstrap` also applies [dotfiles] natively at step 3;
-# running deploy again here is idempotent and keeps Windows covered.
+# `mise bootstrap` already applies [dotfiles] natively at step 3, but that
+# skips the `clean` sweep; running deploy here is idempotent and clears
+# links left over by entries removed from [dotfiles].
 [tasks.bootstrap]
-description = "Deploy dotfiles ([dotfiles] on Unix, PSDotFiles on Windows)"
+description = "Deploy dotfiles"
 run = "mise run deploy"
-run_windows = "mise run deploy"
 
 [tasks.help]
 description = "List available tasks"
@@ -26,31 +26,23 @@ run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task update is not support
 [tasks.list]
 description = "Show dotfiles to deploy"
 run = "mise dotfiles status"
-run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task list is not supported on Windows.'; exit 1\""
 
 [tasks.clean]
 description = "Remove deployed symlinks from $HOME"
 run = "zsh script/clean.zsh"
 run_windows = "pwsh -NoProfile -File script/clean-windows.ps1"
 
-[tasks.prepare-subdirs]
-description = "Ensure required subdirectories exist (Windows, from .deploy_subdir-windows)"
-hide = true
-run = "true"
-run_windows = "pwsh -NoProfile -File script/prepare-subdirs-windows.ps1"
-
 # `clean` runs first so entries removed from [dotfiles] don't leave
 # stale links behind; apply then relinks everything in the allowlist.
 [tasks.deploy]
-description = "Deploy dotfiles to $HOME (mise [dotfiles] on Unix, PSDotFiles on Windows)"
-depends = ["clean", "prepare-subdirs"]
+description = "Deploy dotfiles to $HOME via mise [dotfiles]"
+depends = ["clean"]
 run = "mise dotfiles apply -y"
-run_windows = "pwsh -NoProfile -File script/deploy.ps1"
 
 [tasks.install-apps]
-description = "Install apps (Brewfile on Unix, win/apps.winget on Windows)"
+description = "Install apps (Brewfile on Unix, [bootstrap.packages] winget on Windows)"
 run = "zsh script/install-apps.zsh"
-run_windows = "pwsh -NoProfile -File script/install-apps.ps1"
+run_windows = "mise bootstrap packages apply -y"
 
 [tasks.setup-kanata]
 description = "Create kanata autostart shortcut (Windows)"

@@ -1,5 +1,40 @@
 {
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/umeruma/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "tldraw-offline",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh '/Users/umeruma/skills/tldraw-offline/inject-server-context.sh' SubagentStart"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "crit@crit": true,
+    "ponytail@ponytail": true
+  },
   "extraKnownMarketplaces": {
+    "crit": {
+      "source": {
+        "source": "github",
+        "repo": "tomasz-tomczyk/crit"
+      }
+    },
     "ponytail": {
       "source": {
         "source": "github",
@@ -7,7 +42,6 @@
       }
     }
   },
-  "enabledPlugins": {
-    "ponytail@ponytail": true
-  }
+  "agentPushNotifEnabled": true,
+  "inputNeededNotifEnabled": true
 }

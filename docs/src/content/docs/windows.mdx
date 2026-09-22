@@ -1,18 +1,26 @@
 ---
 title: Windows
-description: install-win、PSDotFiles、winget、Kanata による PowerShell セットアップ。
+description: install-win、mise [dotfiles]、winget、Kanata による PowerShell セットアップ。
 sidebar:
   order: 2
 ---
 
 ## Overview
 
-Windows のセットアップでは以下を使う:
+Windows のセットアップも macOS / Linux と同じ mise の宣言的な仕組みに載っている:
 
-- **[PSDotFiles](https://github.com/ralish/PSDotFiles)** — [`home-win/`](https://github.com/umeruma/dotfiles/tree/main/home-win) を `$HOME` に symlink する
-- **[WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)** — [`win/`](https://github.com/umeruma/dotfiles/tree/main/win) 以下のファイルでパッケージをインストールする
+- **mise `[dotfiles]`** — [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml) の allowlist で [`home-win/`](https://github.com/umeruma/dotfiles/tree/main/home-win) と [`home/`](https://github.com/umeruma/dotfiles/tree/main/home) を `$HOME` にリンクする
+- **mise `[bootstrap.packages]`** — `winget:<id>` でアプリをインストールする
+- **[WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)** — [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) のみ。mise 自体を入れる鶏卵ステップで、mise が無い状態で走る唯一のもの
 
-macOS / Linux では mise の宣言的な `[dotfiles]` allowlist と [`home/`](https://github.com/umeruma/dotfiles/tree/main/home) を使う。
+`[dotfiles]` の分割は以下のとおり:
+
+| ファイル | 適用 OS |
+| --- | --- |
+| `mise.dotfiles.toml` | 全 OS 共通（`~/.agents`、Claude/Copilot の設定など） |
+| `mise.unix.toml` | macOS + Linux |
+| `mise.windows.toml` | Windows（`~/.gitconfig` など3件は `home-win/` の内容で上書き） |
+| `mise.macos.toml` | macOS のみ |
 
 ## Prerequisites
 
@@ -46,8 +54,7 @@ irm https://dot.umeru.ma/install-win | iex
 1. 必要なら PowerShell 7 をインストール
 2. リポジトリを `~/Codes/dotfiles` に clone（既存なら最新を pull）
 3. [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) で `winget configure` を実行（PowerShell 7、Git、mise）
-4. PowerShell Gallery から **PSDotFiles** モジュールをインストール
-5. `mise run deploy` で `home-win/` をリンク
+4. `mise run deploy` で `[dotfiles]` を適用
 
 Windows PowerShell 5.1 から始めた場合、スクリプトは PowerShell 7 で自分自身を再起動して残りを実行する。完了後もターミナルは開いたままで、最後に GUI アプリ用の `mise run install-apps` を案内するバナーが表示される。
 
@@ -60,9 +67,15 @@ cd $env:USERPROFILE\Codes\dotfiles
 mise run deploy
 ```
 
-これは [`script/deploy.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/deploy.ps1) 経由で `Install-DotFiles home-win` を実行する。
+macOS / Linux と同じ `mise dotfiles apply -y` を実行する。親ディレクトリは mise が自動で作るので、事前準備は要らない。
 
-symlink を削除するには:
+宣言の一覧と状態:
+
+```
+mise dotfiles status
+```
+
+symlink を削除するには（[`script/clean-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/clean-windows.ps1) がリポジトリを指すリンク/ジャンクションだけを掃く）:
 
 ```
 mise run clean
@@ -70,29 +83,31 @@ mise run clean
 
 ## Install applications
 
-GUI などのアプリは [`win/apps.winget`](https://github.com/umeruma/dotfiles/blob/main/win/apps.winget) に列挙している:
+GUI などのアプリは [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml) の `[bootstrap.packages]` に `winget:<id>` 形式で列挙している:
 
 ```
 mise run install-apps
 ```
 
-パッケージの追加・削除はこのファイルを編集する。各エントリは `Microsoft.WinGet.DSC/WinGetPackage` に winget パッケージの `id` を指定する形式。
+これは `mise bootstrap packages apply -y` を実行する。macOS の Brewfile と同じく **opt-in**（`mise bootstrap` 本体からは切り離してある）。
 
-設定ファイルのプレビュー:
+追加・状態確認・削除:
 
 ```
-winget configure show -f win/apps.winget
+mise bootstrap packages use winget:Publisher.App   # 追加してインストール
+mise bootstrap packages status                     # 未インストールの確認
+mise bootstrap packages prune                      # 宣言から消したものを削除
 ```
 
-`winget configure` には **WinGet v1.6.2631** 以降が必要。
+winget を `[bootstrap.packages]` のマネージャーとして扱えるのは **mise 2026.9.3** 以降。それ以前は `win/apps.winget`（winget DSC 設定）を使っていた。
 
 ## Kanata (keyboard remapper)
 
 macOS の Karabiner と揃えた IME 切り替えの全体像は [IME Switching](/setup-hard/ime-switching/) を参照。
 
-[Kanata](https://github.com/jtroo/kanata) は [`win/apps.winget`](https://github.com/umeruma/dotfiles/blob/main/win/apps.winget)（`jtroo.kanata_gui`）でインストールする。ポータブル zip パッケージで、winget が GUI バイナリを `%LOCALAPPDATA%\Microsoft\WinGet\Links` 配下のコマンドエイリアス `kanata_windows_gui_winIOv2_x64` として登録するため、手動ダウンロードは不要。
+[Kanata](https://github.com/jtroo/kanata) は `mise run install-apps`（`winget:jtroo.kanata_gui`）でインストールする。ポータブル zip パッケージで、winget が GUI バイナリを `%LOCALAPPDATA%\Microsoft\WinGet\Links` 配下のコマンドエイリアス `kanata_windows_gui_winIOv2_x64` として登録するため、手動ダウンロードは不要。
 
-設定は [`home-win/Documents/kanata/kanata.kbd`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/kanata/kanata.kbd) にあり、PSDotFiles が `~\Documents\kanata\kanata.kbd` に symlink する。HHKB（US 配列）+ **2 つの入力方式**（English (US) IME + 日本語 Microsoft IME）を前提にしている:
+設定は [`home-win/Documents/kanata/kanata.kbd`](https://github.com/umeruma/dotfiles/blob/main/home-win/Documents/kanata/kanata.kbd) にあり、`[dotfiles]` が `~\Documents\kanata\kanata.kbd` に symlink する。HHKB（US 配列）+ **2 つの入力方式**（English (US) IME + 日本語 Microsoft IME）を前提にしている:
 
 - **左 Win タップ** → English (US) IME に切り替え
 - **右 Win タップ** → 日本語 IME に切り替えてかなを ON
@@ -149,7 +164,7 @@ Start-Process "$([Environment]::GetFolderPath('Startup'))\Kanata.lnk"
 
 プラグインの実体は `~/.claude/plugins` に入る。中身は marketplace の git clone（`marketplaces/<name>/`）とバージョン付きキャッシュ（`cache/<marketplace>/<plugin>/<version>/`）なので、このディレクトリは追跡しない。追跡するのは宣言だけ。
 
-[`home-win/.claude/settings.json`](https://github.com/umeruma/dotfiles/blob/main/home-win/.claude/settings.json) に marketplace を `extraKnownMarketplaces`、プラグインを `enabledPlugins` で列挙する。`~/.claude` は Claude Code が書き込む実ディレクトリなので、[`.deploy_subdir-windows`](https://github.com/umeruma/dotfiles/blob/main/.deploy_subdir-windows) に `.claude` を入れてディレクトリごとではなくファイル単位で symlink させる。
+[`home-win/.claude/settings.json`](https://github.com/umeruma/dotfiles/blob/main/home-win/.claude/settings.json) に marketplace を `extraKnownMarketplaces`、プラグインを `enabledPlugins` で列挙する。`~/.claude` は Claude Code が書き込む実ディレクトリなので、ディレクトリごとではなくファイル単位で symlink する（`[dotfiles]` に `~/.claude/settings.json` を個別に宣言している）。
 
 新しいマシンでは `mise run deploy` と再起動だけでは**途中までしか進まない**。marketplace の登録と `cache/` への先読みまでは走るが、git リポジトリ由来のプラグインは `enabledPlugins` だけでは install が完了しない。マシンごとに一度だけシェルコマンドで仕上げる（`/plugin` スラッシュコマンドは対話ターミナルが必要なので使わない）:
 
@@ -178,25 +193,25 @@ node のバージョンは [`home-win/.config/mise/config.toml`](https://github.
 
 ## Developer Mode (symlinks)
 
-PSDotFiles はシンボリックリンクを作成する。**開発者モード** を有効にする:
+**開発者モード** を有効にする:
 
 **設定 → システム → 開発者向け → 開発者モード**
 
 またはデプロイ用シェルを管理者として実行する。
 
-`$PROFILE` がすでに存在する場合は、最初のデプロイ前にバックアップする。競合時は PSDotFiles がエラーを報告するので、手動で解決するか、先に PSDotFiles の `-WhatIf` で確認する:
+これは必須。開発者モードがないと mise は symlink を作れず、**エラーにならず copy にフォールバックする**。見た目は成功するが、`$HOME` 側で編集した内容がリポジトリに戻らず `git status` にも出ない。`mise run clean` は開発者モードが無効なら警告を出す。
 
-```powershell
-$DotFilesPath = "$HOME\Codes\dotfiles"
-Import-Module PSDotFiles
-Install-DotFiles home-win -WhatIf
+`$PROFILE` がすでに存在する場合は、最初のデプロイ前にバックアップする。適用内容の事前確認:
+
+```
+mise dotfiles status
 ```
 
 ## `home/` vs `home-win/`
 
 | Directory   | Used on        | Tool        |
 |------------|----------------|-------------|
-| `home/`    | macOS, Linux   | mise `[dotfiles]` |
-| `home-win/`| Windows        | PSDotFiles  |
+| `home/`    | macOS, Linux（一部は Windows でも） | mise `[dotfiles]` |
+| `home-win/`| Windows        | mise `[dotfiles]` |
 
 Windows 専用のファイルは `home-win/` に置き、mac 専用ツール（Karabiner、Ghostty など）が Windows にデプロイされないようにする。

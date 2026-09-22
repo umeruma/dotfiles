@@ -54,7 +54,7 @@ nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
 
 設定なしでも動く。このリポジトリでは 3 点だけ変えている:
 
-- `theme.name = "terminal"` — Ghostty のテーマ（Birds Of Paradise）にそのまま追従させる
+- `theme.name = "terminal"` — Ghostty のテーマ（cendre）にそのまま追従させる
 - `experimental.switch_ascii_input_source_in_prefix` — prefix（`ctrl+b`）を押している間だけ macOS の入力ソースを ASCII に切り替える。日本語入力中でも prefix コマンドが通る
 - `experimental.reveal_hidden_cursor_for_cjk_ime` — Claude Code / Codex のように自前でカーソルを描く TUI で、IME の候補ウィンドウがカーソルを追従するようにする。`cjk_ime_agents` で対象を絞っているのは、全面適用すると Neovim のノーマルモードでカーソルが二重に見えるため
 
@@ -63,9 +63,13 @@ nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
 ## Daily use
 
 ```bash
-herdr        # セッションを起動 / attach（prefix は ctrl+b、ヘルプは prefix+?）
-nvim         # LazyVim（リーダーキーは space）
-lazygit      # Git TUI
+herdr / hr   # セッションを起動 / attach（prefix は ctrl+b、ヘルプは prefix+?）
+nvim / nv    # LazyVim（リーダーキーは space）。`nv +100 file.rs` もそのまま通る
+lazygit / lg # Git TUI（Files で A = Cursor AI コミットメッセージ）
 ```
+
+`hr` / `nv` / `lg` は `~/.zshrc` の薄いシェル関数（`hr nv` の組み合わせも可）。
+
+lazygit の `A` は **staged の diff だけ** を `cursor-agent`（`composer-2.5-fast`）に渡す。生成中は下ステータスの `loadingText`（中央オーバーレイは非対応）。完了後は lazygit の保存メッセージ（`.git/LAZYGIT_PENDING_COMMIT`、Esc で閉じたときに復元されるもの）に書き込み、nvim 内（LazyVim の lazygit 統合）なら `$NVIM` の RPC ソケット経由で `c` を注入してプリフィル済みの commit パネルを開く。Enter は自分で押す。nvim 外ではポップアップで「c を押せ」と案内する。要: `cursor-agent login`（または `CURSOR_API_KEY`）と stage 済み。
 
 LazyVim のプラグイン追加は `home/.config/nvim/lua/plugins/` に `.lua` を置くだけでよい（`example.lua` が雛形）。`lazy-lock.json` の差分はそのままコミットする。
