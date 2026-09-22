@@ -1,8 +1,9 @@
 # Generate Conventional Commit subject + description from STAGED changes only.
 # Quiet while running — lazygit shows `loadingText` in the bottom status bar.
 # Writes to .git/LAZYGIT_PENDING_COMMIT (lazygit's preserved message). When
-# running inside Neovim ($env:NVIM), injects `c` via RPC after a short delay.
-# Outside nvim: exit 1 with a hint so lazygit shows a popup; press `c` yourself.
+# running inside Neovim ($env:NVIM), resolves nvim.exe in this process and
+# injects `c` via RPC after a short delay (child pwsh has no mise PATH).
+# Outside nvim / if nvim is missing: exit 1 with a hint; press `c` yourself.
 $ErrorActionPreference = 'Stop'
 
 function Fail([string]$Message) {
@@ -67,26 +68,34 @@ if ($agentStatus -ne 0) {
 }
 Remove-Item -Force $errFile -ErrorAction SilentlyContinue
 
-# Native exe capture is often string[]; join before line-splitting.
+# Native capture: string | string[] | (rarely) char[]. Never iterate char[].
 $raw = if ($null -eq $rawOut) { '' }
-  elseif ($rawOut -is [System.Array]) { ($rawOut | ForEach-Object { "$_" }) -join "`n" }
-  else { [string]$rawOut }
+  elseif ($rawOut -is [string] -or $rawOut -is [char[]]) { [string]$rawOut }
+  else { (@($rawOut) | ForEach-Object { "$_" }) -join "`n" }
 
 $lines = @(
   $raw -split "`r?`n" |
     ForEach-Object { $_.Trim() } |
-    Where-Object { $_ -and $_ -notmatch '^```' }
+    Where-Object { $_ -and $_ -notmatch '^```' } |
+    ForEach-Object { $_ -replace '^["`]+', '' -replace '["`]+$', '' }
 )
 
-$subject = if ($lines.Count -gt 0) {
-  $lines[0] -replace '^["`]+', '' -replace '["`]+$', ''
-} else { '' }
-$body = if ($lines.Count -gt 1) {
-  ($lines[1..($lines.Count - 1)] -join "`n").TrimStart()
+# Prefer the Conventional Commits subject line even if the model put prose first
+# (otherwise that prose becomes summary and "fix(...): ..." lands in description).
+$conv = '^(feat|fix|docs|style|refactor|perf|test|chore|ci)(\([^)]*\))?(!)?:\s+\S'
+$subjectIdx = 0
+for ($i = 0; $i -lt $lines.Count; $i++) {
+  if ($lines[$i] -match $conv) { $subjectIdx = $i; break }
+}
+
+$subject = if ($lines.Count -gt $subjectIdx) { $lines[$subjectIdx] } else { '' }
+$body = if ($lines.Count -gt ($subjectIdx + 1)) {
+  ($lines[($subjectIdx + 1)..($lines.Count - 1)] -join "`n").Trim()
 } else { '' }
 
 if (-not $subject) { Fail 'empty commit subject from cursor-agent' }
 
+# lazygit: first line = summary, remainder after "\n" = description (no blank line).
 $pending = if ($body) { "$subject`n$body" } else { $subject }
 $gitDir = (git rev-parse --git-dir).Trim()
 [System.IO.File]::WriteAllText(
@@ -95,14 +104,26 @@ $gitDir = (git rev-parse --git-dir).Trim()
   [System.Text.UTF8Encoding]::new($false)
 )
 
+# Inject `c` into the parent Neovim only when we can resolve nvim.exe here.
+# A fresh `pwsh -NoProfile` from Start-Process often lacks mise/scoop PATH, so
+# resolve the exe in this process and pass it via -EncodedCommand (avoids
+# Windows quoting breakage on \\.\pipe\... addresses).
 if ($env:NVIM) {
-  $nvim = $env:NVIM
-  Start-Process -WindowStyle Hidden pwsh -ArgumentList @(
-    '-NoProfile',
-    '-Command',
-    "Start-Sleep -Milliseconds 300; nvim --server '$nvim' --remote-send 'c' 2>`$null"
-  ) | Out-Null
-  exit 0
+  $nvimExe = (Get-Command nvim -ErrorAction SilentlyContinue)?.Source
+  if ($nvimExe) {
+    $server = $env:NVIM
+    $exeLit = $nvimExe.Replace("'", "''")
+    $serverLit = $server.Replace("'", "''")
+    $script = @"
+Start-Sleep -Milliseconds 500
+& '$exeLit' --server '$serverLit' --remote-send 'c' 2>`$null
+"@
+    $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($script))
+    Start-Process -FilePath 'pwsh' -WindowStyle Hidden -ArgumentList @(
+      '-NoProfile', '-EncodedCommand', $encoded
+    ) | Out-Null
+    exit 0
+  }
 }
 
 Fail "Commit message written. Press c to open the commit panel.`n`n$subject$(if ($body) { "`n`n$body" })"

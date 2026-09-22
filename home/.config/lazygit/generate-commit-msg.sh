@@ -73,12 +73,32 @@ if [ "$agent_status" -ne 0 ]; then
   fail "cursor-agent failed (try: cursor-agent login, or export CURSOR_API_KEY)${err:+: $err}"
 fi
 
-# Drop code fences, leading blank lines, and surrounding whitespace per line.
-RAW=$(printf '%s\n' "$RAW" | sed -e '/^```/d' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | sed -e '/./,$!d')
+# Drop code fences, blank lines, and surrounding whitespace / quotes per line.
+mapfile -t lines < <(
+  printf '%s\n' "$RAW" |
+    sed -e '/^```/d' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
+      -e 's/^["`]*//' -e 's/["`]*$//' |
+    sed -e '/^$/d'
+)
 
-subject=$(printf '%s\n' "$RAW" | head -n 1 | sed -e 's/^["`]*//' -e 's/["`]*$//')
-# Body = everything after the subject, minus leading blank lines (tolerates a missing blank line).
-body=$(printf '%s\n' "$RAW" | tail -n +2 | sed -e '/./,$!d')
+# Prefer the Conventional Commits subject even if the model put prose first
+# (otherwise that prose becomes summary and "fix(...): ..." lands in description).
+conv='^(feat|fix|docs|style|refactor|perf|test|chore|ci)(\([^)]*\))?(!)?:[[:space:]]+[^[:space:]]'
+subject_idx=0
+for i in "${!lines[@]}"; do
+  if [[ "${lines[$i]}" =~ $conv ]]; then
+    subject_idx=$i
+    break
+  fi
+done
+
+subject="${lines[$subject_idx]:-}"
+if (( subject_idx + 1 < ${#lines[@]} )); then
+  body=$(printf '%s\n' "${lines[@]:$((subject_idx + 1))}")
+  body=${body%%$'\n'}
+else
+  body=
+fi
 
 [ -n "$subject" ] || fail "empty commit subject from cursor-agent"
 
