@@ -119,14 +119,14 @@ LazyVim（`home/.config/nvim`）は `%LOCALAPPDATA%\nvim` に symlink され、`
 macOS の Ghostty / Terminal.app と同じ [cendre](https://github.com/Aejkatappaja/cendre)（hard）を Windows Terminal に入れる（opt-in）。フォントも Ghostty と同じ **Moralerspace Neon**（サイズは WT 向けに 12pt、liga/dlig/clig）:
 
 ```
-mise run install-fonts   # Moralerspace Neon + ChaliceIcons → %LOCALAPPDATA%\Microsoft\Windows\Fonts
+mise run install-fonts   # Moralerspace Neon → %LOCALAPPDATA%\Microsoft\Windows\Fonts
 mise run theme           # cendre scheme + profiles.defaults.font
 ```
 
 1. `extras/windows-terminal/cendre.json` を `%LOCALAPPDATA%\Microsoft\Windows Terminal\Fragments\cendre\` にコピー（Preview があればそちらにも）
 2. Store / unpackaged の `settings.json` に `profiles.defaults.colorScheme = "cendre"` と `font.face = "Moralerspace Neon"` をパッチ（ファイル丸ごと symlink はしない）
 
-Windows Terminal を再起動すれば反映される（OS 再起動は不要）。Ghostty の `font-codepoint-map`（Chalice PUA）に相当する指定は WT に無いので、アイコンは DirectWrite のフォールバック頼み。
+Windows Terminal を再起動すれば反映される（OS 再起動は不要）。nvim の Chalice アイコンは macOS（Ghostty の `font-codepoint-map`）のみ。Windows は `mini.icons` の `style = "ascii"`（WT は PUA を別フォントに割り当てられない／Nerd Font も不要）。
 
 ## Kanata (keyboard remapper)
 

@@ -3,6 +3,19 @@
 -- Upstream: https://github.com/artlaman/chalice-icon-theme (MIT)
 -- Font: mise run install-fonts → ~/Library/Fonts/ChaliceIcons-Regular.ttf
 --
+-- Windows: skip. Chalice uses PUA U+E000–E011; Ghostty maps those via
+-- font-codepoint-map, but Windows Terminal cannot, so DirectWrite falls back
+-- to Segoe Fluent Icons (torii / tomato etc.). Use mini.icons ascii instead
+-- (no Nerd Font required).
+if vim.fn.has("win32") == 1 then
+  return {
+    {
+      "nvim-mini/mini.icons",
+      opts = { style = "ascii" },
+    },
+  }
+end
+
 -- Rules:
 --   1. Only Chalice glyphs for file / extension / filetype / directory
 --   2. Names listed in the TOML use that category
