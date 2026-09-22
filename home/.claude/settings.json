@@ -42,6 +42,7 @@
       }
     }
   },
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "inputNeededNotifEnabled": true
+  "awaySummaryEnabled": false
 }
