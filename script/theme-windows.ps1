@@ -1,5 +1,6 @@
 #Requires -Version 5.1
-# Install cendre into Windows Terminal Fragments (opt-in; mirror of mise run theme on macOS).
+# Install cendre into Windows Terminal Fragments and set it as the default
+# color scheme in settings.json (opt-in; mirror of mise run theme on macOS).
 # Source: https://github.com/Aejkatappaja/cendre extras/windows-terminal (hard / default depth).
 $ErrorActionPreference = 'Stop'
 
@@ -26,4 +27,50 @@ foreach ($dir in $destDirs) {
   Write-Host "Installed cendre scheme -> $dest"
 }
 
-Write-Host "Restart Windows Terminal if it is open, then set Appearance → Color scheme to 'cendre'."
+function Set-WindowsTerminalColorScheme {
+  param(
+    [Parameter(Mandatory)][string]$SettingsPath,
+    [Parameter(Mandatory)][string]$SchemeName
+  )
+
+  $raw = Get-Content -LiteralPath $SettingsPath -Raw -Encoding UTF8
+  $settings = $raw | ConvertFrom-Json
+
+  if ($null -eq $settings.profiles) {
+    $settings | Add-Member -NotePropertyName profiles -NotePropertyValue ([pscustomobject]@{}) -Force
+  }
+
+  $profiles = $settings.profiles
+  if ($null -eq $profiles.defaults) {
+    $profiles | Add-Member -NotePropertyName defaults -NotePropertyValue ([pscustomobject]@{ colorScheme = $SchemeName }) -Force
+  } elseif ($null -eq $profiles.defaults.PSObject.Properties['colorScheme']) {
+    $profiles.defaults | Add-Member -NotePropertyName colorScheme -NotePropertyValue $SchemeName
+  } else {
+    $profiles.defaults.colorScheme = $SchemeName
+  }
+
+  $json = $settings | ConvertTo-Json -Depth 100
+  [System.IO.File]::WriteAllText(
+    $SettingsPath,
+    $json + [Environment]::NewLine,
+    [System.Text.UTF8Encoding]::new($false)
+  )
+  Write-Host "Set profiles.defaults.colorScheme='$SchemeName' -> $SettingsPath"
+}
+
+$settingsPaths = @(
+  (Join-Path $env:LOCALAPPDATA 'Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'),
+  (Join-Path $env:LOCALAPPDATA 'Packages\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\LocalState\settings.json'),
+  (Join-Path $env:LOCALAPPDATA 'Microsoft\Windows Terminal\settings.json'),
+  (Join-Path $env:LOCALAPPDATA 'Microsoft\Windows Terminal Preview\settings.json')
+) | Where-Object { Test-Path -LiteralPath $_ }
+
+if (-not $settingsPaths) {
+  Write-Warning "Windows Terminal settings.json not found; scheme fragment installed only. Open Windows Terminal once, then re-run: mise run theme"
+} else {
+  foreach ($path in $settingsPaths) {
+    Set-WindowsTerminalColorScheme -SettingsPath $path -SchemeName 'cendre'
+  }
+}
+
+Write-Host "Done. Restart Windows Terminal (not the OS) if it is already open."

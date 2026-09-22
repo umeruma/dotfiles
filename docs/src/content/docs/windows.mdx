@@ -121,7 +121,10 @@ macOS の Ghostty / Terminal.app と同じ [cendre](https://github.com/Aejkatapp
 mise run theme
 ```
 
-`extras/windows-terminal/cendre.json` を `%LOCALAPPDATA%\Microsoft\Windows Terminal\Fragments\cendre\` にコピーする（Preview が入っていればそちらの Fragments にも）。Windows Terminal を再起動し、Appearance → Color scheme で `cendre` を選ぶ。
+1. `extras/windows-terminal/cendre.json` を `%LOCALAPPDATA%\Microsoft\Windows Terminal\Fragments\cendre\` にコピー（Preview があればそちらにも）
+2. Store / unpackaged の `settings.json` に `profiles.defaults.colorScheme = "cendre"` をパッチ（ファイル丸ごと symlink はしない）
+
+Windows Terminal を再起動すれば反映される（OS 再起動は不要）。
 
 ## Kanata (keyboard remapper)
 
