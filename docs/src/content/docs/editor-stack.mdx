@@ -11,7 +11,7 @@ sidebar:
 | --- | --- | --- |
 | [LazyVim](https://www.lazyvim.org/) | Neovim ディストリビューション（エディタ） | `home/.config/nvim`（Unix → `~/.config/nvim` / Windows → `%LOCALAPPDATA%\nvim`） |
 | [lazygit](https://github.com/jesseduffield/lazygit) | Git の TUI | `home/.config/lazygit`（Unix）/ `home-win/.config/lazygit`（Windows → `%LOCALAPPDATA%\lazygit`） |
-| [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ | `home/.config/herdr/config.toml` |
+| [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ | `home/.config/herdr`（Unix）/ `home-win/.config/herdr`（Windows → `%APPDATA%\herdr`） |
 | [Crit](https://crit.md/) | AI エージェント向けのローカルレビューツール | なし（単一バイナリ） |
 
 herdr は tmux のエージェント版で、Claude Code や Codex を PTY セッションとして常駐させ、状態（作業中 / 待ち / 完了）を一覧しながら切り替える。サーバー側で生き続けるので、ターミナルを閉じても SSH で attach し直せる。
@@ -21,8 +21,10 @@ herdr は tmux のエージェント版で、Claude Code や Codex を PTY セ�
 `mise run install-apps`（macOS Brewfile / Windows winget）でインストールされる:
 
 - `neovim`
-- `herdr`（macOS のみ。Windows は未対応）
+- `herdr`（macOS: Brewfile。Windows: 公式 `install.ps1`、`mise run install-herdr` / `install-apps`）
 - `lazygit`
+- `git-delta`（lazygit の syntax-highlighted diff。macOS: Brewfile `git-delta` / Windows: `winget:dandavison.delta`。テーマは [cendre](https://cendretheme.com/) hard — `~/.config/delta/cendre.gitconfig` + bat `cendre` theme）
+- `bat`（delta の `syntax-theme = cendre` 用。`mise run theme` で `bat cache --build`）
 - `ripgrep`、`fd`（LazyVim の grep / ファイル検索に必須）
 - `tree-sitter-cli`（macOS: Brewfile。Windows は LazyVim/mason が入れる。パーサービルド用に `winget:BrechtSanders.WinLibs.POSIX.UCRT`）
 - `crit`（エージェントの変更をブラウザ UI で行コメントレビューする。`crit <file>` / `crit <url>` で起動）
@@ -48,7 +50,7 @@ nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
 
 `~/.config/nvim`（Windows では `%LOCALAPPDATA%\nvim`）は**ディレクトリごと**リンクしている。LazyVim が `lazy-lock.json` をリンク越しにリポジトリへ書き戻すため、プラグインのバージョンが git で追跡される。プラグイン本体は Unix では `~/.local/share/nvim`、Windows では `%LOCALAPPDATA%\nvim-data`、セッション状態はそれぞれ `~/.local/state/nvim` / nvim-data 配下に入るのでリポジトリは汚れない。
 
-`~/.config/herdr` はログ・ソケット・`session.json` が同じディレクトリに書かれるので、`config.toml` だけを**ファイル単位**でリンクしている（`~/.config/lazygit` と同じ扱い）。
+`~/.config/herdr`（Windows では `%APPDATA%\herdr`）はログ・ソケット・`session.json` が同じディレクトリに書かれるので、`config.toml` だけを**ファイル単位**でリンクしている（`~/.config/lazygit` と同じ扱い）。Windows 用設定は CJK IME 向けに `host_cursor = "native"`（[Windows support](https://herdr.dev/docs/windows-beta/)）。
 
 ## herdr config
 
@@ -67,6 +69,8 @@ herdr / hr   # セッションを起動 / attach（prefix は ctrl+b、ヘルプ
 nvim / nv    # LazyVim（リーダーキーは space）。`nv +100 file.rs` もそのまま通る
 lazygit / lg # Git TUI（Files で A = Cursor AI コミットメッセージ）
 ```
+
+diff は [delta](https://github.com/dandavison/delta)（`git.diffRenderers`）+[cendre](https://cendretheme.com/) hard（`.gitconfig` が `~/.config/delta/cendre.gitconfig` を include。syntax は bat の `cendre` theme）。行番号クリックでエディタへジャンプ（hyperlinks）。`|` で renderer 切替。
 
 `hr` / `nv` / `lg` は `~/.zshrc` の薄いシェル関数（`hr nv` の組み合わせも可）。
 

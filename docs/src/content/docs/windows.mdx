@@ -95,10 +95,11 @@ GUI などのアプリは [`mise.windows.toml`](https://github.com/umeruma/dotfi
 mise run install-apps
 ```
 
-これは `mise bootstrap packages apply -y` のあと、[Cursor CLI](https://cursor.com/docs/cli/overview) の公式 Windows 手順（`irm 'https://cursor.com/install?win32=true' | iex`）を冪等に実行する（[`script/install-apps-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/install-apps-windows.ps1)）。macOS の Brewfile と同じく **opt-in**（`mise bootstrap` 本体からは切り離してある）。CLI 単体だけ入れる場合:
+これは `mise bootstrap packages apply -y` のあと、[Cursor CLI](https://cursor.com/docs/cli/overview) と [herdr](https://herdr.dev/docs/install/) の公式 Windows インストーラを冪等に実行する（[`script/install-apps-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/install-apps-windows.ps1)）。macOS の Brewfile と同じく **opt-in**（`mise bootstrap` 本体からは切り離してある）。単体だけ入れる場合:
 
 ```
 mise run install-cursor-cli
+mise run install-herdr
 ```
 
 追加・状態確認・削除:
@@ -111,20 +112,21 @@ mise bootstrap packages prune                      # 宣言から消したもの
 
 winget を `[bootstrap.packages]` のマネージャーとして扱えるのは **mise 2026.9.3** 以降。それ以前は `win/apps.winget`（winget DSC 設定）を使っていた。
 
-LazyVim（`home/.config/nvim`）は `%LOCALAPPDATA%\nvim` に symlink され、`winget:Neovim.Neovim` / ripgrep / fd / lazygit / WinLibs（treesitter 用 C コンパイラ）は `install-apps` で入る。初回は `nvim` を起動して Lazy sync（または `nvim --headless "+Lazy! sync" +qa`）。ショートカットは PowerShell プロファイルの `nv` / `lg`（`nv` は組み込みエイリアス `New-Variable` を外してから定義）。
+LazyVim（`home/.config/nvim`）は `%LOCALAPPDATA%\nvim` に symlink され、`winget:Neovim.Neovim` / ripgrep / fd / lazygit / WinLibs（treesitter 用 C コンパイラ）は `install-apps` で入る。初回は `nvim` を起動して Lazy sync（または `nvim --headless "+Lazy! sync" +qa`）。ショートカットは PowerShell プロファイルの `nv` / `lg` / `hr`（`nv` は組み込みエイリアス `New-Variable` を外してから定義）。herdr 設定は `%APPDATA%\herdr\config.toml`。
 
 ## Terminal theme (cendre)
 
-macOS の Ghostty / Terminal.app と同じ [cendre](https://github.com/Aejkatappaja/cendre)（hard）を Windows Terminal に入れる（opt-in）:
+macOS の Ghostty / Terminal.app と同じ [cendre](https://github.com/Aejkatappaja/cendre)（hard）を Windows Terminal に入れる（opt-in）。フォントも Ghostty と同じ **Moralerspace Neon**（サイズは WT 向けに 12pt、liga/dlig/clig）:
 
 ```
-mise run theme
+mise run install-fonts   # Moralerspace Neon + ChaliceIcons → %LOCALAPPDATA%\Microsoft\Windows\Fonts
+mise run theme           # cendre scheme + profiles.defaults.font
 ```
 
 1. `extras/windows-terminal/cendre.json` を `%LOCALAPPDATA%\Microsoft\Windows Terminal\Fragments\cendre\` にコピー（Preview があればそちらにも）
-2. Store / unpackaged の `settings.json` に `profiles.defaults.colorScheme = "cendre"` をパッチ（ファイル丸ごと symlink はしない）
+2. Store / unpackaged の `settings.json` に `profiles.defaults.colorScheme = "cendre"` と `font.face = "Moralerspace Neon"` をパッチ（ファイル丸ごと symlink はしない）
 
-Windows Terminal を再起動すれば反映される（OS 再起動は不要）。
+Windows Terminal を再起動すれば反映される（OS 再起動は不要）。Ghostty の `font-codepoint-map`（Chalice PUA）に相当する指定は WT に無いので、アイコンは DirectWrite のフォールバック頼み。
 
 ## Kanata (keyboard remapper)
 
