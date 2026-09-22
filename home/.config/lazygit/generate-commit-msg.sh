@@ -74,7 +74,11 @@ if [ "$agent_status" -ne 0 ]; then
 fi
 
 # Drop code fences, blank lines, and surrounding whitespace / quotes per line.
-mapfile -t lines < <(
+# (bash 3.2 on macOS has no `mapfile`, so read the lines in a loop.)
+lines=()
+while IFS= read -r line; do
+  lines+=("$line")
+done < <(
   printf '%s\n' "$RAW" |
     sed -e '/^```/d' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
       -e 's/^["`]*//' -e 's/["`]*$//' |
