@@ -6,4 +6,6 @@ return {
       opts.linters_by_ft.markdown = {}
     end,
   },
+  -- インラインレンダリング無効化（記号を隠さず treesitter のハイライトだけ使う）
+  { "MeanderingProgrammer/render-markdown.nvim", enabled = false },
 }
