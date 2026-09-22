@@ -1,0 +1,3 @@
+# .editorconfig の end_of_line = lf に合わせ、作業ツリーも LF で統一する。
+# core.autocrlf=true の環境で改行だけの差分（gitsigns の青いライン）が出るのを防ぐ。
+* text=auto eol=lf

@@ -1,0 +1,31 @@
+onboarding = false
+# herdr — agent multiplexer (https://herdr.dev)
+# Windows: linked to %APPDATA%\herdr\config.toml
+# Print the full commented defaults with `herdr --default-config`.
+# Apply edits to a running server with `herdr server reload-config`.
+# Only this file is symlinked: herdr writes logs, sockets and session.json
+# into the same directory, so the config dir itself stays local.
+
+[theme]
+# Follow the host terminal palette (Windows Terminal: cendre) instead of
+# a bundled scheme, so herdr matches whatever the terminal is themed with.
+name = "terminal"
+
+[experimental]
+# Agent TUIs paint their own cursor, which leaves the IME candidate window
+# stranded. Reveal the real cursor for those panes only — applying it
+# everywhere would draw a second cursor in vim normal mode.
+reveal_hidden_cursor_for_cjk_ime = true
+cjk_ime_agents = ["claude", "codex"]
+# switch_ascii_input_source_in_prefix is macOS / Korean-IME on Windows;
+# Japanese Microsoft IME is not supported yet — omitted here.
+
+[ui]
+agent_panel_sort = "spaces"
+# Drawn cursor is the Windows default (stable), but it cannot anchor CJK IME.
+# Native restores IME candidate placement; may flicker during heavy output.
+# https://herdr.dev/docs/windows-beta/
+host_cursor = "native"
+
+[terminal]
+default_shell = "pwsh"

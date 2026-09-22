@@ -20,6 +20,8 @@
 # runtime-write dirs: per-file links only
 "~/.config/herdr/config.toml" = { source = "home/.config/herdr/config.toml", mode = "symlink" }
 "~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
+# bat themes dir: only this file; cache lives beside it.
+"~/.config/bat/themes/cendre.tmTheme" = { source = "extras/bat/cendre.tmTheme", mode = "symlink" }
 "~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
 "~/.config/micro/plug/editorconfig" = { source = "home/.config/micro/plug/editorconfig", mode = "symlink" }
 # Windows keeps its own source for these three (see mise.windows.toml).

@@ -18,6 +18,16 @@
 "winget:Notion.NotionCalendar" = "latest"
 "winget:Figma.Figma" = "latest"
 "winget:Elgato.WaveLink" = "latest"
+"winget:JesseDuffield.lazygit" = "latest"
+"winget:dandavison.delta" = "latest" # lazygit diff renderer (syntax highlighting)
+"winget:sharkdp.bat" = "latest" # delta syntax-theme = cendre (bat theme cache)
+# LazyVim deps (see macos/Brewfile). tree-sitter-cli is not on winget;
+# nvim-treesitter uses prebuilt parsers / needs a C toolchain if compiling.
+"winget:Neovim.Neovim" = "latest"
+"winget:BurntSushi.ripgrep.MSVC" = "latest"
+"winget:sharkdp.fd" = "latest"
+# nvim-treesitter (LazyVim) needs a C compiler on Windows.
+"winget:BrechtSanders.WinLibs.POSIX.UCRT" = "latest"
 # ponytail: Raycast は msstore 由来の ID。旧 apps.winget では `source: msstore` を
 # 明示していた。winget の暗黙のソース解決に任せている。解決できなければ
 # `winget install --id 9PFXXSHC64H3 --source msstore` を手動で。
@@ -36,3 +46,12 @@
 "~/.config/mise/config.toml" = { source = "home-win/.config/mise/config.toml", mode = "symlink" }
 "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1" = { source = "home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1", mode = "symlink" }
 "~/Documents/kanata/kanata.kbd" = { source = "home-win/Documents/kanata/kanata.kbd", mode = "symlink" }
+# lazygit defaults to %LOCALAPPDATA%\lazygit on Windows (not ~/.config).
+"~/AppData/Local/lazygit/config.yml" = { source = "home-win/.config/lazygit/config.yml", mode = "symlink" }
+"~/AppData/Local/lazygit/generate-commit-msg.ps1" = { source = "home-win/.config/lazygit/generate-commit-msg.ps1", mode = "symlink" }
+# bat on Windows uses %APPDATA%\bat (not ~/.config/bat).
+"~/AppData/Roaming/bat/themes/cendre.tmTheme" = { source = "extras/bat/cendre.tmTheme", mode = "symlink" }
+# Neovim / LazyVim: Windows config dir is %LOCALAPPDATA%\nvim (same tree as Unix).
+"~/AppData/Local/nvim" = { source = "home/.config/nvim", mode = "symlink" }
+# herdr defaults to %APPDATA%\herdr on Windows (not ~/.config).
+"~/AppData/Roaming/herdr/config.toml" = { source = "home-win/.config/herdr/config.toml", mode = "symlink" }

@@ -9,22 +9,24 @@ sidebar:
 
 | Tool | Role | Config |
 | --- | --- | --- |
-| [LazyVim](https://www.lazyvim.org/) | Neovim ディストリビューション（エディタ） | `home/.config/nvim` |
-| [lazygit](https://github.com/jesseduffield/lazygit) | Git の TUI | `home/.config/lazygit/config.yml` |
-| [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ | `home/.config/herdr/config.toml` |
+| [LazyVim](https://www.lazyvim.org/) | Neovim ディストリビューション（エディタ） | `home/.config/nvim`（Unix → `~/.config/nvim` / Windows → `%LOCALAPPDATA%\nvim`） |
+| [lazygit](https://github.com/jesseduffield/lazygit) | Git の TUI | `home/.config/lazygit`（Unix）/ `home-win/.config/lazygit`（Windows → `%LOCALAPPDATA%\lazygit`） |
+| [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ | `home/.config/herdr`（Unix）/ `home-win/.config/herdr`（Windows → `%APPDATA%\herdr`） |
 | [Crit](https://crit.md/) | AI エージェント向けのローカルレビューツール | なし（単一バイナリ） |
 
 herdr は tmux のエージェント版で、Claude Code や Codex を PTY セッションとして常駐させ、状態（作業中 / 待ち / 完了）を一覧しながら切り替える。サーバー側で生き続けるので、ターミナルを閉じても SSH で attach し直せる。
 
 ## Prerequisites
 
-`mise run install-apps`（macOS Brewfile）でインストールされる:
+`mise run install-apps`（macOS Brewfile / Windows winget）でインストールされる:
 
 - `neovim`
-- `herdr`
+- `herdr`（macOS: Brewfile。Windows: 公式 `install.ps1`、`mise run install-herdr` / `install-apps`）
 - `lazygit`
+- `git-delta`（lazygit の syntax-highlighted diff。macOS: Brewfile `git-delta` / Windows: `winget:dandavison.delta`。テーマは [cendre](https://cendretheme.com/) hard — `~/.config/delta/cendre.gitconfig` + bat `cendre` theme）
+- `bat`（delta の `syntax-theme = cendre` 用。`mise run theme` で `bat cache --build`）
 - `ripgrep`、`fd`（LazyVim の grep / ファイル検索に必須）
-- `tree-sitter-cli`（nvim-treesitter がパーサーをビルドするのに必要。brew の `tree-sitter` はライブラリのみで CLI は別 formula）
+- `tree-sitter-cli`（macOS: Brewfile。Windows は LazyVim/mason が入れる。パーサービルド用に `winget:BrechtSanders.WinLibs.POSIX.UCRT`）
 - `crit`（エージェントの変更をブラウザ UI で行コメントレビューする。`crit <file>` / `crit <url>` で起動）
 
 Crit を Claude Code から `/crit` スラッシュコマンドで使う場合は、プラグインを別途インストールする（プラグイン実体は `~/.claude/plugins` にランタイム管理されるため symlink 対象にはしない）:
@@ -46,9 +48,9 @@ nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
 
 ## How it is linked
 
-`~/.config/nvim` は**ディレクトリごと**リンクしている。LazyVim が `lazy-lock.json` をリンク越しにリポジトリへ書き戻すため、プラグインのバージョンが git で追跡される。プラグイン本体は `~/.local/share/nvim`、セッション状態は `~/.local/state/nvim` に入るのでリポジトリは汚れない。
+`~/.config/nvim`（Windows では `%LOCALAPPDATA%\nvim`）は**ディレクトリごと**リンクしている。LazyVim が `lazy-lock.json` をリンク越しにリポジトリへ書き戻すため、プラグインのバージョンが git で追跡される。プラグイン本体は Unix では `~/.local/share/nvim`、Windows では `%LOCALAPPDATA%\nvim-data`、セッション状態はそれぞれ `~/.local/state/nvim` / nvim-data 配下に入るのでリポジトリは汚れない。
 
-`~/.config/herdr` はログ・ソケット・`session.json` が同じディレクトリに書かれるので、`config.toml` だけを**ファイル単位**でリンクしている（`~/.config/lazygit` と同じ扱い）。
+`~/.config/herdr`（Windows では `%APPDATA%\herdr`）はログ・ソケット・`session.json` が同じディレクトリに書かれるので、`config.toml` だけを**ファイル単位**でリンクしている（`~/.config/lazygit` と同じ扱い）。Windows 用設定は CJK IME 向けに `host_cursor = "native"`（[Windows support](https://herdr.dev/docs/windows-beta/)）。
 
 ## herdr config
 
@@ -68,8 +70,10 @@ nvim / nv    # LazyVim（リーダーキーは space）。`nv +100 file.rs` も�
 lazygit / lg # Git TUI（Files で A = Cursor AI コミットメッセージ）
 ```
 
+diff は [delta](https://github.com/dandavison/delta)（`git.diffRenderers`）+[cendre](https://cendretheme.com/) hard（`.gitconfig` が `~/.config/delta/cendre.gitconfig` を include。syntax は bat の `cendre` theme）。行番号クリックでエディタへジャンプ（hyperlinks）。`|` で renderer 切替。
+
 `hr` / `nv` / `lg` は `~/.zshrc` の薄いシェル関数（`hr nv` の組み合わせも可）。
 
-lazygit の `A` は **staged の diff だけ** を `cursor-agent`（`composer-2.5-fast`）に渡す。生成中は下ステータスの `loadingText`（中央オーバーレイは非対応）。完了後は lazygit の保存メッセージ（`.git/LAZYGIT_PENDING_COMMIT`、Esc で閉じたときに復元されるもの）に書き込み、nvim 内（LazyVim の lazygit 統合）なら `$NVIM` の RPC ソケット経由で `c` を注入してプリフィル済みの commit パネルを開く。Enter は自分で押す。nvim 外ではポップアップで「c を押せ」と案内する。要: `cursor-agent login`（または `CURSOR_API_KEY`）と stage 済み。
+lazygit の `A` は **staged の diff だけ** を `cursor-agent`（`composer-2.5-fast`）に渡す。生成中は下ステータスの `loadingText`（中央オーバーレイは非対応）。完了後は lazygit の保存メッセージ（`.git/LAZYGIT_PENDING_COMMIT`、Esc で閉じたときに復元されるもの）に書き込み、nvim 内（LazyVim の lazygit 統合）なら `$NVIM` の RPC ソケット経由で `c` を注入してプリフィル済みの commit パネルを開く。Enter は自分で押す。nvim 外ではポップアップで「c を押せ」と案内する。要: `cursor-agent login`（または `CURSOR_API_KEY`）と stage 済み。ヘルパー本体は macOS が `generate-commit-msg.sh`、Windows が `generate-commit-msg.ps1`（`mise.windows.toml` が `%LOCALAPPDATA%\lazygit` にリンク）。
 
 LazyVim のプラグイン追加は `home/.config/nvim/lua/plugins/` に `.lua` を置くだけでよい（`example.lua` が雛形）。`lazy-lock.json` の差分はそのままコミットする。

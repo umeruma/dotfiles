@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
+# Windows: linked to %LOCALAPPDATA%\lazygit\ (lazygit's default config dir).
 
 gui:
   commitHashLength: 0
@@ -15,15 +16,12 @@ git:
     - command: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 
 
-# Files: A = generate (bottom loader via loadingText; centered overlay is not
-# available), write it to .git/LAZYGIT_PENDING_COMMIT (lazygit's own preserved
-# message), then open the commit panel prefilled by injecting `c` via nvim's
-# RPC socket when running inside Neovim. Outside nvim: popup says "press c".
-# The script is linked via mise.macos.toml.
+# Files: A = generate via PowerShell helper (see generate-commit-msg.ps1).
 customCommands:
   - key: 'A'
     context: 'files'
     description: 'AI commit message → open prefilled commit panel'
     loadingText: 'Generating commit message with Cursor…'
-    command: '$HOME/.config/lazygit/generate-commit-msg.sh'
+    # lazygit templates have no .Env — expand LOCALAPPDATA inside pwsh.
+    command: "pwsh -NoProfile -Command \"& (Join-Path $env:LOCALAPPDATA 'lazygit/generate-commit-msg.ps1')\""
     output: none

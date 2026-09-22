@@ -12,4 +12,4 @@ cd "$root"
 
 require_cmd git
 
-git pull origin main
+git pull --no-ff origin main

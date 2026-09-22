@@ -22,6 +22,10 @@ $scanRoots = @(
   '.agents'
   'Documents\PowerShell'
   'Documents\kanata'
+  'AppData\Local\lazygit'
+  'AppData\Local\nvim'
+  'AppData\Roaming\herdr'
+  'AppData\Roaming\bat'
 ) | ForEach-Object { Join-Path $HOME $_ }
 
 function Test-ReparsePoint {
