@@ -16,5 +16,6 @@
       }
     }
   },
-  "theme": "dark"
+  "theme": "dark",
+  "agentPushNotifEnabled": true
 }
