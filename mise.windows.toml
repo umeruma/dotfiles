@@ -49,3 +49,5 @@
 "~/AppData/Local/lazygit/generate-commit-msg.ps1" = { source = "home-win/.config/lazygit/generate-commit-msg.ps1", mode = "symlink" }
 # Neovim / LazyVim: Windows config dir is %LOCALAPPDATA%\nvim (same tree as Unix).
 "~/AppData/Local/nvim" = { source = "home/.config/nvim", mode = "symlink" }
+# herdr defaults to %APPDATA%\herdr on Windows (not ~/.config).
+"~/AppData/Roaming/herdr/config.toml" = { source = "home-win/.config/herdr/config.toml", mode = "symlink" }

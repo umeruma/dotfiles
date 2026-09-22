@@ -40,7 +40,7 @@ depends = ["clean"]
 run = "mise dotfiles apply -y"
 
 [tasks.install-apps]
-description = "Install apps (Brewfile on Unix; winget + Cursor CLI on Windows)"
+description = "Install apps (Brewfile on Unix; winget + Cursor CLI + herdr on Windows)"
 run = "zsh script/install-apps.zsh"
 run_windows = "pwsh -NoProfile -File script/install-apps-windows.ps1"
 
@@ -48,6 +48,11 @@ run_windows = "pwsh -NoProfile -File script/install-apps-windows.ps1"
 description = "Install Cursor CLI (official installer; Windows)"
 run = "echo 'Task install-cursor-cli is only supported on Windows (macOS: brew install --cask cursor-cli).'; exit 1"
 run_windows = "pwsh -NoProfile -File script/install-cursor-cli-windows.ps1"
+
+[tasks.install-herdr]
+description = "Install herdr (official installer; Windows)"
+run = "echo 'Task install-herdr is only supported on Windows (macOS: brew install herdr).'; exit 1"
+run_windows = "pwsh -NoProfile -File script/install-herdr-windows.ps1"
 
 [tasks.setup-kanata]
 description = "Create kanata autostart shortcut (Windows)"
