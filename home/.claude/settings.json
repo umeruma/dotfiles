@@ -2,7 +2,7 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "*",
+        "matcher": "^(startup|resume|clear|compact|fork)$",
         "hooks": [
           {
             "type": "command",
@@ -42,7 +42,7 @@
       }
     }
   },
+  "awaySummaryEnabled": false,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "awaySummaryEnabled": false
+  "agentPushNotifEnabled": true
 }
