@@ -44,6 +44,8 @@ cask "cursor"
 cask "cursor-cli"
 cask "deskpad"
 cask "discord"
+# Dock replacement with widgets, profiles and window previews
+cask "dockdoor-pro"
 cask "figma"
 cask "ghostty"
 cask "gyazo"
@@ -57,10 +59,11 @@ cask "mole-app"
 cask "netnewswire"
 cask "ngrok"
 cask "notion"
+# AI usage tracker for Claude Code, Cursor, Codex, Copilot
+cask "openusage"
 cask "raycast"
 cask "transmit"
 cask "visual-studio-code"
-# Assign keys, and then decorate and label them
 cask "xcodes-app"
 cask "zed"
 mas "Apple Configurator", id: 1037126344
