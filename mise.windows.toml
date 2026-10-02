@@ -9,6 +9,7 @@
 "winget:Anthropic.Claude" = "latest"
 "winget:Anthropic.ClaudeCode" = "latest"
 "winget:SlackTechnologies.Slack" = "latest"
+"winget:Tailscale.Tailscale" = "latest"
 "winget:Unity.UnityHub" = "latest"
 "winget:Zen-Team.Zen-Browser" = "latest"
 "winget:Nota.Gyazo" = "latest"
