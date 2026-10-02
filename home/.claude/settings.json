@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash '/Users/umeruma/.claude/hooks/herdr-agent-state.sh' session",
+            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
             "timeout": 10
           }
         ]
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sh '/Users/umeruma/skills/tldraw-offline/inject-server-context.sh' SubagentStart"
+            "command": "sh \"$HOME/skills/tldraw-offline/inject-server-context.sh\" SubagentStart"
           }
         ]
       }
