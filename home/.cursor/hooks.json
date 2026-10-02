@@ -1,0 +1,66 @@
+{
+  "hooks": {
+    "afterAgentResponse": [
+      {
+        "command": "if [ -f \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ]; then ORCA_CURSOR_HOOK_RESPONSE='{}' /bin/sh \"$HOME/.orca/agent-hooks/cursor-hook.sh\"; else printf '%s\\n' '{}'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+        "timeout": 10
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "if [ -f \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ]; then ORCA_CURSOR_HOOK_RESPONSE='{\"permission\":\"allow\"}' /bin/sh \"$HOME/.orca/agent-hooks/cursor-hook.sh\"; else printf '%s\\n' '{\"permission\":\"allow\"}'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+        "timeout": 10
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "if [ -f \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ]; then ORCA_CURSOR_HOOK_RESPONSE='{\"continue\":true}' /bin/sh \"$HOME/.orca/agent-hooks/cursor-hook.sh\"; else printf '%s\\n' '{\"continue\":true}'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+        "timeout": 10
+      },
+      {
+        "command": "node \"$HOME/.claude/plugins/marketplaces/ponytail/hooks/ponytail-mode-tracker.js\"",
+        "timeout": 5
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "if [ -f \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ]; then ORCA_CURSOR_HOOK_RESPONSE='{}' /bin/sh \"$HOME/.orca/agent-hooks/cursor-hook.sh\"; else printf '%s\\n' '{}'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+        "timeout": 10
+      }
+    ],
+    "postToolUseFailure": [
+      {
+        "command": "if [ -f \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ]; then ORCA_CURSOR_HOOK_RESPONSE='{}' /bin/sh \"$HOME/.orca/agent-hooks/cursor-hook.sh\"; else printf '%s\\n' '{}'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+        "timeout": 10
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "if [ -f \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ]; then ORCA_CURSOR_HOOK_RESPONSE='{\"permission\":\"allow\"}' /bin/sh \"$HOME/.orca/agent-hooks/cursor-hook.sh\"; else printf '%s\\n' '{\"permission\":\"allow\"}'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+        "timeout": 10
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": "bash \"$HOME/.cursor/herdr-agent-state.sh\" session"
+      },
+      {
+        "command": "node \"$HOME/.claude/plugins/marketplaces/ponytail/hooks/ponytail-activate.js\"",
+        "timeout": 5
+      }
+    ],
+    "stop": [
+      {
+        "command": "if [ -f \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ]; then ORCA_CURSOR_HOOK_RESPONSE='{}' /bin/sh \"$HOME/.orca/agent-hooks/cursor-hook.sh\"; else printf '%s\\n' '{}'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+        "timeout": 10
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": "if [ -f \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -r \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ] && [ -x \"$HOME/.orca/agent-hooks/cursor-hook.sh\" ]; then ORCA_CURSOR_HOOK_RESPONSE='{\"permission\":\"allow\"}' /bin/sh \"$HOME/.orca/agent-hooks/cursor-hook.sh\"; else printf '%s\\n' '{\"permission\":\"allow\"}'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+        "timeout": 10
+      }
+    ]
+  },
+  "version": 1
+}
