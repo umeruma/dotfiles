@@ -9,6 +9,15 @@
       "skillFolderHash": "eb6a23305aea6e340d14b9de3766e721f9f4861b",
       "installedAt": "2026-06-27T14:47:14.761Z",
       "updatedAt": "2026-06-27T14:47:14.761Z"
+    },
+    "natural-japanese": {
+      "source": "coji/natural-japanese",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/coji/natural-japanese.git",
+      "skillPath": "skills/natural-japanese/SKILL.md",
+      "skillFolderHash": "77fce8fc457a41321ac4963065590fb91c14f781",
+      "installedAt": "2026-10-03T00:30:03.428Z",
+      "updatedAt": "2026-10-03T00:30:03.428Z"
     }
   },
   "dismissed": {
@@ -16,17 +25,17 @@
   },
   "lastSelectedAgents": [
     "amp",
-    "antigravity",
-    "antigravity-cli",
     "cline",
     "codex",
     "cursor",
-    "deepagents",
+    "droid",
     "gemini-cli",
     "github-copilot",
+    "kilo",
     "kimi-code-cli",
     "opencode",
     "warp",
-    "zed"
+    "zed",
+    "claude-code"
   ]
 }

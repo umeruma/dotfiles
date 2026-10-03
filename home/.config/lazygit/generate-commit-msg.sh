@@ -33,7 +33,7 @@ fi
 STAT=$(git diff --cached --stat)
 DIFF=$(git diff --cached)
 if [ "${#DIFF}" -gt 24000 ]; then
-  DIFF=$(printf '%s' "$DIFF" | head -c 24000)
+  DIFF=${DIFF:0:24000} # not `| head -c`: SIGPIPE + pipefail exits 141
   DIFF+=$'\n\n[staged diff truncated]'
 fi
 
