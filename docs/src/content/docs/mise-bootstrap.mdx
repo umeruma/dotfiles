@@ -27,7 +27,7 @@ curl インストーラー（`install`）は、mise が存在する **前** に�
 
 | Phase | Config | This repo |
 | --- | --- | --- |
-| packages | `mise.linux.toml` の `[bootstrap.packages]` | Linux: `apt:build-essential`、`apt:zsh` |
+| packages | `mise.linux.toml` の `[bootstrap.packages]` | Linux: `apt:build-essential`、`apt:zsh`（Debian 系）／`pacman:base-devel`、`pacman:zsh`（Arch 系）。使えない manager の行は mise が skip する |
 | dotfiles | `mise.dotfiles.toml`（共通）/ `mise.unix.toml` / `mise.windows.toml` / `mise.macos.toml` の `[dotfiles]` | `home/`・`home-win/` の宣言的 symlink allowlist（実行時書き込みのある dir はファイル単位、静的な設定 dir はディレクトリごと） |
 | macOS defaults | `mise.macos.toml` の `[bootstrap.macos.*]` / `[bootstrap.macos.defaults]` | Dock・Finder・キーボードなどスカラー値の設定（配列 / PlistBuddy は未移行） |
 | user | `[bootstrap.user]` | `login_shell = "/bin/zsh"`（`install` 内の旧 `chsh` ブロックを置き換え） |
