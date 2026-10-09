@@ -69,6 +69,7 @@ cask "zed"
 mas "Apple Configurator", id: 1037126344
 mas "CotEditor", id: 1024640650
 mas "Craft", id: 1487937127
+mas "CrystalFetch", id: 6454431289
 mas "Day One", id: 1055511498
 mas "Dropover", id: 1355679052
 mas "Keka", id: 470158793
@@ -76,4 +77,5 @@ mas "MeetingBar", id: 1532419400
 mas "OpenIn", id: 1643649331
 mas "Slack", id: 803453959
 mas "Tailscale", id: 1475387142
+mas "UTM", id: 1538878817
 mas "WorldWideWeb", id: 1621370168
