@@ -2,3 +2,4 @@
 bin/
 # backups written by tools that rewrite ~/.claude/settings.json through the symlink
 home/.claude/*.bak
+__pycache__/
