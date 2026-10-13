@@ -78,3 +78,5 @@ mas "Slack", id: 803453959
 mas "Tailscale", id: 1475387142
 mas "UTM", id: 1538878817
 mas "WorldWideWeb", id: 1621370168
+# Encrypted DNS client with ad and tracker blocking
+cask "nextdns-app"
