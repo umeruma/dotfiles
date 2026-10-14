@@ -12,7 +12,7 @@ This document is a guide for safe and productive collaboration between AI agents
 2. Gather context (search, then read large relevant file sections)
 3. Make minimal diffs (avoid unrelated formatting)
 4. Run quality gates and report results (Build / Lint / Typecheck / Test)
-5. Update documentation (add details to `docs/content/docs`, use README as an entry point)
+5. Update documentation (add details to `docs/src/content/docs`, use README as an entry point)
 6. Record changes, results, and follow-ups concisely
 
 ## Quality Gates (Keep Green)
@@ -30,7 +30,7 @@ This document is a guide for safe and productive collaboration between AI agents
 ## Coding and Structure Guidelines
 - Symlinks for `home/` and `home-win/` are declared in `[dotfiles]`, split by OS: `mise.dotfiles.toml` (all), `mise.unix.toml`, `mise.windows.toml`, `mise.macos.toml`; deploy with `mise run deploy` on every OS
 - Dirs that receive runtime writes (karabiner, micro, lazygit, hammerspoon) get per-file entries — never whole-dir symlinks
-- Fresh Unix setup converges via `mise bootstrap` (see `docs/content/docs/mise-bootstrap.mdx`)
+- Fresh Unix setup converges via `mise bootstrap` (see `docs/src/content/docs/mise-bootstrap.mdx`)
 - Use `README.md` as an entry point; put detailed steps/background in `docs/`
 - Follow existing style (frontmatter, naming, hierarchy) when creating files
 
@@ -47,7 +47,7 @@ This document is a guide for safe and productive collaboration between AI agents
 - Main operations are mise tasks in root `mise.toml` (`mise tasks` / `mise run …`)
 - Machine bootstrap (packages, login shell, deploy) uses `mise bootstrap`
 - `.miserc.toml` sets `auto_env = true` so `mise.linux.toml` / `mise.macos.toml` load
-- Documentation is managed as MDX in `docs/content/docs` and published on the site
+- Documentation is managed as MDX in `docs/src/content/docs` and published on the site
 - Navigation is auto-completed by `meta.json` (usually just add a page)
 
 ## References
