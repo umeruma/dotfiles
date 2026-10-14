@@ -18,7 +18,6 @@
 "winget:Notion.Notion" = "latest"
 "winget:Notion.NotionCalendar" = "latest"
 "winget:Figma.Figma" = "latest"
-"winget:Elgato.WaveLink" = "latest"
 "winget:JesseDuffield.lazygit" = "latest"
 "winget:dandavison.delta" = "latest" # lazygit diff renderer (syntax highlighting)
 "winget:sharkdp.bat" = "latest" # delta syntax-theme = cendre (bat theme cache)
