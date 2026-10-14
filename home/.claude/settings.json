@@ -191,6 +191,5 @@
   },
   "awaySummaryEnabled": false,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "model": "opus"
+  "agentPushNotifEnabled": true
 }

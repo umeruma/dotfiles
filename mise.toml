@@ -42,6 +42,9 @@ depends = ["clean"]
 run = [
   '''git config filter.home.clean 'sed "s|$HOME|\$HOME|g"' ''',
   '''git config filter.home.smudge 'sed "s|\\\$HOME|$HOME|g"' ''',
+  # filter.claude-settings: Claude Code rewrites settings.json on /model; keep the
+  # file tracked (plugins, hooks) but drop the per-machine model choice from git.
+  '''git config filter.claude-settings.clean "jq 'del(.model)'" ''',
   # pre-commit runs gitleaks on staged changes (see .githooks/)
   "git config core.hooksPath .githooks",
   "mise dotfiles apply -y",
