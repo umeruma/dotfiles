@@ -49,6 +49,7 @@ This document is a guide for safe and productive collaboration between AI agents
 - `.miserc.toml` sets `auto_env = true` so `mise.linux.toml` / `mise.macos.toml` load
 - Documentation is managed as MDX in `docs/src/content/docs` and published on the site
 - Navigation is auto-completed by `meta.json` (usually just add a page)
+- Record removed or rejected tools/approaches and why in `docs/src/content/docs/decisions.md`; check it before proposing one back
 - `.githooks/pre-commit` runs gitleaks (from `[tools]` in `mise.toml`) on staged changes; `mise run deploy` sets `core.hooksPath`
 
 ## References
