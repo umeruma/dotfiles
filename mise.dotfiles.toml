@@ -29,3 +29,5 @@
 "~/.cursor/settings.json" = { source = "home/.cursor/settings.json", mode = "symlink" }
 # cendre for delta (git include); bat theme is per-OS (config-dir differs).
 "~/.config/delta/cendre.gitconfig" = { source = "extras/delta/cendre.gitconfig", mode = "symlink" }
+# starship reads ~/.config/starship.toml on every OS (Windows included).
+"~/.config/starship.toml" = { source = "home/.config/starship.toml", mode = "symlink" }

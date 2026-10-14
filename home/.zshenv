@@ -15,6 +15,11 @@ export EDITOR=micro
 export VISUAL="$EDITOR"
 export READNULLCMD="less"
 
+# bat: use the terminal's 16 colours (cendre); colour man pages (omarchy envs)
+export BAT_THEME=ansi
+export MANROFFOPT="-c"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 export DOTFILES="$HOME/Codes/dotfiles"
 export DOTFILES_HOME="$HOME/Codes/dotfiles/home"
 

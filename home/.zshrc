@@ -21,6 +21,17 @@ autoload -Uz compinit && compinit
 # Zsh option: Keybindings (use emacs keybindings)
 bindkey -e
 
+# Arrow keys: walk history filtered by what is already typed (omarchy inputrc)
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+bindkey '^[OA' history-beginning-search-backward
+bindkey '^[OB' history-beginning-search-forward
+
+# Completion: case-insensitive, Tab / Shift+Tab cycle candidates (omarchy inputrc)
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+setopt MENU_COMPLETE
+bindkey '^[[Z' reverse-menu-complete
+
 # Zsh builtin module: zmv (small utility)
 autoload -Uz zmv
 alias zmv='noglob zmv -W'
@@ -66,18 +77,8 @@ if [[ -d "$PLAYDATE_SDK_PATH/bin" ]]; then
     path=("$PLAYDATE_SDK_PATH/bin" $path)
 fi
 
-# --- sheldon (plugin manager) + enhancd ---
-# enhancd / fzy integration
-export ENHANCD_FILTER="fzy --prompt '❯ '"
-export ENHANCD_DOT_SHOW_FULLPATH=1
-
-# enhancd is profile-gated (interactive only); skip it in AI agent shells.
+# --- sheldon (plugin manager) --------------
 if command -v sheldon >/dev/null 2>&1; then
-    if is_agent_shell; then
-        unset SHELDON_PROFILE
-    else
-        export SHELDON_PROFILE=interactive
-    fi
     eval "$(sheldon source)"
 fi
 
@@ -86,6 +87,25 @@ eval "$(mise activate zsh)"
 
 export MISE_STATUS_MESSAGE_SHOW_ENV=true
 export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
+
+# --- zoxide (smarter cd) ------------------
+# Replaces enhancd (unmaintained). `cd <query>` jumps by frecency;
+# bare `cd` / `cdi` pick from history with fzy, like enhancd did.
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh --cmd cd)"
+    cdi() {
+        local dir
+        dir="$(zoxide query -l | fzy --prompt '❯ ')" || return
+        __zoxide_cd "$dir"
+    }
+    cd() { if (( $# == 0 )); then cdi; else __zoxide_z "$@"; fi; }
+fi
+
+# --- starship (prompt) --------------------
+# Replaces pure; one config for zsh and PowerShell (home/.config/starship.toml).
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
 
 # --- git-wt (git worktree manager) --------
 # https://github.com/k1LoW/git-wt?tab=readme-ov-file
@@ -107,6 +127,13 @@ wr() {
   git wt -d "$dir"
 }
 
+# ga <branch>: add a worktree and switch to it. gd [branch]: delete it from the main worktree.
+ga() { git wt "$@"; }
+gd() {
+  local target="${1:-$(git branch --show-current)}"
+  cd "$(git rev-parse --path-format=absolute --git-common-dir)/.." && git wt -d "$target"
+}
+
 export XDG_CONFIG_HOME="$HOME/.config"
 
 # --- fzy (fuzzy finder) -------------------
@@ -115,6 +142,12 @@ fzyselect() {
   fzy < <(find . -maxdepth 1)
 }
 alias -g F='$(fzyselect)'
+
+# --- fzf (fuzzy finder with preview) ------
+# ff: pick a file with a bat preview. eff: open the pick in $EDITOR. (omarchy aliases)
+export FZF_DEFAULT_OPTS="--color=16 --layout=reverse --border --height=80%"
+ff() { fzf --preview 'bat --style=numbers --color=always {}' "$@"; }
+eff() { local f; f="$(ff)" && [[ -n "$f" ]] && "$EDITOR" "$f"; }
 
 # --- Cursor -------------------------------
 # Cursor IDE (Editor Window; skip Agents/Glass on launch)
@@ -126,10 +159,12 @@ cua() { cursor-agent "$@"; }
 
 # --- herdr --------------------------------
 hr() { herdr "$@"; }
+# hdl / hdlm / hsl: dev layouts (editor + agent + terminal), ported from omarchy
+[[ -r "$HOME/.config/zsh/herdr.zsh" ]] && source "$HOME/.config/zsh/herdr.zsh"
 
 # --- Neovim -------------------------------
-# args pass through; nv defaults to .
-nv() { nvim "${@:-.}"; }
+# args pass through; n defaults to . (omarchy alias)
+n() { nvim "${@:-.}"; }
 
 # --- lazygit (git UI) ---------------------
 lg() { lazygit "${@:-.}"; }
@@ -147,9 +182,17 @@ alias keka="/Applications/Keka.app/Contents/MacOS/Keka --cli"
 # =========================
 # Shell basics
 # =========================
-alias ls="ls -G"
-alias ll="ls -lG"
-alias la="ls -laG"
+# eza when present (omarchy aliases), plain ls otherwise. No icons: font may lack NF glyphs.
+if command -v eza >/dev/null 2>&1; then
+    alias ls="eza --group-directories-first"
+    alias ll="eza -lh --group-directories-first"
+    alias la="eza -lah --group-directories-first"
+    alias lt="eza --tree --level=2 --long --git"
+else
+    alias ls="ls -G"
+    alias ll="ls -lG"
+    alias la="ls -laG"
+fi
 
 # =========================
 # dotfiles

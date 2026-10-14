@@ -21,6 +21,7 @@
 "winget:JesseDuffield.lazygit" = "latest"
 "winget:dandavison.delta" = "latest" # lazygit diff renderer (syntax highlighting)
 "winget:sharkdp.bat" = "latest" # delta syntax-theme = cendre (bat theme cache)
+"winget:Starship.Starship" = "latest" # prompt (home/.config/starship.toml)
 # LazyVim deps (see macos/Brewfile). tree-sitter-cli is not on winget;
 # nvim-treesitter uses prebuilt parsers / needs a C toolchain if compiling.
 "winget:Neovim.Neovim" = "latest"

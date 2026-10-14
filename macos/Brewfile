@@ -1,5 +1,3 @@
-# brew "eza"
-
 # Editor / agent stack — see docs/editor-stack
 brew "neovim"     # LazyVim (config in home/.config/nvim)
 brew "herdr"      # agent multiplexer (https://herdr.dev)
@@ -9,7 +7,9 @@ brew "tree-sitter-cli"  # required (nvim-treesitter parser builds)
 
 brew "crit"       # inline code review for AI agent workflows (https://crit.md)
 brew "diffr"
+brew "eza"        # ls / lt aliases (home/.zshrc)
 brew "ffmpeg"
+brew "fzf"        # ff / eff, zoxide `cdi`
 brew "fzy"
 brew "gh"
 brew "gifsicle"
@@ -30,9 +30,11 @@ brew "mkcert"
 brew "rust"
 brew "sheldon"
 brew "shellcheck"
+brew "starship"   # prompt (home/.config/starship.toml, shared with PowerShell)
 brew "websocat"
 brew "pkgx"
 brew "rclone"
+brew "zoxide"     # cd replacement (home/.zshrc)
 cask "1password"
 cask "1password-cli"
 cask "cleanmymac"

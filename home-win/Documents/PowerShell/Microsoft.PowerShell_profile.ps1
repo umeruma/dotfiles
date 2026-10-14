@@ -40,7 +40,9 @@ if (-not (Get-Command herdr -ErrorAction SilentlyContinue)) {
 }
 
 # nv = New-Variable is a built-in PowerShell alias; drop it for LazyVim parity with zsh.
-Remove-Alias nv -Force -ErrorAction SilentlyContinue
-function nv { if ($args.Count) { nvim @args } else { nvim . } }
-function lg { if ($args.Count) { lazygit @args } else { lazygit . } }
-function hr { if ($args.Count) { herdr @args } else { herdr } }
+function n { if ($args.Count) { nvim @args } else { nvim . } }
+
+# starship prompt (shared config: ~/.config/starship.toml)
+if (Get-Command starship -ErrorAction SilentlyContinue) {
+  Invoke-Expression (&starship init powershell)
+}
