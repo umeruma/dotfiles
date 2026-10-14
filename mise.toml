@@ -42,6 +42,8 @@ depends = ["clean"]
 run = [
   '''git config filter.home.clean 'sed "s|$HOME|\$HOME|g"' ''',
   '''git config filter.home.smudge 'sed "s|\\\$HOME|$HOME|g"' ''',
+  # pre-commit runs gitleaks on staged changes (see .githooks/)
+  "git config core.hooksPath .githooks",
   "mise dotfiles apply -y",
 ]
 
@@ -74,4 +76,7 @@ run_windows = "pwsh -NoProfile -File script/theme-windows.ps1"
 description = "Download Moralerspace Neon (+ ChaliceIcons on macOS) for the terminal"
 run = "zsh script/install-fonts.zsh"
 run_windows = "pwsh -NoProfile -File script/install-fonts-windows.ps1"
+
+[tools]
+gitleaks = "8"
 
