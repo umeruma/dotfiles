@@ -4,3 +4,6 @@
 
 # Orca などが絶対パスで書き戻すファイル。git には $HOME で保存する（filter は mise run deploy で登録）。
 home/.cursor/hooks.json filter=home
+
+# Claude Code が /model のたびに書き戻す `model` は git に入れない（filter は mise run deploy で登録）。
+home/.claude/settings.json filter=claude-settings
