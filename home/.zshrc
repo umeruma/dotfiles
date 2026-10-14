@@ -54,23 +54,23 @@ setopt MULTIOS
 setopt EXTENDED_GLOB
 unsetopt CLOBBER 
 
-# -------------------------
-# Development Environment
-# -------------------------
-# Playdate SDK
+# =========================
+# Tools
+# =========================
+# One section per tool: delete the section when the tool is removed.
+# Sections that eval/PATH are order-sensitive; keep them in this order.
+
+# --- Playdate SDK -------------------------
 export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK"
 if [[ -d "$PLAYDATE_SDK_PATH/bin" ]]; then
     path=("$PLAYDATE_SDK_PATH/bin" $path)
 fi
 
-# -------------------------
-# Plugin options & Plugin managers
-# -------------------------
+# --- sheldon (plugin manager) + enhancd ---
 # enhancd / fzy integration
 export ENHANCD_FILTER="fzy --prompt '❯ '"
 export ENHANCD_DOT_SHOW_FULLPATH=1
 
-# sheldon (plugin manager)
 # enhancd is profile-gated (interactive only); skip it in AI agent shells.
 if command -v sheldon >/dev/null 2>&1; then
     if is_agent_shell; then
@@ -81,13 +81,13 @@ if command -v sheldon >/dev/null 2>&1; then
     eval "$(sheldon source)"
 fi
 
-# mise (pkg manager)
+# --- mise (pkg manager) -------------------
 eval "$(mise activate zsh)"
 
 export MISE_STATUS_MESSAGE_SHOW_ENV=true
 export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
 
-# git-wt (git worktree manager)
+# --- git-wt (git worktree manager) --------
 # https://github.com/k1LoW/git-wt?tab=readme-ov-file
 eval "$(git wt --init zsh)"
 
@@ -109,10 +109,14 @@ wr() {
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# -------------------------
-# Aliases & small functions
-# -------------------------
+# --- fzy (fuzzy finder) -------------------
+# Interactive file selection with fzy
+fzyselect() {
+  fzy < <(find . -maxdepth 1)
+}
+alias -g F='$(fzyselect)'
 
+# --- Cursor -------------------------------
 # Cursor IDE (Editor Window; skip Agents/Glass on launch)
 # Note: `cu` is taken by /usr/bin/cu (serial dial-up), so use `cur` instead.
 alias cursor='cursor --classic'
@@ -120,32 +124,36 @@ alias cursor='cursor --classic'
 # Cursor CLI agent (brew cask cursor-cli)
 cua() { cursor-agent "$@"; }
 
-# herdr / nvim shortcuts (args pass through; nv defaults to .)
+# --- herdr --------------------------------
 hr() { herdr "$@"; }
+
+# --- Neovim -------------------------------
+# args pass through; nv defaults to .
 nv() { nvim "${@:-.}"; }
 
-# lazygit (git UI)
+# --- lazygit (git UI) ---------------------
 lg() { lazygit "${@:-.}"; }
 
-# github cli aliases 
+# --- gh (GitHub CLI) ----------------------
 # https://cli.github.com/manual/gh_repo_gitignore_view
 gi() { gh repo gitignore "$@"; }
 
 # https://cli.github.com/manual/gh_repo_license_view
 gli() { gh repo license "$@"; }
 
+# --- Keka ---------------------------------
+alias keka="/Applications/Keka.app/Contents/MacOS/Keka --cli"
+
+# =========================
+# Shell basics
+# =========================
 alias ls="ls -G"
 alias ll="ls -lG"
 alias la="ls -laG"
 
-alias keka="/Applications/Keka.app/Contents/MacOS/Keka --cli"
-
-# Interactive file selection with fzy
-fzyselect() {
-  fzy < <(find . -maxdepth 1)
-}
-alias -g F='$(fzyselect)'
-
+# =========================
+# dotfiles
+# =========================
 alias dot='cd $DOTFILES'
 
 dottrack() {
