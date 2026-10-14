@@ -5,3 +5,5 @@
 
 [tools]
 node = "22"
+# git-wt is brew-only on macOS; on Windows mise fetches the GitHub release.
+"ubi:k1LoW/git-wt" = "latest"

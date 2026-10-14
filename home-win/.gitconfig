@@ -17,3 +17,11 @@
 	path = ~/Codes_DL/.gitconfig
 [include]
 	path = ~/.gitconfig.local
+
+# Git Worktree Manager Settings — same as home/.gitconfig (no remover: Windows has no `trash` CLI)
+# https://github.com/k1LoW/git-wt?tab=readme-ov-file#configuration
+[wt]
+	basedir = ../{gitroot}-wt
+	copyuntracked = true
+	copyignored = false
+	copymodified = true
