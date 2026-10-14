@@ -11,3 +11,4 @@ reading:
 inspired by:
 - https://github.com/paulmillr/dotfiles
 - https://github.com/babarot/dotfiles
+- https://github.com/omacom/omarchy — bash の alias / 関数（`ff`, herdr レイアウト）、inputrc、starship 設定を zsh 向けに移植（MIT）

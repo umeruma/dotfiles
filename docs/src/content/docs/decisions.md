@@ -36,6 +36,9 @@ sidebar:
 ## Shell
 
 - **zplug → zinit → sheldon**: zplugなどは結局開発者も使わなくなったツールだったはず。sheldon が設定も素直に書けて安定していそうだと判断。（[5fa2b95](https://github.com/umeruma/dotfiles/commit/5fa2b95)、[71e6510](https://github.com/umeruma/dotfiles/commit/71e6510)）
+- **enhancd → zoxide**: enhancd はリリースが3年前で止まっている。zoxide は `zoxide init zsh --cmd cd` で `cd` をそのまま置き換えられる。enhancd で使っていた「引数なし `cd` で履歴から fzy 選択」だけは `cdi` を fzy 版にして残した。enhancd 専用だった sheldon の `interactive` プロファイル分岐も一緒に消した。
+- **pure → starship**: zsh と PowerShell で同じプロンプト設定（`home/.config/starship.toml`）を使うため。設定は omarchy の `config/starship.toml` を元に、Nerd Font なしでも出る記号に替えた。
+- **omarchy の `ga` / `gd`（worktree 作成・削除）の移植（見送り）**: omarchy 版は `../repo--branch` に作る独自配置で git-wt と衝突する。同名の `ga` / `gd` は git-wt の薄いラッパーにした。
 
 ## Editor
 
