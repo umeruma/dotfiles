@@ -7,7 +7,7 @@ sidebar:
 
 ## Overview
 
-Windows のセットアップも macOS / Linux と同じ mise の宣言的な仕組みに載っている:
+Windows のセットアップも macOS / Linux と同じ mise の宣言的な仕組みに則っています:
 
 - **mise `[dotfiles]`** — [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml) の allowlist で [`home-win/`](https://github.com/umeruma/dotfiles/tree/main/home-win) と [`home/`](https://github.com/umeruma/dotfiles/tree/main/home) を `$HOME` にリンクする
 - **mise `[bootstrap.packages]`** — `winget:<id>` でアプリをインストールする
@@ -18,13 +18,11 @@ Windows のセットアップも macOS / Linux と同じ mise の宣言的な仕
 | ファイル | 適用 OS |
 | --- | --- |
 | `mise.dotfiles.toml` | 全 OS 共通（`~/.agents`、Claude/Copilot の設定など） |
-| `mise.unix.toml` | macOS + Linux |
 | `mise.windows.toml` | Windows（`~/.gitconfig` など3件は `home-win/` の内容で上書き） |
-| `mise.macos.toml` | macOS のみ |
 
 ## Prerequisites
 
-新規またはリセット直後の Windows では、まず Microsoft Store から **App Installer**（winget）を入れる。自分で用意する必要があるのは winget だけで、**Git**・**PowerShell 7**・**mise** はすべてスクリプトが winget 経由で自動インストールする。
+新規またはリセット直後の Windows では、まず Microsoft Store から **App Installer**（winget）を入れます。自分で用意する必要があるのは winget だけで、**Git**・**PowerShell 7**・**mise** はすべてスクリプトが winget 経由で自動インストールします。
 
 install-win 実行時に winget がない場合、スクリプトが App Installer の Store ページを開いて案内を表示して停止する。App Installer を入れてからコマンドを再実行する。
 

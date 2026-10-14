@@ -1,6 +1,6 @@
 ---
 title: Lean zsh
-description: この lean な zsh 設定の参考資料とインスピレーション元。
+description: zsh 設定の参考資料とdotfilesのインスピレーション元のリポジトリ
 sidebar:
   order: 7
 ---

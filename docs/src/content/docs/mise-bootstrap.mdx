@@ -1,23 +1,23 @@
 ---
 title: mise bootstrap
-description: macOS / Linux の新規マシンセットアップを mise bootstrap で収束させる仕組み。
+description: 新規マシンセットアップを mise bootstrap で行う
 sidebar:
   order: 3
 ---
 
 ## Overview
 
-macOS / Linux の新規マシンセットアップは [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) が主役。
+基本的なマシンセットアップは [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) が担当。
 
-curl インストーラー（`install`）は、mise が存在する **前** に必要な鶏卵問題のステップだけを担当する:
+curl インストーラー（`install`）は、mise が存在する前に必要なステップを担当する:
 
 1. このリポジトリを `~/Codes/dotfiles` に clone（または pull）
 2. macOS では Xcode Command Line Tools をインストール（`init/init-macos.sh`）
-3. Homebrew をインストール（Brewfile / `install-apps` で引き続き使用）
+3. Homebrew をインストール（Brewfile を使った `install-apps` CLI パッケージ、GUIアプリケーションのインストールに利用）
 4. mise 自体をインストール（`curl https://mise.run | sh`）
 5. `mise trust` + `mise bootstrap --yes --update` を実行
 
-以降、宣言的なマシン状態は以下に置く:
+宣言的なマシン状態は以下に置く:
 
 - [`.miserc.toml`](https://github.com/umeruma/dotfiles/blob/main/.miserc.toml) — early-init（`auto_env = true` で OS 別設定を読み込む）
 - [`mise.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.toml) — 共通の bootstrap user/task と mise タスク
@@ -56,11 +56,11 @@ dot && mise bootstrap macos defaults apply --dry-run --yes
 
 ## What stays outside bootstrap (for now)
 
-以下は意図的に bootstrap の外にある — Windows 専用、対話的、あるいは bootstrap の宣言的な仕組みより既存の方がリッチなもの:
+以下は意図的に bootstrap の外で管理:
 
 | Piece | Why |
 | --- | --- |
-| `install-win` + `win/bootstrap.winget` | PowerShell 7 / Git / mise 自体を入れる鶏卵ステップ。mise が存在する前なので bootstrap では扱えない |
+| `install-win` + `win/bootstrap.winget` | PowerShell 7 / Git / mise 自体を入れるステップ。mise が存在する前なので bootstrap では扱えない |
 | `macos/Brewfile` / `linux/Brewfile`（`mise run install-apps` 経由） | 意図的: `brew bundle add` / `brew bundle cleanup` の追加・追跡ワークフローが便利なため。bootstrap にはデプロイに必須のパッケージだけ残す |
 | Windows GUI アプリ（`mise.windows.toml` の `[bootstrap.packages]`） | `[bootstrap.packages]` に**宣言はする**が、`mise run install-apps`（= `mise bootstrap packages apply`）でのみ適用する opt-in 扱い。Brewfile と対称 |
 | Xcode CLT | 対話的な `xcode-select --install` |
@@ -74,12 +74,3 @@ experimental な bootstrap に慣れてきたら:
 （完了済み: macOS defaults → `[bootstrap.macos.defaults]`、stow → `[dotfiles]`、PSDotFiles → `[dotfiles]`、`win/apps.winget` → `[bootstrap.packages]`。予定なし: Brewfile → `[bootstrap.packages]` — `brew bundle` ワークフローは欠点ではなく機能なので）
 
 `mise bootstrap` はまだ experimental 扱いのため、このリポジトリの `mise.toml` では `settings.experimental = true` を設定している。
-
-## Related commands
-
-```
-mise run deploy        # home/ を symlink（bootstrap タスクの実体でもある）
-mise run install-apps  # Brewfile / winget アプリ（opt-in）
-mise bootstrap packages status  # 宣言済みパッケージの状態
-mise run theme         # cendre（Terminal.app / Windows Terminal）
-```
