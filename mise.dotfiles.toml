@@ -28,6 +28,7 @@
 # Installed via `npx skills add -g` (tracked through ~/.agents); declared here so fresh machines get the Claude Code link too.
 "~/.claude/skills/natural-japanese" = { source = "home/.agents/skills/natural-japanese", mode = "symlink" }
 "~/.claude/skills/orca-cli" = { source = "home/.agents/skills/orca-cli", mode = "symlink" }
+"~/.claude/skills/orchestration" = { source = "home/.agents/skills/orchestration", mode = "symlink" }
 # Cursor marketplace plugins (install state itself lives in Cursor's state DB).
 "~/.cursor/settings.json" = { source = "home/.cursor/settings.json", mode = "symlink" }
 # cendre for delta (git include); bat theme is per-OS (config-dir differs).
