@@ -10,3 +10,7 @@ vim.opt.conceallevel = 0
 
 -- .mdx は標準では検出されず ft=conf に落ちるので markdown 扱いにする
 vim.filetype.add({ extension = { mdx = "markdown" } })
+
+-- omarchy-nvim defaults
+vim.opt.relativenumber = false
+vim.g.autoformat = false

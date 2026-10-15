@@ -44,6 +44,7 @@ local -a prune_dirs=(
   "$HOME/.config/ghostty"
   "$HOME/.config/nvim"
   "$HOME/.config/sheldon"
+  "$HOME/.config/zsh"
   "$HOME/.config/micro/plug/editorconfig/help"
   "$HOME/.config/micro/plug/editorconfig"
   "$HOME/.config/karabiner/assets/complex_modifications"

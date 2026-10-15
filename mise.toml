@@ -37,7 +37,18 @@ run_windows = "pwsh -NoProfile -File script/clean-windows.ps1"
 [tasks.deploy]
 description = "Deploy dotfiles to $HOME via mise [dotfiles]"
 depends = ["clean"]
-run = "mise dotfiles apply -y"
+# filter.home: tools (e.g. Orca) rewrite hooks with absolute home paths;
+# git stores them as $HOME and expands back on checkout (see .gitattributes).
+run = [
+  '''git config filter.home.clean 'sed "s|$HOME|\$HOME|g"' ''',
+  '''git config filter.home.smudge 'sed "s|\\\$HOME|$HOME|g"' ''',
+  # filter.claude-settings: Claude Code rewrites settings.json on /model; keep the
+  # file tracked (plugins, hooks) but drop the per-machine model choice from git.
+  '''git config filter.claude-settings.clean "jq 'del(.model)'" ''',
+  # pre-commit runs gitleaks on staged changes (see .githooks/)
+  "git config core.hooksPath .githooks",
+  "mise dotfiles apply -y",
+]
 
 [tasks.install-apps]
 description = "Install apps (Brewfile on Unix; winget + Cursor CLI + herdr on Windows)"
@@ -68,4 +79,7 @@ run_windows = "pwsh -NoProfile -File script/theme-windows.ps1"
 description = "Download Moralerspace Neon (+ ChaliceIcons on macOS) for the terminal"
 run = "zsh script/install-fonts.zsh"
 run_windows = "pwsh -NoProfile -File script/install-fonts-windows.ps1"
+
+[tools]
+gitleaks = "8"
 

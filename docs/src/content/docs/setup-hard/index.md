@@ -1,6 +1,6 @@
 ---
 title: Setup Hardware
-description: このセットアップで使っているキーボード・マウス・オーディオ機材。
+description: キーボード・マウス・オーディオ機材
 sidebar:
   order: 6
 ---
@@ -26,5 +26,10 @@ IME 切り替えの設定（macOS: Karabiner / Windows: kanata）は [IME Switch
 - pulsar / ParaControl V2 XXL [🔗 Amazon](https://www.amazon.co.jp/dp/B09KC5J24D/)
 
 ## Audio
+### Headphone
 
 - beyerdynamic / DT770PRO 32Ω [🔗 サウンドハウス](https://www.soundhouse.co.jp/products/detail/item/193166/)
+
+### Microphone
+
+- Shure / SM58

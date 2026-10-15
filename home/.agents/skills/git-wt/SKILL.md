@@ -33,7 +33,7 @@ git wt --json                     # JSON 形式で表示
 
 # 切り替え / 作成（ブランチ・worktree がなければ自動作成）
 git wt <branch>                   # ブランチ名で切り替え
-git wt <worktree-folder-name>     # .git/wt/ 内のフォルダ名で切り替え
+git wt <worktree-folder-name>     # ../<repo>-wt/ 内のフォルダ名で切り替え（wt.basedir）
 git wt <path>                     # 絶対 / 相対パスで切り替え
 
 # 削除（safe: デフォルトブランチは保護される）

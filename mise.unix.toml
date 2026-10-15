@@ -11,12 +11,10 @@
 "~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
 "~/.gitignore" = { source = "home/.gitignore", mode = "symlink" }
 # static config dirs (whole-dir links; new repo files show up automatically)
-"~/.config/ghostty" = { source = "home/.config/ghostty", mode = "symlink" }
 "~/.config/sheldon" = { source = "home/.config/sheldon", mode = "symlink" }
-# ~/.config/nvim is linked whole-dir on purpose: LazyVim writes lazy-lock.json
-# back through the link into the repo, so plugin versions stay tracked by git.
-# Plugin payloads live in ~/.local/share/nvim, session state in ~/.local/state/nvim.
-"~/.config/nvim" = { source = "home/.config/nvim", mode = "symlink" }
+"~/.config/zsh" = { source = "home/.config/zsh", mode = "symlink" }
+# nvim / ghostty are macOS-only (mise.macos.toml): on Linux (Omarchy) the
+# distro ships its own theme-synced configs for both.
 # runtime-write dirs: per-file links only
 "~/.config/herdr/config.toml" = { source = "home/.config/herdr/config.toml", mode = "symlink" }
 "~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
@@ -31,6 +29,7 @@
 # Claude Code writes back through this link, so settings it manages itself
 # (theme, marketplaces it adds) land in the repo as real changes.
 "~/.claude/settings.json" = { source = "home/.claude/settings.json", mode = "symlink" }
+"~/.cursor/hooks.json" = { source = "home/.cursor/hooks.json", mode = "symlink" }
 # mise's own global config: declares tools that must resolve outside a project
 # (GUI apps inherit the persistent PATH, not a shell with `mise activate`).
 # Per-file because `mise use -g` rewrites config.toml in place.

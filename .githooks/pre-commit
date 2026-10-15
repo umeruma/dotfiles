@@ -1,0 +1,15 @@
+#!/bin/sh
+# Stops a commit that leaks a secret. `mise run deploy` sets
+# core.hooksPath=.githooks; gitleaks comes from [tools] in mise.toml.
+set -eu
+
+if ! command -v mise >/dev/null 2>&1; then
+  echo "pre-commit: mise not found; skipping gitleaks" >&2
+  exit 0
+fi
+
+if ! mise exec -- gitleaks git --staged --redact --no-banner --log-level warn .; then
+  echo "pre-commit: gitleaks found a secret in the staged changes; remove it before committing" >&2
+  echo "  (false positive: add its fingerprint to .gitleaksignore)" >&2
+  exit 1
+fi

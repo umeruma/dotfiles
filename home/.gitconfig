@@ -1,7 +1,6 @@
 [core]
   excludesfile = ~/.gitignore
   symlinks = true
-  editor = open -W -a 'Visual Studio Code'
 [init]
   defaultBranch = main
 [user]
@@ -36,10 +35,14 @@
 # Git Worktree Manager Settings
 # https://github.com/k1LoW/git-wt?tab=readme-ov-file#configuration
 [wt]
-  basedir = .git/wt
+  # Sibling dir per repo (~/Codes/<repo>-wt/<branch>): visible to Finder / editors / herdr,
+  # and outside .git/ so Vite's fs.deny does not block it. Still under mise's trusted ~/Codes/.
+  basedir = ../{gitroot}-wt
   copyuntracked = true
   copyignored = false
   copymodified = true
+  # Move removed worktrees to the Trash (macOS /usr/bin/trash): instant for node_modules, recoverable.
+  remover = trash
 
 [alias]
 #  # 過去1年間で最も変更されたファイルトップ20（高チャーン＝潜在的リスク）

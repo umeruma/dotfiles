@@ -1,24 +1,21 @@
 ---
 title: dotfiles
-description: umeruma の dotfiles を macOS / Linux / Windows にインストール・デプロイする。
+description: dotfiles for umeruma。macOS / Linux / Windows 対応
 sidebar:
   order: 1
 ---
 
 ## install (macOS / Linux)
-この dotfiles リポジトリは `~/Codes/dotfiles` に配置する前提で作られている。
 
-実行前にスクリプトの中身を確認する:  
-[https://dot.umeru.ma/install](https://dot.umeru.ma/install)
+実行前にスクリプトの中身を確認します: 
+
+> [https://dot.umeru.ma/install](https://dot.umeru.ma/install)
 
 Terminal.app を開いて実行:
 
 ```
 bash -c "$(curl -fsSL https://dot.umeru.ma/install)"
 ```
-リポジトリを `~/Codes/dotfiles` に clone して dotfiles をセットアップする。すでに存在する場合は最新を pull してから続行する。
-
-clone 後、インストーラーは（必要なら）mise を入れて [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) を実行し、OS パッケージ・ログインシェル・`mise run deploy` を収束させる。詳細: [mise bootstrap](/mise-bootstrap)
 
 bash と curl のオプションのメモ:
 
@@ -26,24 +23,22 @@ bash:
 - `-c`: 渡した文字列を bash コマンドとして実行する（例: `bash -c "echo hello"` は `hello` を出力）
 
 curl:
-- `-f` (`--fail`): サーバーエラー時に静かに失敗する（出力なし・非ゼロ終了）
-- `-s` (`--silent`): サイレントモード。進捗やエラーメッセージを表示しない
-- `-S` (`--show-error`): `-s` と併用時、失敗時のエラーメッセージだけは表示する
-- `-L` (`--location`): HTTP リダイレクトを自動で追う
+- `-f` (`--fail`): HTTP エラー（4xx/5xx）のときはエラーページを出力せず、非ゼロで終了する
+- `-s` (`--silent`): 進捗バーやエラーメッセージを表示しない
+- `-S` (`--show-error`): `-s` と組み合わせると、エラーメッセージだけは表示する
+- `-L` (`--location`): リダイレクト先までたどってダウンロードする
 
+インストール実行後、dotfiles リポジトリは `~/Codes/dotfiles` にcloneされます。すでに存在する場合はHEADをpullしてインストール処理を実行します。
+
+インストーラーは [`mise bootstrap`](https://mise.jdx.dev/bootstrap.html) を実行して、定義されているmacOS用のdefaultsの適用を行ったのち、`$HOME`へのdotfilesのデプロイを行います。詳細は、 [mise bootstrap](/mise-bootstrap)。
 
 ## install (Windows)
 
 PowerShell でのセットアップ（`install-win`、mise `[dotfiles]`、winget）は [Windows](/windows) を参照。
 
-## jump to dotfiles
+## jump to dotfiles (on all platform)
 
-ターミナルからは以下で dotfiles ディレクトリにすぐ移動できる:
-```
-dot 
-```
-
-.zshenv と .zshrc に以下がある:
+.zshenv と .zshrc にこのような定義があり、
 ```
 # on .zshenv
 export DOTFILES="$HOME/Codes/dotfiles"
@@ -51,6 +46,8 @@ export DOTFILES="$HOME/Codes/dotfiles"
 # on .zshrc
 alias dot='cd $DOTFILES' 
 ```
+
+ターミナルで`dot`を実行することで、dotfiles ディレクトリにすぐ移動できます。
 
 ## Deploy dotfiles
 
@@ -62,30 +59,37 @@ dot && mise run deploy
 
 ### How it works
 
-symlink は mise の `[dotfiles]` セクションで宣言的に管理している。[`mise.dotfiles.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.dotfiles.toml)（クロスプラットフォーム。`.miserc.toml` の `env = ["dotfiles"]` で読み込む）と [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml)（macOS 専用）の 2 つで、各エントリは明示的な allowlist になっている:
+symlink は mise の `[dotfiles]` セクションで宣言的に管理しています。
+- for all platform [`mise.dotfiles.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.dotfiles.toml)
+  - `.miserc.toml` の `env = ["dotfiles"]` により全ての環境で適用される
+- for macOS [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml)
+- for macOS & Linux [`mise.unix.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.unix.toml)
+- for Windows [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml)
 
 ```toml
+# 登録内容の一例
 [dotfiles]
 "~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
 ```
 
-実行時に書き込みが発生するディレクトリ（ログや状態。例: `~/.config/karabiner`、`~/.config/micro`、`~/.config/lazygit`、`~/.config/herdr`）は**ファイル単位**でリンクし、アプリの状態がリポジトリに漏れないようにしている。純粋に静的な設定ディレクトリ（`~/.config/ghostty`、`~/.config/sheldon`）はディレクトリごとリンクする。
+デプロイしているファイルの他に、アプリケーションがログファイルやコンフィグファイルを吐き出すディレクトリ（例: `~/.config/karabiner`、`~/.config/micro`、`~/.config/lazygit`、`~/.config/herdr`）は**ファイル単位**でリンクし、ログファイル等はリポジトリ管理されないようにしています。静的な設定ディレクトリ（`~/.config/ghostty`、`~/.config/sheldon`）はディレクトリごとリンクしています。
 
-`~/.config/nvim` は例外で、書き込みが発生するがディレクトリごとリンクしている。LazyVim が `lazy-lock.json` をリンク越しにリポジトリへ書き戻し、プラグインのバージョンが git で追跡されるため。詳細: [Editor Stack](/editor-stack)
+`~/.config/nvim` は例外で、ディレクトリごとリンクしています。LazyVim のプラグインバージョンが `lazy-lock.json` git で追跡されるようにするためです。詳細は: [Editor Stack](/editor-stack)
 
 よく使うコマンド:
 
 ```
-mise dotfiles status   # エントリごとに applied / differs / missing を表示
-mise run clean         # home/ を指す symlink をすべて削除（dangling 含む）
-dottrack <path>        # 既存ファイルの追跡を開始（エントリ追加 + リンク）
-```
+mise dotfiles status   # 各設定の applied / differs / missing を表示
+mise run install-apps  # Burewfileに登録したアプリケーションの登録
+dottrack <path>        # 既存ファイルのリポジトリ管理の開始
 
-Agent skills（`home/.agents/skills/`）は全エージェント共通の single source of truth: `~/.agents` はディレクトリごと 1 本のリンク（Cursor と GitHub Copilot は `~/.agents/skills/` を直接読む）で、Claude Code には `~/.claude/skills/` にスキル単位のリンクを張る。ディレクトリごとリンクするのは意図的で、`npx skills` でインストールしたスキルと `.skill-lock.json` がリンク越しにリポジトリ内へ入るため、インストールが git で追跡される。
+brew bundle add --cask [app name]
+  # リポジトリで管理するbrew caskアプリケーションの登録
+```
 
 ## macOS defaults
 
-macOS の設定は `mise bootstrap` が [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml)（`[bootstrap.macos.*]` と `[bootstrap.macos.defaults]`）から適用する。再収束させる、または差分を確認するには:
+macOS の設定と差分を確認するには:
 
 ```
 dot && mise bootstrap macos defaults status
@@ -95,21 +99,20 @@ dot && mise bootstrap macos defaults status
 
 ## Terminal theme (cendre)
 
-Ghostty（macOS）は deploy 済みの `theme = cendre`。Terminal.app / Windows Terminal は opt-in:
+Ghostty（macOS）のテーマは deploy コマンドで適用される。`theme = cendre`。Terminal.app / Windows Terminal は opt-in で、明示的にコマンドを実行する:
 
 ```
 dot && mise run theme
 ```
 
-- macOS: [cendre](https://github.com/Aejkatappaja/cendre) の `extras/macos-terminal/cendre.terminal` を開いてプロファイルを取り込む（既定プロファイルへの切替は Terminal.app 側）
+- macOS: [cendre](https://github.com/Aejkatappaja/cendre) の `extras/macos-terminal/cendre.terminal` を開いてプロファイルを取り込む（切り替えは Terminal.app の設定で）
 - Windows: Fragments にスキームを置き、`settings.json` の `profiles.defaults.colorScheme` を `cendre` にパッチ（Terminal 再起動で反映）
 
 ## tech stack
 
-- [mise](https://mise.jdx.dev/) — タスクランナー兼マシンブートストラップ
+- [mise](https://mise.jdx.dev/) — タスクランナー、マシンブートストラップ
 - [sheldon](https://github.com/rossmacarthur/sheldon#readme) — zsh プラグインマネージャー
 - [Homebrew](https://docs.brew.sh/Manpage) — パッケージマネージャー（Brewfile / `install-apps`）
-- [mise `[dotfiles]`](https://mise.jdx.dev/bootstrap.html) — `home/` の宣言的 symlink デプロイ
 
 ## website
 

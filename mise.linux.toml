@@ -1,6 +1,10 @@
 # Loaded on Linux only (merged with mise.toml).
 # Replaces init/init-linux.sh.
+# Entries for a manager missing on this distro are skipped by mise,
+# so apt (Debian/Ubuntu) and pacman (Arch/Omarchy) coexist here.
 
 [bootstrap.packages]
 "apt:build-essential" = "latest"
 "apt:zsh" = "latest"
+"pacman:base-devel" = "latest"
+"pacman:zsh" = "latest"

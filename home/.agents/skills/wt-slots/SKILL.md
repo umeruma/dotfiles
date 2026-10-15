@@ -24,10 +24,10 @@ argument-hint: "[タスク一覧の URL やタスク名]"
 
 ### 1. worktree の置き場（重要）
 
-**`.git/` 配下に worktree を置くと Vite が動かない。** Vite の `server.fs.deny` 既定に `**/.git/**` が含まれるため、`git wt` の既定 basedir（`.git/wt/`）だと全アセットが `outside of Vite serving allow list` になる。
+グローバルの `wt.basedir` は `../{gitroot}-wt`（repo の外）だが、launch.json の `cwd` は repo 内限定なので、このワークフローでは repo ごとに repo 直下へ上書きする。**`.git/` 配下には置かない。** Vite の `server.fs.deny` 既定に `**/.git/**` が含まれるため、`.git/wt/` だと全アセットが `outside of Vite serving allow list` になる。
 
 ```sh
-git config wt.basedir ".wt"          # repo 直下。launch.json の cwd はプロジェクト内限定なので repo 外も不可
+git config wt.basedir ".wt"          # repo 直下（グローバルの ../{gitroot}-wt を上書き）。launch.json の cwd は repo 内限定
 echo ".wt/" >> .git/info/exclude     # コミットせず無視
 ```
 
