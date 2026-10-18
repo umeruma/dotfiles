@@ -43,7 +43,9 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            # Move files in the way (old mise [dotfiles] links) aside instead of failing
+            # Move plain files in the way aside instead of failing. Foreign
+            # symlinks (old mise [dotfiles] links) still fail: `mise run deploy`
+            # removes those once their entries are gone.
             home-manager.backupFileExtension = "before-hm";
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.${user}.imports = [ ./nix/home-manager ];
