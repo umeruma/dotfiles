@@ -7,7 +7,6 @@
     discord
     meetingbar
     openusage
-    raycast
     slack
     utm
     vscode
@@ -25,6 +24,9 @@
     "loopback" # installs an audio driver
     "netnewswire"
     "nextdns-app" # nixpkgs nextdns is the CLI daemon, not the app
+    # Self-updates and migrates its data forward; nixpkgs lags behind, and
+    # an older build cannot open the migrated data.
+    "raycast"
     "notion" # nixpkgs notion is a window manager
     "transmit"
     "xcodes-app" # nixpkgs has only the xcodes CLI
