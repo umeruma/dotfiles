@@ -13,6 +13,9 @@ in
     # Take over the Homebrew installed with the official script, keeping
     # its installed packages
     autoMigrate = true;
+    # .zshenv puts /opt/homebrew/bin after the Nix profiles; brew shellenv
+    # in /etc/zshrc would move it to the front
+    enableZshIntegration = false;
   };
 
   homebrew = {

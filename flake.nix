@@ -13,6 +13,17 @@
     };
     # Installs Homebrew itself and pins its version
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
+    # Tools not in nixpkgs. Pinned to a release tag; bump the tag to update.
+    crit = {
+      url = "github:tomasz-tomczyk/crit/v0.23.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # zsh plugin not in nixpkgs, sourced as-is
+    k = {
+      url = "github:supercrabtree/k";
+      flake = false;
+    };
   };
 
   outputs =

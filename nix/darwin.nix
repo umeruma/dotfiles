@@ -10,6 +10,10 @@
   # Set here because home-manager uses this pkgs (useGlobalPkgs).
   nixpkgs.config.allowUnfree = true;
 
+  # /etc/zshrc: home-manager's .zshrc runs compinit and the prompt itself
+  programs.zsh.enableCompletion = false;
+  programs.zsh.promptInit = "";
+
   system.primaryUser = user;
   users.users.${user}.home = "/Users/${user}";
 
