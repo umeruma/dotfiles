@@ -32,7 +32,6 @@ brew "sheldon"
 brew "shellcheck"
 brew "starship"   # prompt (home/.config/starship.toml, shared with PowerShell)
 brew "websocat"
-brew "pkgx"
 brew "rclone"
 brew "zoxide"     # cd replacement (home/.zshrc)
 cask "1password"

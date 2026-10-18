@@ -22,9 +22,4 @@ path=($dotfiles_path $path)
 # add zsh completions
 # -------------------------
 
-# pkgx interactive initialization (if installed)
-# if command -v pkgx >/dev/null 2>&1; then
-#   eval "$(pkgx --quiet dev --shellcode)"
-# fi
-
 # fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
