@@ -51,18 +51,18 @@ run = [
 ]
 
 [tasks.install-apps]
-description = "Install apps (Brewfile on Unix; winget + Cursor CLI + herdr on Windows)"
+description = "Install apps (flake.nix on macOS; Brewfile on Linux; winget + Cursor CLI + herdr on Windows)"
 run = "zsh script/install-apps.zsh"
 run_windows = "pwsh -NoProfile -File script/install-apps-windows.ps1"
 
 [tasks.install-cursor-cli]
 description = "Install Cursor CLI (official installer; Windows)"
-run = "echo 'Task install-cursor-cli is only supported on Windows (macOS: brew install --cask cursor-cli).'; exit 1"
+run = "echo 'Task install-cursor-cli is only supported on Windows (macOS: nix/home-manager/tools/cursor.nix).'; exit 1"
 run_windows = "pwsh -NoProfile -File script/install-cursor-cli-windows.ps1"
 
 [tasks.install-herdr]
 description = "Install herdr (official installer; Windows)"
-run = "echo 'Task install-herdr is only supported on Windows (macOS: brew install herdr).'; exit 1"
+run = "echo 'Task install-herdr is only supported on Windows (macOS: nix/home-manager/tools/herdr.nix).'; exit 1"
 run_windows = "pwsh -NoProfile -File script/install-herdr-windows.ps1"
 
 [tasks.setup-kanata]

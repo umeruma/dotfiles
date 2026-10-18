@@ -22,8 +22,7 @@ if [[ "$uname_s" == "Linux" ]]; then
     print -u2 -r -- "warn: apt-get not found; skipping 'sudo apt-get install hugo'"
   fi
 elif [[ "$uname_s" == "Darwin" ]]; then
-  require_cmd brew
-  brew bundle --file=./macos/Brewfile
+  mise run switch
 else
   print -u2 -r -- "error: unsupported OS: $uname_s"
   exit 1

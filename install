@@ -62,16 +62,14 @@ install() {
 		bash ./init/init-macos.sh
 	fi
 
-	# Homebrew is still used by `mise run install-apps` (Brewfile) and shellenv in .zprofile.
-	# CLI/GUI packages can gradually move to [bootstrap.packages] (brew: / brew-cask: / mas:).
-	echo ""
-	if type brew >/dev/null 2>&1; then
-		echo "brew is installed";
-	else
-		if [ "$uname_s" = 'Linux' ]; then
+	# Linux: Homebrew for `mise run install-apps` (linux/Brewfile).
+	# macOS: nix-homebrew installs it on `mise run switch` (nix/homebrew.nix).
+	if [ "$uname_s" = 'Linux' ]; then
+		echo ""
+		if type brew >/dev/null 2>&1; then
+			echo "brew is installed";
+		else
 			sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-		elif [ "$uname_s" = 'Darwin' ]; then
-			/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 		fi
 	fi
 

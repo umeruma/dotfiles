@@ -1,5 +1,12 @@
 # Loaded on macOS only (merged with mise.toml).
 
+# Apply flake.nix (nix-darwin + home-manager + Homebrew casks / App Store).
+# nix-darwin comes from flake.lock, so this also works before darwin-rebuild
+# is installed. Root: nix-darwin activates system files.
+[tasks.switch]
+description = "Apply flake.nix (packages, apps, zsh) with darwin-rebuild"
+run = "sudo /nix/var/nix/profiles/default/bin/nix run --inputs-from . nix-darwin#darwin-rebuild -- switch --flake .#AME"
+
 [bootstrap.macos.dock]
 autohide = true
 tilesize = 75
@@ -83,6 +90,7 @@ run = [
   "killall Dock 2>/dev/null || true",
   "killall Finder 2>/dev/null || true",
   "killall SystemUIServer 2>/dev/null || true",
+  "mise run switch",
   # Moralerspace Neon + ChaliceIcons — not vendored; fetched on bootstrap
   "mise run install-fonts",
 ]

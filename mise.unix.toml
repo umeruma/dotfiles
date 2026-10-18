@@ -5,14 +5,9 @@
 # so app state stays out of the repo.
 
 [dotfiles]
-# shell / git
-"~/.zshenv" = { source = "home/.zshenv", mode = "symlink" }
-"~/.zprofile" = { source = "home/.zprofile", mode = "symlink" }
-"~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
+# git (zsh is per-OS: home-manager on macOS, mise.linux.toml on Linux)
 "~/.gitignore" = { source = "home/.gitignore", mode = "symlink" }
 # static config dirs (whole-dir links; new repo files show up automatically)
-"~/.config/sheldon" = { source = "home/.config/sheldon", mode = "symlink" }
-"~/.config/zsh" = { source = "home/.config/zsh", mode = "symlink" }
 # nvim / ghostty are macOS-only (mise.macos.toml): on Linux (Omarchy) the
 # distro ships its own theme-synced configs for both.
 # runtime-write dirs: per-file links only

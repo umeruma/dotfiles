@@ -8,3 +8,11 @@
 "apt:zsh" = "latest"
 "pacman:base-devel" = "latest"
 "pacman:zsh" = "latest"
+
+# zsh: on macOS home-manager generates these (nix/home-manager/tools/zsh.nix).
+[dotfiles]
+"~/.zshenv" = { source = "home/.zshenv", mode = "symlink" }
+"~/.zprofile" = { source = "home/.zprofile", mode = "symlink" }
+"~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
+"~/.config/sheldon" = { source = "home/.config/sheldon", mode = "symlink" }
+"~/.config/zsh" = { source = "home/.config/zsh", mode = "symlink" }

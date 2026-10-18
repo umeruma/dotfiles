@@ -15,7 +15,7 @@ fail() {
 }
 
 if ! command -v cursor-agent >/dev/null 2>&1 && ! command -v agent >/dev/null 2>&1; then
-  fail "cursor-agent not found (brew install --cask cursor-cli)"
+  fail "cursor-agent not found (nix/home-manager/tools/cursor.nix)"
 fi
 
 # TODO: make the generator swappable via an env var (e.g. LAZYGIT_AI_CMD="claude -p") instead of hardcoding cursor-agent.

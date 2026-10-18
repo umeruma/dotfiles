@@ -39,7 +39,6 @@ dotfiles_path=(
 path=($dotfiles_path $path)
 
 # Homebrew settings (agents run brew too)
-export HOMEBREW_BUNDLE_FILE="$DOTFILES/macos/Brewfile"
 # Avoid installing certain formulae via Homebrew
 # Link: https://docs.brew.sh/Manpage#:~:text=fishcompletion%2C%20zshcompletion%2C%20stageonly.-,HOMEBREW_FORBIDDEN_FORMULAE,-A%20space-separated%20list
 export HOMEBREW_FORBIDDEN_FORMULAE="python python3 pip npm pnpm yarn claude"

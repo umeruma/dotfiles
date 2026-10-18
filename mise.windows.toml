@@ -23,7 +23,7 @@
 "winget:sharkdp.bat" = "latest" # delta syntax-theme = cendre (bat theme cache)
 "winget:jqlang.jq" = "latest" # git filter.claude-settings (see mise.toml deploy)
 "winget:Starship.Starship" = "latest" # prompt (home/.config/starship.toml)
-# LazyVim deps (see macos/Brewfile). tree-sitter-cli is not on winget;
+# LazyVim deps (see nix/home-manager/tools/neovim.nix). tree-sitter-cli is not on winget;
 # nvim-treesitter uses prebuilt parsers / needs a C toolchain if compiling.
 "winget:Neovim.Neovim" = "latest"
 "winget:BurntSushi.ripgrep.MSVC" = "latest"

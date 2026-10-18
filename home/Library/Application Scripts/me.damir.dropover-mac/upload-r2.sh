@@ -6,7 +6,7 @@ set -euo pipefail
 OP_ITEM="op://Private/Cloudflare R2 Dropover"
 KC=dropover-r2
 CLOP=/Applications/Clop.app/Contents/SharedSupport/ClopCLI
-RCLONE=/opt/homebrew/bin/rclone
+RCLONE=/etc/profiles/per-user/$(id -un)/bin/rclone
 OP=/opt/homebrew/bin/op
 
 kc() { security find-generic-password -s $KC -a $1 -w; }
