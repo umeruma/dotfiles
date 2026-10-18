@@ -75,6 +75,17 @@ install() {
 		fi
 	fi
 
+	# macOS: Nix (Determinate installer) for flake.nix (nix-darwin + home-manager).
+	# nix-darwin leaves Nix itself to this installer (nix.enable = false).
+	if [ "$uname_s" = "Darwin" ]; then
+		echo ""
+		if [ -x /nix/var/nix/profiles/default/bin/nix ]; then
+			echo "nix is installed"
+		else
+			curl -fsSL https://install.determinate.systems/nix | sh -s -- install --no-confirm
+		fi
+	fi
+
 	# Check if mise is installed; if not, install it
 	echo ""
 	ensure_mise_on_path

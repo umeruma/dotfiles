@@ -1,0 +1,43 @@
+{
+  description = "umeruma's macOS environment";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Installs Homebrew itself and pins its version
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+  };
+
+  outputs =
+    inputs@{ nix-darwin, home-manager, nix-homebrew, ... }:
+    let
+      user = "umeruma";
+    in
+    {
+      # Named, not keyed by hostname: switch with `darwin-rebuild switch --flake .#AME`
+      darwinConfigurations.AME = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit inputs user; };
+        modules = [
+          ./nix/darwin.nix
+          nix-homebrew.darwinModules.nix-homebrew
+          ./nix/homebrew.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            # Move files in the way (old mise [dotfiles] links) aside instead of failing
+            home-manager.backupFileExtension = "before-hm";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.users.${user}.imports = [ ./nix/home-manager ];
+          }
+        ];
+      };
+    };
+}
