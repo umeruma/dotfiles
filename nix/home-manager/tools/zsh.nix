@@ -35,10 +35,17 @@
       export DOTFILES="$HOME/Codes/dotfiles"
       export DOTFILES_HOME="$HOME/Codes/dotfiles/home"
 
-      # Nix profiles come first (set by /etc/zshenv); Homebrew only fills in
-      # what Nix does not provide.
+      # Nix profiles go ahead of the system dirs, and Homebrew only fills in
+      # what Nix does not provide. Listed here, not left to /etc/zshenv: it
+      # skips PATH when __NIX_DARWIN_SET_ENVIRONMENT_DONE is inherited, as in
+      # agent shells spawned by GUI apps (Orca, Cursor) with their own PATH.
       typeset -U path
-      path=("$HOME/.local/bin" "$DOTFILES/bin"(N-/) $path /opt/homebrew/bin(N-/) /opt/homebrew/sbin(N-/))
+      path=(
+        "$HOME/.local/bin" "$DOTFILES/bin"(N-/)
+        "/etc/profiles/per-user/$USER/bin" /run/current-system/sw/bin /nix/var/nix/profiles/default/bin
+        ''${path:#/opt/homebrew/*}
+        /opt/homebrew/bin(N-/) /opt/homebrew/sbin(N-/)
+      )
 
       export HOMEBREW_FORBIDDEN_FORMULAE="python python3 pip npm pnpm yarn claude"
 
