@@ -108,8 +108,10 @@ install() {
 	mise trust --yes
 	mise bootstrap --yes --update
 
-	echo ""
-	echo "If you want to install apps, run: mise run install-apps"
+	if [ "$uname_s" = 'Linux' ]; then
+		echo ""
+		echo "If you want to install apps, run: mise run install-apps"
+	fi
 }
 
 install

@@ -16,3 +16,8 @@
 "~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
 "~/.config/sheldon" = { source = "home/.config/sheldon", mode = "symlink" }
 "~/.config/zsh" = { source = "home/.config/zsh", mode = "symlink" }
+
+# macOS: `mise run switch` installs apps (flake.nix).
+[tasks.install-apps]
+description = "Install apps (linux/Brewfile + hugo)"
+run = "zsh script/install-apps.zsh"

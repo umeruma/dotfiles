@@ -57,3 +57,19 @@
 "~/AppData/Local/nvim" = { source = "home/.config/nvim", mode = "symlink" }
 # herdr defaults to %APPDATA%\herdr on Windows (not ~/.config).
 "~/AppData/Roaming/herdr/config.toml" = { source = "home-win/.config/herdr/config.toml", mode = "symlink" }
+
+[tasks.install-apps]
+description = "Install apps (winget + Cursor CLI + herdr)"
+run = "pwsh -NoProfile -File script/install-apps-windows.ps1"
+
+[tasks.install-cursor-cli]
+description = "Install Cursor CLI (official installer)"
+run = "pwsh -NoProfile -File script/install-cursor-cli-windows.ps1"
+
+[tasks.install-herdr]
+description = "Install herdr (official installer)"
+run = "pwsh -NoProfile -File script/install-herdr-windows.ps1"
+
+[tasks.setup-kanata]
+description = "Create kanata autostart shortcut"
+run = "pwsh -NoProfile -File script/setup-kanata.ps1"
