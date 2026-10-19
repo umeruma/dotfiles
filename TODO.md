@@ -24,7 +24,3 @@ Nix（nix-darwin + home-manager）移行の残り作業。
   - nixpkgs 2.7.3.0 < cask 2.8.2.0 で、古い版は移行済みデータを開けなかった
   - 自己更新するアプリなので、cask のままが妥当かもしれない
   - 確認: `nix eval --raw --inputs-from . nixpkgs#raycast.version`
-
-## Nix: 自己更新するアプリ
-
-- [ ] Cursor / VS Code / Zed / Slack / Discord が、データ移行や自己更新で壊れないか
