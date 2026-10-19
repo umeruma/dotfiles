@@ -11,7 +11,8 @@ sidebar:
 
 ## Packages
 
-- **Brewfile → `[bootstrap.packages]`（見送り）**: `brew bundle add` / `brew bundle cleanup` で追加・追跡するワークフローを残したい。TOML に移すとこれがなくなる。詳細は [mise bootstrap](/mise-bootstrap)。
+- **Brewfile → `[bootstrap.packages]`（見送り）**: `brew bundle add` / `brew bundle cleanup` で追加・追跡するワークフローを残したかったので見送った。その後、macOS の Brewfile 自体を Nix に移したので、この案はもうない。
+- **Brewfile → flake + nix-homebrew（macOS）**: Brewfile ではアプリと zsh の設定が別のファイルにあり、アプリを消しても alias や設定が残っていた。Nix ではツールごとのファイル（`nix/home-manager/tools/*.nix`）に、パッケージや cask と、zsh の alias・関数・設定を一緒に書ける。ファイルを消せば全部一緒に消える。nixpkgs にないアプリやドライバは nix-homebrew 経由の Homebrew で入れ、cask も各ツールのファイルの `my.casks` で宣言する。（[805e05a](https://github.com/umeruma/dotfiles/commit/805e05a)）
 - **`Brewfile.lock.json`**: Homebrew 7 から読み書きされなくなったので削除。（[3327221](https://github.com/umeruma/dotfiles/commit/3327221)）
 - **Brewfile の mise**: mise は bootstrap の途中で `curl https://mise.run | sh` で入れるので、Brewfile からは外した。（[e3e71b1](https://github.com/umeruma/dotfiles/commit/e3e71b1)）
 - **`win/apps.winget`（winget DSC）**: mise 2026.9.3 で winget が `[bootstrap.packages]` に対応したので、`mise.windows.toml` に移した。Brewfile と同じく opt-in。（[5f1e66c](https://github.com/umeruma/dotfiles/commit/5f1e66c)）
@@ -21,6 +22,7 @@ sidebar:
 
 - **AltTab**: 使い始めた DockDoor Pro に同じ機能があるので外した。（[51e3a06](https://github.com/umeruma/dotfiles/commit/51e3a06)）
 - **Bartender**: 弊害が大きく、使わない方がメリットが多いと判断した。（[c59241f](https://github.com/umeruma/dotfiles/commit/c59241f)）
+- **Raycast を nixpkgs から入れる**: cask に戻した。Raycast は自己更新し、そのたびにデータを新しい形式へ移行する。nixpkgs の版（2.7.3.0）は cask（2.8.2.0）より古く、移行済みのデータを開けなかった。（[b28c562](https://github.com/umeruma/dotfiles/commit/b28c562)）
 - **Elgato Wave XLR / Wave Link**: 使うのをやめ、オーディオインターフェースを常駐アプリが不要な Zoom AMS-22 に替えた。Wave XLR は PC スイッチャーで切り替えると、色設定がおかしくなったり音量がリセットされたりした。Wave Link は OS 側で入出力を切り替えたうえで、Wave Link 上でも出力を切り替える必要があり、二度手間だった。（[3327221](https://github.com/umeruma/dotfiles/commit/3327221)）
 
 ## Deploy
@@ -45,6 +47,7 @@ sidebar:
 ## Shell
 
 - **zplug → zinit → sheldon**: zplugなどは結局開発者も使わなくなったツールだったはず。sheldon が設定も素直に書けて安定していそうだと判断。（[5fa2b95](https://github.com/umeruma/dotfiles/commit/5fa2b95)、[71e6510](https://github.com/umeruma/dotfiles/commit/71e6510)）
+- **sheldon → home-manager（macOS）**: `programs.zsh` に移した。理由は Brewfile と同じで、ツールのファイルにパッケージと zsh の設定を一緒に書けるから。プラグイン（k など）は flake の input でコミットを固定する。Linux は今も `home/.zshrc` と sheldon。（[9e3f331](https://github.com/umeruma/dotfiles/commit/9e3f331)）
 - **enhancd → zoxide**: enhancd はリリースが3年前で止まっている。zoxide は `zoxide init zsh --cmd cd` で `cd` をそのまま置き換えられる。enhancd で使っていた「引数なし `cd` で履歴から fzy 選択」だけは `cdi` を fzy 版にして残した。enhancd 専用だった sheldon の `interactive` プロファイル分岐も一緒に消した。
 - **pure → starship**: zsh と PowerShell で同じプロンプト設定（`home/.config/starship.toml`）を使うため。設定は omarchy の `config/starship.toml` を元に、Nerd Font なしでも出る記号に替えた。
 - **omarchy の `ga` / `gd`（worktree 作成・削除）の移植（見送り）**: omarchy 版は `../repo--branch` に作る独自配置で git-wt と衝突する。同名の `ga` / `gd` は git-wt の薄いラッパーにした。

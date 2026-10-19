@@ -31,7 +31,6 @@ Nix（nix-darwin + home-manager）移行の残り作業。
 
 ## Nix: Docs
 
-- [ ] `decisions.md`: sheldon → home-manager、Brewfile → flake + nix-homebrew、Raycast を cask にした理由
 - [ ] `mise-bootstrap.mdx` を macOS の新しい流れ（Nix インストール → `mise run switch`）に合わせる
 - [ ] Nix の使い方ページを足す（ツールファイルの足し方、switch、更新）
 - [ ] `AGENTS.md` の sheldon / Brewfile の記述を直す
