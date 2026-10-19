@@ -28,9 +28,3 @@ Nix（nix-darwin + home-manager）移行の残り作業。
 ## Nix: 自己更新するアプリ
 
 - [ ] Cursor / VS Code / Zed / Slack / Discord が、データ移行や自己更新で壊れないか
-
-## Nix: Docs
-
-- [ ] `mise-bootstrap.mdx` を macOS の新しい流れ（Nix インストール → `mise run switch`）に合わせる
-- [ ] Nix の使い方ページを足す（ツールファイルの足し方、switch、更新）
-- [ ] `AGENTS.md` の sheldon / Brewfile の記述を直す

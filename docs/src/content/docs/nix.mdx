@@ -1,0 +1,78 @@
+---
+title: Nix (macOS)
+description: macOS のパッケージ・アプリ・リンクを nix-darwin + home-manager で宣言する
+sidebar:
+  order: 5
+---
+
+## Overview
+
+macOS のパッケージ、GUI アプリ、zsh の設定、dotfiles のリンクは、すべて [`flake.nix`](https://github.com/umeruma/dotfiles/blob/main/flake.nix) に宣言しています。反映は `mise run switch` の1つだけです。
+
+| File | 役割 |
+| --- | --- |
+| `flake.nix` | 入力（nixpkgs、nix-darwin、home-manager、nix-homebrew など）と `darwinConfigurations.AME` |
+| `nix/darwin.nix` | システム側の設定 |
+| `nix/homebrew.nix` | Homebrew 本体（nix-homebrew）。各ツールの cask と App Store アプリを集めて入れる |
+| `nix/home-manager/default.nix` | `tools/` の全ファイルを読み込む。`my.casks` などのオプションを定義 |
+| `nix/home-manager/dotfiles.nix` | ツールに属さないリンクと、`~/.config` のまるごとリンク |
+| `nix/home-manager/tools/*.nix` | ツールごとに1ファイル |
+
+`tools/` の1ファイルには、一緒に足して一緒に消すもの（アプリ、CLI、zsh の alias や関数、設定ファイルのリンク）をまとめて書きます。ファイルを消せば、全部まとめて消えます。
+
+## Switch
+
+```
+dot && mise run switch
+```
+
+nix-darwin、home-manager、Homebrew の順に反映し、宣言から消したリンクも外します。
+
+- `sudo` を使うので、自分のターミナルで実行します。Claude Code の `!` からはパスワードを入力できません。
+- `~/.config` が空でないディレクトリのままだと、switch は止まります。中身を `home/.config` に移してから実行します。
+
+## Add a tool
+
+入れ方は、上から順に探します。
+
+1. **nixpkgs**: `home.packages`。探すときは `nix search nixpkgs <name>`。
+2. **ほかの flake**: `flake.nix` の `inputs` に足す（例: `crit.nix`）。
+3. **Homebrew cask**: `my.casks`。nixpkgs にないもの、ドライバやシステム拡張を入れるもの、自己更新でデータを移行するもの（Raycast）。
+4. **App Store**: `my.masApps`。ID は `mas list` で調べる（`app-store.nix`）。
+5. **GitHub Releases など**: `fetchurl` で取ってくる（例: `azookey.nix`）。
+
+zsh の alias や関数は、同じファイルに書きます。
+
+```nix
+# nix/home-manager/tools/keka.nix
+{ pkgs, ... }:
+{
+  home.packages = [ pkgs.keka ];
+
+  programs.zsh.shellAliases.keka = "${pkgs.keka}/Applications/Keka.app/Contents/MacOS/Keka --cli";
+}
+```
+
+設定もエイリアスもない GUI アプリは、`apps.nix` にまとめます。
+
+新しいファイルは、switch の前に `git add` します。flake は git が追跡していないファイルを読みません。
+
+### Remove a tool
+
+ファイル（または行）を消して switch します。ただし cask は、今は switch で消えません（`nix/homebrew.nix` の `cleanup = "none"`）。全部を宣言し終えるまでは、`brew uninstall --cask <name>` で消します。
+
+## Update
+
+| What | How |
+| --- | --- |
+| nixpkgs などの入力 | `nix flake update` のあと switch。1つだけ上げるなら `nix flake update <input>` |
+| タグで固定した入力（crit） | `flake.nix` のタグを書き換え、`nix flake update crit` のあと switch |
+| cask | switch では上げない（`upgrade = false`）。アプリの自己更新に任せるか、`brew upgrade --cask <name>` |
+| App Store | App Store に任せる |
+| `fetchurl` で固定したもの（azooKey） | `version` と `hash` を書き換えて switch |
+
+`hash` は次のコマンドで取れます。古いまま switch しても、エラーに正しい値が出ます。
+
+```
+nix store prefetch-file <url>
+```

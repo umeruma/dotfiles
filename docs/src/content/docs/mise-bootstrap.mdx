@@ -21,15 +21,27 @@ curl インストーラー（`install`）は、mise が存在する前に必要�
 
 - [`.miserc.toml`](https://github.com/umeruma/dotfiles/blob/main/.miserc.toml) — early-init（`auto_env = true` で OS 別設定を読み込む）
 - [`mise.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.toml) — 共通の bootstrap user/task と mise タスク
-- [`mise.linux.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.linux.toml) / [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) / [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml) — OS パッケージ
+- [`mise.linux.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.linux.toml) / [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml) / [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml) — OS ごとの設定
+- [`flake.nix`](https://github.com/umeruma/dotfiles/blob/main/flake.nix) — macOS のパッケージ・アプリ・リンク（[Nix (macOS)](/nix)）
+
+## macOS
+
+macOS では、パッケージもアプリもリンクも `mise bootstrap` では入れず、Nix に任せる。流れは次のとおり:
+
+1. `install` が Xcode Command Line Tools と Nix（Determinate インストーラー）、mise を入れる
+2. `mise bootstrap` が macOS defaults とログインシェルを適用する
+3. `post-defaults` フックが `mise run switch` を実行し、nix-darwin・home-manager・Homebrew を反映する（`sudo` のパスワードを聞かれる）
+
+2回目以降は `mise run switch` だけでよい。
 
 ## What `mise bootstrap` does here
 
 | Phase | Config | This repo |
 | --- | --- | --- |
-| packages | `mise.linux.toml` の `[bootstrap.packages]` | Linux: `apt:build-essential`、`apt:zsh`（Debian 系）／`pacman:base-devel`、`pacman:zsh`（Arch 系）。使えない manager の行は mise が skip する |
+| packages | `mise.linux.toml` の `[bootstrap.packages]` | Linux: `apt:build-essential`、`apt:zsh`（Debian 系）／`pacman:base-devel`、`pacman:zsh`（Arch 系）。使えない manager の行は mise が skip する。macOS は Nix が入れる |
 | dotfiles | `mise.linux.toml` / `mise.windows.toml` の `[dotfiles]` | `home/`・`home-win/` の宣言的 symlink allowlist（実行時書き込みのある dir はファイル単位）。macOS は `[dotfiles]` を持たず、home-manager がリンクする（`mise run switch`） |
 | macOS defaults | `mise.macos.toml` の `[bootstrap.macos.*]` / `[bootstrap.macos.defaults]` | Dock・Finder・キーボードなどスカラー値の設定（配列 / PlistBuddy は未移行） |
+| hooks | `mise.macos.toml` の `[bootstrap.hooks.post-defaults]` | Dock・Finder を再起動し、`mise run switch` を実行する |
 | user | `[bootstrap.user]` | `login_shell = "/bin/zsh"`（`install` 内の旧 `chsh` ブロックを置き換え） |
 
 再実行しても安全: 宣言的なフェーズは収束する。
@@ -70,6 +82,6 @@ experimental な bootstrap に慣れてきたら:
 
 1. **Shell activation** — `.zshrc` に書いている `eval "$(mise activate zsh)"` を mise 管理にしたければ、オプションの `[bootstrap.mise_shell_activate]` を使う
 
-（完了済み: macOS defaults → `[bootstrap.macos.defaults]`、stow → `[dotfiles]`、PSDotFiles → `[dotfiles]`、`win/apps.winget` → `[bootstrap.packages]`。予定なし: Brewfile → `[bootstrap.packages]` — `brew bundle` ワークフローは欠点ではなく機能なので）
+（完了済み: macOS defaults → `[bootstrap.macos.defaults]`、stow → `[dotfiles]`、PSDotFiles → `[dotfiles]`、`win/apps.winget` → `[bootstrap.packages]`、macOS の Brewfile とリンク → Nix。予定なし: `linux/Brewfile` → `[bootstrap.packages]` — `brew bundle` ワークフローは欠点ではなく機能なので）
 
 `mise bootstrap` はまだ experimental 扱いのため、このリポジトリの `mise.toml` では `settings.experimental = true` を設定している。
