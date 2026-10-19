@@ -8,9 +8,14 @@
     "Craft" = 1487937127;
     "CrystalFetch" = 6454431289;
     "Day One" = 1055511498;
-    # Custom upload script is copied by mise.macos.toml [dotfiles]
+    "Developer" = 640199958;
+    # Custom upload script is copied by dotfiles.nix
     "Dropover" = 1355679052;
+    "iMovie" = 408981434;
+    "Keynote" = 409183694;
+    "MenubarX" = 1575588022;
     "OpenIn" = 1643649331;
+    "pdmanager" = 6751735648;
     # nixpkgs tailscale is the CLI daemon; this is the network extension app
     "Tailscale" = 1475387142;
     "WorldWideWeb" = 1621370168;
