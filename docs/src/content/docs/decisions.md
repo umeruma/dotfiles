@@ -39,6 +39,7 @@ sidebar:
 ## Tasks
 
 - **Makefile → Just → mise tasks**: Just を経由して、最終的に mise に一本化。ツールとタスクの入口が `mise` 1つになる。（[c3c91a6](https://github.com/umeruma/dotfiles/commit/c3c91a6)、[3771669](https://github.com/umeruma/dotfiles/commit/3771669)、[6b460ef](https://github.com/umeruma/dotfiles/commit/6b460ef)）
+- **`mise run help`**: 削除。中身は `mise tasks` を呼ぶだけだった。
 
 ## Shell
 

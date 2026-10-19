@@ -5,11 +5,6 @@ experimental = true
 [bootstrap.user]
 login_shell = "/bin/zsh"
 
-[tasks.help]
-description = "List available tasks"
-run = "zsh script/help.zsh"
-run_windows = "pwsh -NoProfile -Command \"Write-Host 'Task help is not supported on Windows.'; exit 1\""
-
 [tasks.update]
 description = "Fetch latest changes"
 run = "zsh script/update.zsh"
