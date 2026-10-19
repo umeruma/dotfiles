@@ -1,8 +1,10 @@
 $env:DOTFILES = "$HOME\Codes\dotfiles"
 $DotFilesPath = $env:DOTFILES
 
+# dot: cd to the repo. dot <task> also runs `mise run <task>` there
 function dot {
   Set-Location $env:DOTFILES
+  if ($args) { mise run @args }
 }
 
 $miseCommand = Get-Command mise -ErrorAction SilentlyContinue

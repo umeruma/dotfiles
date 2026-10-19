@@ -197,7 +197,8 @@ fi
 # =========================
 # dotfiles
 # =========================
-alias dot='cd $DOTFILES'
+# dot: cd to the repo. dot <task> also runs `mise run <task>` there
+dot() { cd "$DOTFILES" || return; (( $# )) || return 0; mise run "$@"; }
 
 dottrack() {
   if [[ -z "$1" ]]; then

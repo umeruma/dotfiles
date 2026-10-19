@@ -89,7 +89,8 @@
       setopt MULTIOS EXTENDED_GLOB
       unsetopt CLOBBER
 
-      alias dot='cd $DOTFILES'
+      # dot: cd to the repo. dot <task> also runs `mise run <task>` there
+      dot() { cd "$DOTFILES" || return; (( $# )) || return 0; mise run "$@"; }
     '';
   };
 }

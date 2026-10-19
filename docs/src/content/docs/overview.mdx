@@ -44,17 +44,17 @@ PowerShell でのセットアップ（`install-win`、mise `[dotfiles]`、winget
 export DOTFILES="$HOME/Codes/dotfiles"
 
 # on .zshrc
-alias dot='cd $DOTFILES' 
+dot() { cd "$DOTFILES" || return; (( $# )) || return 0; mise run "$@"; }
 ```
 
-ターミナルで`dot`を実行することで、dotfiles ディレクトリにすぐ移動できます。
+ターミナルで`dot`を実行することで、dotfiles ディレクトリにすぐ移動できます。`dot switch` のようにタスク名を付けると、移動したうえで `mise run <task>` を実行します。
 
 ## Link dotfiles
 
 dotfiles をホームディレクトリにリンクするには:
 
 ```
-dot && mise run switch          # macOS
+dot switch                      # macOS
 dot && mise dotfiles apply -y   # Linux / Windows
 ```
 
@@ -99,7 +99,7 @@ dot && mise bootstrap macos defaults status
 Ghostty（macOS）のテーマは設定ファイル（`home/.config/ghostty`）で適用される。`theme = cendre`。Terminal.app / Windows Terminal は opt-in で、明示的にコマンドを実行する:
 
 ```
-dot && mise run theme
+dot theme
 ```
 
 - macOS: [cendre](https://github.com/Aejkatappaja/cendre) の `extras/macos-terminal/cendre.terminal` を開いてプロファイルを取り込む（切り替えは Terminal.app の設定で）
