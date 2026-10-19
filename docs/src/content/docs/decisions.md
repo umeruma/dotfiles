@@ -31,6 +31,10 @@ sidebar:
 - **ランタイムに書き込むディレクトリのまるごと symlink（Linux / Windows）**: 禁止。lazygit・micro・herdr などはファイル単位でリンクする。過去に移行で dangling symlink が11本出たため。macOS は `~/.config` をまるごと `home/.config` にリンクし、状態ファイルは `home/.config/.gitignore` で除外する方式に変えた（babarot/dotfiles と同じ）。hammerspoon は `~/.config` の外なので、今もファイル単位。
 - **`mise run deploy`**: 削除。macOS のリンクは home-manager に移り、switch が古いリンクも消すようになった。Linux / Windows は `mise dotfiles apply`（`mise bootstrap` の手順3でも走る）を直接使い、エントリを消したときだけ `mise run clean` を先に実行する。git の hooksPath と filter は、clone ごとに `git config` する代わりに `repo.gitconfig` を `~/.gitconfig` の `includeIf` で読む。
 - **`mise.dotfiles.toml` / `mise.unix.toml`**: 削除。mise は設定ファイルを足し合わせるだけで、Mac だけエントリを外すことができない。Mac に `[dotfiles]` が見えると、`mise bootstrap` が home-manager と同じ場所にリンクを張ってぶつかる。共通エントリは `mise.linux.toml` と `mise.windows.toml` に1回ずつ書く。
+- **`home/.config/.gitignore` を Nix で生成する（見送り）**: 各ツールのファイルに `my.configIgnore = [ "herdr/*" "!herdr/config.toml" ];` のように書き、activation で集めて書き出す案。ツールのファイルを消すと ignore も一緒に消えるので、1ファイル1ライフサイクルに合う。
+  - `home.file` で作ると Nix store へのシンボリックリンクになるが、git（2.32 以降）は作業ツリー内のシンボリックリンクの `.gitignore` を読まない。なので実ファイルとして書き出し、git でも管理する。手で編集しても switch で上書きされる。
+  - `.git/info/exclude` に書く方法は選ばない。clone 直後は ignore が効かず、認証情報が untracked として見えてしまう。
+  - いまの ignore の多くは、tools にファイルがないアプリ（emacs、flutter、zed など）のもので、それらは一覧のファイルにまとめることになる。ツールごとに書きたい場面が増えたら作る。
 
 ## Tasks
 
