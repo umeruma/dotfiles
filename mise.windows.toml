@@ -35,8 +35,8 @@
 # `winget install --id 9PFXXSHC64H3 --source msstore` を手動で。
 "winget:9PFXXSHC64H3" = "latest"
 
-# Windows-side [dotfiles]. Cross-platform entries live in mise.dotfiles.toml;
-# the first three here override the `home/` sources declared in mise.unix.toml.
+# Windows-side [dotfiles]. The shared block at the end lists the same files as
+# mise.linux.toml; macOS links them with home-manager (nix/home-manager/dotfiles.nix).
 # `mise dotfiles apply` creates missing parent dirs, so no prepare-subdirs step.
 # NOTE: `mode = "symlink"` needs Developer Mode (Settings -> System ->
 # For developers). Without it mise silently copies instead, and edits made in
@@ -57,6 +57,44 @@
 "~/AppData/Local/nvim" = { source = "home/.config/nvim", mode = "symlink" }
 # herdr defaults to %APPDATA%\herdr on Windows (not ~/.config).
 "~/AppData/Roaming/herdr/config.toml" = { source = "home-win/.config/herdr/config.toml", mode = "symlink" }
+
+# Shared with mise.linux.toml
+# AI agents — single source of truth: home/.agents.
+# ~/.agents is linked whole-dir on purpose: Cursor and Copilot read
+# ~/.agents/skills natively, and skill installers (npx skills) write
+# installed skills + .skill-lock.json through the link into the repo,
+# so installs are tracked by git. Claude Code only reads
+# ~/.claude/skills, so repo-authored skills get per-skill entries there.
+# (On Windows a whole-dir symlink becomes a junction; writes still pass through.)
+"~/.agents" = { source = "home/.agents", mode = "symlink" }
+"~/.claude/CLAUDE.md" = { source = "home/.claude/CLAUDE.md", mode = "symlink" }
+"~/.copilot/instructions/global.instructions.md" = { source = "home/.agents/instructions/global.instructions.md", mode = "symlink" }
+"~/.claude/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
+"~/.claude/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
+"~/.claude/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
+"~/.claude/skills/dev-crit" = { source = "home/.agents/skills/dev-crit", mode = "symlink" }
+"~/.claude/skills/wt-slots" = { source = "home/.agents/skills/wt-slots", mode = "symlink" }
+# Installed via `npx skills add -g` (tracked through ~/.agents); declared here so fresh machines get the Claude Code link too.
+"~/.claude/skills/natural-japanese" = { source = "home/.agents/skills/natural-japanese", mode = "symlink" }
+"~/.claude/skills/orca-cli" = { source = "home/.agents/skills/orca-cli", mode = "symlink" }
+"~/.claude/skills/orchestration" = { source = "home/.agents/skills/orchestration", mode = "symlink" }
+# Cursor marketplace plugins (install state itself lives in Cursor's state DB).
+"~/.cursor/settings.json" = { source = "home/.cursor/settings.json", mode = "symlink" }
+# cendre for delta (git include); bat theme is per-OS (config-dir differs).
+"~/.config/delta/cendre.gitconfig" = { source = "extras/delta/cendre.gitconfig", mode = "symlink" }
+# starship reads ~/.config/starship.toml on every OS (Windows included).
+"~/.config/starship.toml" = { source = "home/.config/starship.toml", mode = "symlink" }
+
+# Linux / Windows link with `mise dotfiles apply` (also step 3 of `mise bootstrap`).
+# It never removes a link whose entry is gone: `clean` drops every link into
+# the repo, then apply relinks what is still declared.
+[tasks.list]
+description = "Show dotfiles to link"
+run = "mise dotfiles status"
+
+[tasks.clean]
+description = "Remove symlinks into the repo from $HOME (then: mise dotfiles apply)"
+run = "pwsh -NoProfile -File script/clean-windows.ps1"
 
 [tasks.install-apps]
 description = "Install apps (winget + Cursor CLI + herdr)"

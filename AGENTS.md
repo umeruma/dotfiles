@@ -28,8 +28,8 @@ This document is a guide for safe and productive collaboration between AI agents
 - Only change global OS/tool settings with explicit consent
 
 ## Coding and Structure Guidelines
-- Symlinks for `home/` and `home-win/` are declared in `[dotfiles]`, split by OS: `mise.dotfiles.toml` (all), `mise.unix.toml`, `mise.windows.toml`, `mise.macos.toml`; deploy with `mise run deploy` on every OS
-- Dirs that receive runtime writes (karabiner, micro, lazygit, hammerspoon) get per-file entries — never whole-dir symlinks
+- macOS links dotfiles with home-manager (`nix/home-manager/dotfiles.nix`, or a tool's own `tools/<tool>.nix`) and `mise run switch`; it reads no `[dotfiles]`. Linux / Windows use `[dotfiles]` in `mise.linux.toml` / `mise.windows.toml` with `mise dotfiles apply`. A file shared by every OS is listed in all three places
+- On macOS `~/.config` links whole to `home/.config`; ignore tool state and credentials in `home/.config/.gitignore`. On Linux / Windows, dirs that receive runtime writes get per-file entries — never whole-dir symlinks
 - Fresh Unix setup converges via `mise bootstrap` (see `docs/src/content/docs/mise-bootstrap.mdx`)
 - Use `README.md` as an entry point; put detailed steps/background in `docs/`
 - Follow existing style (frontmatter, naming, hierarchy) when creating files

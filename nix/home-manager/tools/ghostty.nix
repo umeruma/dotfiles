@@ -1,4 +1,4 @@
-# Config (~/.config/ghostty) is linked by mise.macos.toml [dotfiles]
+# Config: home/.config/ghostty (via the ~/.config link)
 { pkgs, ... }:
 {
   home.packages = [ pkgs.ghostty-bin ];

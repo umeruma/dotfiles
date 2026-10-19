@@ -1,5 +1,5 @@
-# Agent multiplexer (https://herdr.dev). config.toml is linked by
-# mise.unix.toml [dotfiles]; the layout functions are shared with Linux.
+# Agent multiplexer (https://herdr.dev). config: home/.config/herdr
+# (via the ~/.config link); the layout functions are shared with Linux.
 { pkgs, ... }:
 {
   home.packages = with pkgs; [

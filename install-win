@@ -5,7 +5,7 @@
 
 .DESCRIPTION
   Clone to ~/Codes/dotfiles, apply win/bootstrap.winget, then run
-  mise run deploy. Install GUI apps separately with: mise run install-apps
+  mise dotfiles apply. Install GUI apps separately with: mise run install-apps
 
   Review this script before running:
     irm https://dot.umeru.ma/install-win | iex
@@ -205,13 +205,13 @@ function Invoke-Deploy {
   $env:DOTFILES = $RepoRoot
 
   if (-not (Test-CommandExists mise)) {
-    throw 'mise not found on PATH after bootstrap. Open a new terminal or log out/in, then run: mise run deploy'
+    throw 'mise not found on PATH after bootstrap. Open a new terminal or log out/in, then run: mise dotfiles apply'
   }
 
-  Write-Host 'Running mise run deploy...'
-  & mise run deploy
+  Write-Host 'Running mise dotfiles apply...'
+  & mise dotfiles apply -y
   if ($LASTEXITCODE -ne 0) {
-    throw "mise run deploy failed (exit $LASTEXITCODE)"
+    throw "mise dotfiles apply failed (exit $LASTEXITCODE)"
   }
 }
 

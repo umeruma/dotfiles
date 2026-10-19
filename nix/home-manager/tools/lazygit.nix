@@ -1,4 +1,4 @@
-# config.yml is linked by mise.unix.toml [dotfiles]; delta renders its diffs
+# config: home/.config/lazygit (via the ~/.config link); delta renders its diffs
 # (theme: cendre, see bat.nix).
 { pkgs, ... }:
 {

@@ -8,7 +8,7 @@
     imagemagick
     lftp
     mas
-    micro # config: ~/.config/micro, linked by mise.unix.toml [dotfiles]
+    micro # config: home/.config/micro (via the ~/.config link)
     mkcert
     rclone
     rustc

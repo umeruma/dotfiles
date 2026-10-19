@@ -2,7 +2,7 @@
 # Create (or refresh) a Startup shortcut so kanata launches on login.
 # Prerequisites:
 #   - kanata installed:  mise run install-apps   (jtroo.kanata_gui)
-#   - config deployed:   mise run deploy         (home-win/Documents/kanata/kanata.kbd)
+#   - config linked:     mise dotfiles apply     (home-win/Documents/kanata/kanata.kbd)
 $ErrorActionPreference = 'Stop'
 
 . "$PSScriptRoot/_lib.ps1"
@@ -22,7 +22,7 @@ Install it first:  mise run install-apps   (or: winget install jtroo.kanata_gui)
 
 $cfg = Join-Path $HOME 'Documents\kanata\kanata.kbd'
 if (-not (Test-Path $cfg)) {
-  throw "kanata config not found: $cfg  (run: mise run deploy)"
+  throw "kanata config not found: $cfg  (run: mise dotfiles apply)"
 }
 
 $startup = [Environment]::GetFolderPath('Startup')

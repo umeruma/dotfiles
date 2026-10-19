@@ -1,5 +1,5 @@
-# One config for zsh and PowerShell: ~/.config/starship.toml, linked by
-# mise.dotfiles.toml [dotfiles]
+# One config for zsh and PowerShell: home/.config/starship.toml (~/.config
+# links to home/.config, see dotfiles.nix)
 { pkgs, ... }:
 {
   home.packages = [ pkgs.starship ];

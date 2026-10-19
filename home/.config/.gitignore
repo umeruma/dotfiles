@@ -1,0 +1,44 @@
+# ~/.config links here on macOS (nix/home-manager/dotfiles.nix), so whatever
+# tools write there shows up in this directory. Ignore a tool's state; track
+# a config edited by hand. A new untracked file here is a tool you have not
+# decided on yet.
+
+# Credentials and tokens: never track
+.wrangler
+1Password
+gh
+github-copilot
+op
+rclone
+mise/age.txt
+
+# Tool state and app-managed config (not tracked yet)
+aicommit2
+codeburn
+configstore
+cursor
+emacs
+flashspace
+flutter
+goose
+homebrew
+istherenet
+kero
+KiwiDesk
+lftp
+mole
+opencode
+raycast
+snapzy
+swiftpm
+zed
+zellij
+zi
+tool_state
+
+# Runtime state beside tracked files
+herdr/*
+!herdr/config.toml
+karabiner/automatic_backups
+micro/backups
+micro/buffers

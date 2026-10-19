@@ -1,6 +1,6 @@
 # zsh itself: env, PATH, options, history, keys, completion.
 # Each tool's aliases / functions / init live in that tool's file.
-# Linux (Omarchy) still uses home/.zshrc via mise.unix.toml [dotfiles].
+# Linux (Omarchy) still uses home/.zshrc via mise.linux.toml [dotfiles].
 { config, ... }:
 {
   programs.zsh = {

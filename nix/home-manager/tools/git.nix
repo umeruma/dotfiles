@@ -1,4 +1,4 @@
-# ~/.gitconfig is linked by mise.unix.toml [dotfiles]
+# ~/.gitconfig is linked by dotfiles.nix
 { pkgs, ... }:
 {
   home.packages = with pkgs; [

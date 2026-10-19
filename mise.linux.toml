@@ -9,13 +9,79 @@
 "pacman:base-devel" = "latest"
 "pacman:zsh" = "latest"
 
-# zsh: on macOS home-manager generates these (nix/home-manager/tools/zsh.nix).
+# Linux [dotfiles]. macOS links its files with home-manager
+# (nix/home-manager/dotfiles.nix); Windows has its own list in mise.windows.toml.
+# Dirs that receive runtime writes (logs, state) get per-file entries
+# so app state stays out of the repo.
 [dotfiles]
+# zsh: on macOS home-manager generates these (nix/home-manager/tools/zsh.nix).
 "~/.zshenv" = { source = "home/.zshenv", mode = "symlink" }
 "~/.zprofile" = { source = "home/.zprofile", mode = "symlink" }
 "~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
 "~/.config/sheldon" = { source = "home/.config/sheldon", mode = "symlink" }
 "~/.config/zsh" = { source = "home/.config/zsh", mode = "symlink" }
+
+# Same files as mise.windows.toml's shared block; macOS links them with
+# home-manager (nix/home-manager/dotfiles.nix).
+# AI agents — single source of truth: home/.agents.
+# ~/.agents is linked whole-dir on purpose: Cursor and Copilot read
+# ~/.agents/skills natively, and skill installers (npx skills) write
+# installed skills + .skill-lock.json through the link into the repo,
+# so installs are tracked by git. Claude Code only reads
+# ~/.claude/skills, so repo-authored skills get per-skill entries there.
+# (On Windows a whole-dir symlink becomes a junction; writes still pass through.)
+"~/.agents" = { source = "home/.agents", mode = "symlink" }
+"~/.claude/CLAUDE.md" = { source = "home/.claude/CLAUDE.md", mode = "symlink" }
+"~/.copilot/instructions/global.instructions.md" = { source = "home/.agents/instructions/global.instructions.md", mode = "symlink" }
+"~/.claude/skills/commit" = { source = "home/.agents/skills/commit", mode = "symlink" }
+"~/.claude/skills/dev-server" = { source = "home/.agents/skills/dev-server", mode = "symlink" }
+"~/.claude/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
+"~/.claude/skills/dev-crit" = { source = "home/.agents/skills/dev-crit", mode = "symlink" }
+"~/.claude/skills/wt-slots" = { source = "home/.agents/skills/wt-slots", mode = "symlink" }
+# Installed via `npx skills add -g` (tracked through ~/.agents); declared here so fresh machines get the Claude Code link too.
+"~/.claude/skills/natural-japanese" = { source = "home/.agents/skills/natural-japanese", mode = "symlink" }
+"~/.claude/skills/orca-cli" = { source = "home/.agents/skills/orca-cli", mode = "symlink" }
+"~/.claude/skills/orchestration" = { source = "home/.agents/skills/orchestration", mode = "symlink" }
+# Cursor marketplace plugins (install state itself lives in Cursor's state DB).
+"~/.cursor/settings.json" = { source = "home/.cursor/settings.json", mode = "symlink" }
+# cendre for delta (git include); bat theme is per-OS (config-dir differs).
+"~/.config/delta/cendre.gitconfig" = { source = "extras/delta/cendre.gitconfig", mode = "symlink" }
+# starship reads ~/.config/starship.toml on every OS (Windows included).
+"~/.config/starship.toml" = { source = "home/.config/starship.toml", mode = "symlink" }
+
+# git
+"~/.gitignore" = { source = "home/.gitignore", mode = "symlink" }
+# static config dirs (whole-dir links; new repo files show up automatically)
+# nvim / ghostty are not linked: Omarchy ships its own theme-synced configs.
+# runtime-write dirs: per-file links only
+"~/.config/herdr/config.toml" = { source = "home/.config/herdr/config.toml", mode = "symlink" }
+"~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
+# bat themes dir: only this file; cache lives beside it.
+"~/.config/bat/themes/cendre.tmTheme" = { source = "extras/bat/cendre.tmTheme", mode = "symlink" }
+"~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
+"~/.config/micro/plug/editorconfig" = { source = "home/.config/micro/plug/editorconfig", mode = "symlink" }
+"~/.gitconfig" = { source = "home/.gitconfig", mode = "symlink" }
+# Claude Code plugins are declared, not vendored: ~/.claude/plugins holds git
+# clones and version-stamped caches, so only the declaration is tracked here.
+# Claude Code writes back through this link, so settings it manages itself
+# (theme, marketplaces it adds) land in the repo as real changes.
+"~/.claude/settings.json" = { source = "home/.claude/settings.json", mode = "symlink" }
+"~/.cursor/hooks.json" = { source = "home/.cursor/hooks.json", mode = "symlink" }
+# mise's own global config: declares tools that must resolve outside a project
+# (GUI apps inherit the persistent PATH, not a shell with `mise activate`).
+# Per-file because `mise use -g` rewrites config.toml in place.
+"~/.config/mise/config.toml" = { source = "home/.config/mise/config.toml", mode = "symlink" }
+
+# Linux / Windows link with `mise dotfiles apply` (also step 3 of `mise bootstrap`).
+# It never removes a link whose entry is gone: `clean` drops every link into
+# the repo, then apply relinks what is still declared.
+[tasks.list]
+description = "Show dotfiles to link"
+run = "mise dotfiles status"
+
+[tasks.clean]
+description = "Remove symlinks into the repo from $HOME (then: mise dotfiles apply)"
+run = "zsh script/clean.zsh"
 
 # macOS: `mise run switch` installs apps (flake.nix).
 [tasks.install-apps]

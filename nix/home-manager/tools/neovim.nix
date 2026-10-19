@@ -1,4 +1,4 @@
-# LazyVim (config: ~/.config/nvim, linked by mise.macos.toml [dotfiles]).
+# LazyVim (config: ~/.config/nvim, via the ~/.config link).
 # ripgrep / fd / tree-sitter are LazyVim requirements.
 { pkgs, ... }:
 {
