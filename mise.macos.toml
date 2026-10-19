@@ -72,6 +72,4 @@ run = [
   "killall Finder 2>/dev/null || true",
   "killall SystemUIServer 2>/dev/null || true",
   "mise run switch",
-  # Moralerspace Neon + ChaliceIcons — not vendored; fetched on bootstrap
-  "mise run install-fonts",
 ]

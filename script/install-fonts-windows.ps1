@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 # Download fonts used by Windows Terminal into the per-user Fonts folder.
-# Mirrors script/install-fonts.zsh (macOS Ghostty) for Moralerspace Neon only.
+# Windows counterpart of nix/home-manager/tools/fonts.nix, Moralerspace Neon only.
 # - Moralerspace Neon — https://github.com/yuru7/moralerspace (SIL OFL)
 #
 # ChaliceIcons is macOS-only here: nvim skips Chalice on Windows (no WT

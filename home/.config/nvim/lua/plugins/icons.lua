@@ -1,7 +1,7 @@
 -- Apply Chalice icon theme to mini.icons.
 -- Source of truth: stdpath("config")/chalice-icons.toml
 -- Upstream: https://github.com/artlaman/chalice-icon-theme (MIT)
--- Font: mise run install-fonts → ~/Library/Fonts/ChaliceIcons-Regular.ttf
+-- Font: nix/home-manager/tools/fonts.nix → ~/Library/Fonts/HomeManager/ChaliceIcons-Regular.ttf
 --
 -- Windows: skip. Chalice uses PUA U+E000–E011; Ghostty maps those via
 -- font-codepoint-map, but Windows Terminal cannot, so DirectWrite falls back
