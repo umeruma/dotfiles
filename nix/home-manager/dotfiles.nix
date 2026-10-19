@@ -27,8 +27,6 @@ in
       # Whole dir: skill installers (npx skills) write through it into the repo
       ".agents"
       ".claude/CLAUDE.md"
-      # Claude Code writes back through it (theme, marketplaces)
-      ".claude/settings.json"
       ".cursor/settings.json"
       ".cursor/hooks.json"
     ] home

@@ -65,7 +65,6 @@
 # clones and version-stamped caches, so only the declaration is tracked here.
 # Claude Code writes back through this link, so settings it manages itself
 # (theme, marketplaces it adds) land in the repo as real changes.
-"~/.claude/settings.json" = { source = "home/.claude/settings.json", mode = "symlink" }
 "~/.cursor/hooks.json" = { source = "home/.cursor/hooks.json", mode = "symlink" }
 # mise's own global config: declares tools that must resolve outside a project
 # (GUI apps inherit the persistent PATH, not a shell with `mise activate`).

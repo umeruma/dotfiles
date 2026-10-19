@@ -4,7 +4,3 @@
 
 # Orca などが絶対パスで書き戻すファイル。git には $HOME で保存する（filter は repo.gitconfig）。
 home/.cursor/hooks.json filter=home
-
-# Claude Code が /model のたびに書き戻す `model` は git に入れない（filter は repo.gitconfig）。
-# サイズが変わると git status には M が出るが diff は空で、commit にも乗らない。`git add` で消える。
-home/.claude/settings.json filter=claude-settings

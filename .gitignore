@@ -1,6 +1,10 @@
 .DS_Store
 bin/
-# backups written by tools that rewrite ~/.claude/settings.json / ~/.cursor/hooks.json through the symlink
+# Written by Claude Code and the tools that hook into it (Orca, herdr, plugins);
+# nothing here is chosen by hand, so it is left to each machine.
+home/.claude/settings.json
+home-win/.claude/settings.json
+# backups written by tools that rewrite these files through the symlink
 home/.claude/*.bak
 home/.cursor/*.bak
 __pycache__/

@@ -188,20 +188,17 @@ Start-Process "$([Environment]::GetFolderPath('Startup'))\Kanata.lnk"
 
 ## Claude Code plugins
 
-プラグインの実体は `~/.claude/plugins` に入る。中身は marketplace の git clone（`marketplaces/<name>/`）とバージョン付きキャッシュ（`cache/<marketplace>/<plugin>/<version>/`）なので、このディレクトリは追跡しない。追跡するのは宣言だけ。
+プラグインも `~/.claude/settings.json` も追跡しない（全 OS 共通）。settings.json の中身は、Claude Code と、hook を足すツール（Orca、herdr など）やプラグインが書き込むものなので、マシンごとに任せる。
 
-[`home-win/.claude/settings.json`](https://github.com/umeruma/dotfiles/blob/main/home-win/.claude/settings.json) に marketplace を `extraKnownMarketplaces`、プラグインを `enabledPlugins` で列挙する。`~/.claude` は Claude Code が書き込む実ディレクトリなので、ディレクトリごとではなくファイル単位で symlink する（`[dotfiles]` に `~/.claude/settings.json` を個別に宣言している）。
-
-新しいマシンでは `mise dotfiles apply` と再起動だけでは**途中までしか進まない**。marketplace の登録と `cache/` への先読みまでは走るが、git リポジトリ由来のプラグインは `enabledPlugins` だけでは install が完了しない。マシンごとに一度だけシェルコマンドで仕上げる（`/plugin` スラッシュコマンドは対話ターミナルが必要なので使わない）:
+プラグインは、ツールのドキュメントどおりにマシンごとに入れる（`/plugin` スラッシュコマンドは対話ターミナルが必要なので、シェルコマンドを使う）:
 
 ```
+claude plugin marketplace add <owner>/<repo>
 claude plugin install <plugin>@<marketplace>
 claude plugin list
 ```
 
 `plugin list` が `Status: enabled` を返せば完了。起動中のセッションに反映するには `/reload-plugins`。
-
-Claude Code は symlink 越しに書き戻すので、アプリ側で変更した設定（テーマ、自動追加される marketplace など）はリポジトリの差分として現れる。プラグインを増やすときは `home-win/.claude/settings.json` と `home/.claude/settings.json` の両方に追記する（`home/` と `home-win/` を分けている方針どおり、意図的に二重管理）。
 
 ### hooks を使うプラグインは node が必要
 

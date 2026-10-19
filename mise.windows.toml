@@ -21,7 +21,6 @@
 "winget:JesseDuffield.lazygit" = "latest"
 "winget:dandavison.delta" = "latest" # lazygit diff renderer (syntax highlighting)
 "winget:sharkdp.bat" = "latest" # delta syntax-theme = cendre (bat theme cache)
-"winget:jqlang.jq" = "latest" # git filter.claude-settings (see mise.toml deploy)
 "winget:Starship.Starship" = "latest" # prompt (home/.config/starship.toml)
 # LazyVim deps (see nix/home-manager/tools/neovim.nix). tree-sitter-cli is not on winget;
 # nvim-treesitter uses prebuilt parsers / needs a C toolchain if compiling.
@@ -44,7 +43,6 @@
 
 [dotfiles]
 "~/.gitconfig" = { source = "home-win/.gitconfig", mode = "symlink" }
-"~/.claude/settings.json" = { source = "home-win/.claude/settings.json", mode = "symlink" }
 "~/.config/mise/config.toml" = { source = "home-win/.config/mise/config.toml", mode = "symlink" }
 "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1" = { source = "home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1", mode = "symlink" }
 "~/Documents/kanata/kanata.kbd" = { source = "home-win/Documents/kanata/kanata.kbd", mode = "symlink" }

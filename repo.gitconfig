@@ -6,5 +6,3 @@
 [filter "home"]
 	clean = sed \"s|$HOME|\\$HOME|g\"
 	smudge = sed \"s|\\\\\\$HOME|$HOME|g\"
-[filter "claude-settings"]
-	clean = jq 'del(.model)'
