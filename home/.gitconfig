@@ -21,6 +21,9 @@
   path = ~/Codes/.gitconfig
 [includeIf "gitdir:~/Codes_DL/"]
   path = ~/Codes_DL/.gitconfig
+# This repo's hooks and filters (repo.gitconfig), for every worktree too
+[includeIf "gitdir:~/Codes/dotfiles/"]
+  path = ~/Codes/dotfiles/repo.gitconfig
 [pull]
   rebase = false
   ff = false

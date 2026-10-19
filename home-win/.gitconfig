@@ -15,6 +15,9 @@
 # extra includeIf for other drives) go in ~/.gitconfig.local.
 [includeIf "gitdir/i:~/Codes_DL/"]
 	path = ~/Codes_DL/.gitconfig
+# This repo's hooks and filters (repo.gitconfig), for every worktree too
+[includeIf "gitdir/i:~/Codes/dotfiles/"]
+	path = ~/Codes/dotfiles/repo.gitconfig
 [include]
 	path = ~/.gitconfig.local
 

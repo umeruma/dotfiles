@@ -1,6 +1,6 @@
 #!/bin/sh
-# Stops a commit that leaks a secret. `mise run deploy` sets
-# core.hooksPath=.githooks; gitleaks comes from [tools] in mise.toml.
+# Stops a commit that leaks a secret. repo.gitconfig (included by
+# ~/.gitconfig) sets core.hooksPath=.githooks; gitleaks comes from [tools] in mise.toml.
 set -eu
 
 if ! command -v mise >/dev/null 2>&1; then
