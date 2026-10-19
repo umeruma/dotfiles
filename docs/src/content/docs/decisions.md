@@ -13,6 +13,7 @@ sidebar:
 
 - **Brewfile → `[bootstrap.packages]`（見送り）**: `brew bundle add` / `brew bundle cleanup` で追加・追跡するワークフローを残したかったので見送った。その後、macOS の Brewfile 自体を Nix に移したので、この案はもうない。
 - **Brewfile → flake + nix-homebrew（macOS）**: Brewfile ではアプリと zsh の設定が別のファイルにあり、アプリを消しても alias や設定が残っていた。Nix ではツールごとのファイル（`nix/home-manager/tools/*.nix`）に、パッケージや cask と、zsh の alias・関数・設定を一緒に書ける。ファイルを消せば全部一緒に消える。nixpkgs にないアプリやドライバは nix-homebrew 経由の Homebrew で入れ、cask も各ツールのファイルの `my.casks` で宣言する。（[805e05a](https://github.com/umeruma/dotfiles/commit/805e05a)）
+- **Homebrew の `cleanup = "uninstall"`（見送り）**: 宣言から消したアプリを switch で消せるが、宣言していないアプリも全部消える。dotfiles に入れずに手で入れるアプリもあるので、`"none"` のままにする。宣言から外したアプリは `brew uninstall` で消す。
 - **`Brewfile.lock.json`**: Homebrew 7 から読み書きされなくなったので削除。（[3327221](https://github.com/umeruma/dotfiles/commit/3327221)）
 - **Brewfile の mise**: mise は bootstrap の途中で `curl https://mise.run | sh` で入れるので、Brewfile からは外した。（[e3e71b1](https://github.com/umeruma/dotfiles/commit/e3e71b1)）
 - **`win/apps.winget`（winget DSC）**: mise 2026.9.3 で winget が `[bootstrap.packages]` に対応したので、`mise.windows.toml` に移した。Brewfile と同じく opt-in。（[5f1e66c](https://github.com/umeruma/dotfiles/commit/5f1e66c)）

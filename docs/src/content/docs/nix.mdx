@@ -59,7 +59,7 @@ zsh の alias や関数は、同じファイルに書きます。
 
 ### Remove a tool
 
-ファイル（または行）を消して switch します。ただし cask は、今は switch で消えません（`nix/homebrew.nix` の `cleanup = "none"`）。全部を宣言し終えるまでは、`brew uninstall --cask <name>` で消します。
+ファイル（または行）を消して switch します。ただし Homebrew で入れたもの（cask、formula、App Store）は、switch では消えません。dotfiles に入れずに手で入れるアプリもあるので、`nix/homebrew.nix` を `cleanup = "none"` にしているためです。`brew uninstall --cask <name>` などで消します。
 
 ## Update
 

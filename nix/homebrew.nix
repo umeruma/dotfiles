@@ -23,8 +23,9 @@ in
     onActivation = {
       autoUpdate = false;
       upgrade = false;
-      # ponytail: "none" until every cask/brew in macos/Brewfile is declared
-      # in a tool file; then "uninstall" so removing a line removes the app.
+      # Not every app on this Mac belongs in dotfiles, so keep what was
+      # installed by hand. Removing a line leaves the app; uninstall it with
+      # `brew uninstall` (see decisions.md).
       cleanup = "none";
     };
     casks = hm.my.casks;
