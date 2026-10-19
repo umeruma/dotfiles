@@ -17,8 +17,9 @@ Windows のセットアップも macOS / Linux と同じ mise の宣言的な仕
 
 | ファイル | 適用 OS |
 | --- | --- |
-| `mise.dotfiles.toml` | 全 OS 共通（`~/.agents`、Claude/Copilot の設定など） |
-| `mise.windows.toml` | Windows（`~/.gitconfig` など3件は `home-win/` の内容で上書き） |
+| `mise.windows.toml` | Windows（`home-win/` 由来のものと、`~/.agents` や Claude/Copilot の設定など全 OS 共通のもの） |
+
+全 OS 共通のエントリは `mise.linux.toml` にも同じものを書いている（macOS は home-manager）。理由は [Overview](/overview#how-it-works)。
 
 ## Prerequisites
 
@@ -52,20 +53,20 @@ irm https://dot.umeru.ma/install-win | iex
 1. 必要なら PowerShell 7 をインストール
 2. リポジトリを `~/Codes/dotfiles` に clone（既存なら最新を pull）
 3. [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) で `winget configure` を実行（PowerShell 7、Git、mise）
-4. `mise run deploy` で `[dotfiles]` を適用
+4. `mise dotfiles apply -y` で `[dotfiles]` を適用
 
 Windows PowerShell 5.1 から始めた場合、スクリプトは PowerShell 7 で自分自身を再起動して残りを実行する。完了後もターミナルは開いたままで、最後に GUI アプリ用の `mise run install-apps` を案内するバナーが表示される。
 
-## Deploy dotfiles
+## Link dotfiles
 
 **PowerShell 7** でリポジトリのルートから:
 
 ```
 cd $env:USERPROFILE\Codes\dotfiles
-mise run deploy
+mise dotfiles apply -y
 ```
 
-macOS / Linux と同じ `mise dotfiles apply -y` を実行する。親ディレクトリは mise が自動で作るので、事前準備は要らない。
+親ディレクトリは mise が自動で作るので、事前準備は要らない。
 
 リポジトリを最新にする（`git pull --no-ff origin main`）:
 
@@ -79,7 +80,7 @@ mise run update
 mise dotfiles status
 ```
 
-symlink を削除するには（[`script/clean-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/clean-windows.ps1) がリポジトリを指すリンク/ジャンクションだけを掃く）:
+symlink を削除するには（[`script/clean-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/clean-windows.ps1) がリポジトリを指すリンク/ジャンクションだけを掃く）。`mise dotfiles apply` は宣言から消したエントリのリンクを残すので、エントリを消したあとはこれを実行してから apply し直す:
 
 ```
 mise run clean
@@ -161,7 +162,7 @@ Windows 11 24H2 では旧来の `rundll32 ... input.dll ... {HOTKEYS}` 呼び出
 
 ### Autostart
 
-ログイン時に kanata を自動起動するには、（`install-apps` と `deploy` の後に）一度だけスタートアップのショートカットを作成する:
+ログイン時に kanata を自動起動するには、（`install-apps` と `mise dotfiles apply` の後に）一度だけスタートアップのショートカットを作成する:
 
 ```
 mise run setup-kanata
@@ -191,7 +192,7 @@ Start-Process "$([Environment]::GetFolderPath('Startup'))\Kanata.lnk"
 
 [`home-win/.claude/settings.json`](https://github.com/umeruma/dotfiles/blob/main/home-win/.claude/settings.json) に marketplace を `extraKnownMarketplaces`、プラグインを `enabledPlugins` で列挙する。`~/.claude` は Claude Code が書き込む実ディレクトリなので、ディレクトリごとではなくファイル単位で symlink する（`[dotfiles]` に `~/.claude/settings.json` を個別に宣言している）。
 
-新しいマシンでは `mise run deploy` と再起動だけでは**途中までしか進まない**。marketplace の登録と `cache/` への先読みまでは走るが、git リポジトリ由来のプラグインは `enabledPlugins` だけでは install が完了しない。マシンごとに一度だけシェルコマンドで仕上げる（`/plugin` スラッシュコマンドは対話ターミナルが必要なので使わない）:
+新しいマシンでは `mise dotfiles apply` と再起動だけでは**途中までしか進まない**。marketplace の登録と `cache/` への先読みまでは走るが、git リポジトリ由来のプラグインは `enabledPlugins` だけでは install が完了しない。マシンごとに一度だけシェルコマンドで仕上げる（`/plugin` スラッシュコマンドは対話ターミナルが必要なので使わない）:
 
 ```
 claude plugin install <plugin>@<marketplace>
@@ -206,7 +207,7 @@ Claude Code は symlink 越しに書き戻すので、アプリ側で変更し�
 
 SessionStart などの hook を持つプラグインは `node` を実行する。GUI アプリは**永続ユーザー PATH しか継承しない**ため、`mise activate pwsh` でシェル起動時にだけ通している状態では hook が毎回失敗する。スキルは使えるのに hook だけ効かない、という分かりにくい壊れ方をする。
 
-node のバージョンは [`home-win/.config/mise/config.toml`](https://github.com/umeruma/dotfiles/blob/main/home-win/.config/mise/config.toml) で宣言済みで、deploy が `~/.config/mise/config.toml` に symlink する。プロジェクトの `mise.toml` に `[tools]` を書くのでは届かない — それはそのディレクトリの中でしか解決しないため。
+node のバージョンは [`home-win/.config/mise/config.toml`](https://github.com/umeruma/dotfiles/blob/main/home-win/.config/mise/config.toml) で宣言済みで、`mise dotfiles apply` が `~/.config/mise/config.toml` に symlink する。プロジェクトの `mise.toml` に `[tools]` を書くのでは届かない — それはそのディレクトリの中でしか解決しないため。
 
 残る手作業は shims を永続 PATH に入れること。マシンごとに一度だけ:
 

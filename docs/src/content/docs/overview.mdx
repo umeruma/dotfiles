@@ -49,42 +49,39 @@ alias dot='cd $DOTFILES'
 
 ターミナルで`dot`を実行することで、dotfiles ディレクトリにすぐ移動できます。
 
-## Deploy dotfiles
+## Link dotfiles
 
-dotfiles をホームディレクトリにデプロイするには:
+dotfiles をホームディレクトリにリンクするには:
 
 ```
-dot && mise run deploy
+dot && mise run switch          # macOS
+dot && mise dotfiles apply -y   # Linux / Windows
 ```
 
 ### How it works
 
-symlink は mise の `[dotfiles]` セクションで宣言的に管理しています。
-- for all platform [`mise.dotfiles.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.dotfiles.toml)
-  - `.miserc.toml` の `env = ["dotfiles"]` により全ての環境で適用される
-- for macOS [`mise.macos.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.macos.toml)
-- for macOS & Linux [`mise.unix.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.unix.toml)
-- for Windows [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml)
+macOS は home-manager、Linux と Windows は mise の `[dotfiles]` でリンクします。どちらもリポジトリへ直接リンクするので、ファイルを編集すればその場で反映されます。
 
-```toml
-# 登録内容の一例
-[dotfiles]
-"~/.zshrc" = { source = "home/.zshrc", mode = "symlink" }
-```
+- macOS: [`nix/home-manager/dotfiles.nix`](https://github.com/umeruma/dotfiles/blob/main/nix/home-manager/dotfiles.nix)（ツール固有のものは `nix/home-manager/tools/<tool>.nix`）
+- Linux: [`mise.linux.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.linux.toml)
+- Windows: [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml)
 
-デプロイしているファイルの他に、アプリケーションがログファイルやコンフィグファイルを吐き出すディレクトリ（例: `~/.config/karabiner`、`~/.config/micro`、`~/.config/lazygit`、`~/.config/herdr`）は**ファイル単位**でリンクし、ログファイル等はリポジトリ管理されないようにしています。静的な設定ディレクトリ（`~/.config/ghostty`、`~/.config/sheldon`）はディレクトリごとリンクしています。
+`~/.agents` や `~/.claude/*` など全 OS で同じファイルは、3か所に1回ずつ書いています。Mac は `[dotfiles]` を1件も読みません。読むと `mise bootstrap` が Nix と同じ場所にリンクを張り、home-manager とぶつかるためです。
 
-`~/.config/nvim` は例外で、ディレクトリごとリンクしています。LazyVim のプラグインバージョンが `lazy-lock.json` git で追跡されるようにするためです。詳細は: [Editor Stack](/editor-stack)
+macOS では `~/.config` をまるごと `home/.config` にリンクしています（[babarot/dotfiles](https://github.com/babarot/dotfiles) と同じ方式）。ツールが書き込む状態ファイルや認証情報は [`home/.config/.gitignore`](https://github.com/umeruma/dotfiles/blob/main/home/.config/.gitignore) で除外します。新しいツールのファイルは untracked として出てくるので、そのつど追跡するか除外するかを決めます。
+
+Linux（Omarchy）は `~/.config` を Omarchy が管理しているので、まるごとリンクはしません。実行時に書き込みのあるディレクトリ（例: `~/.config/lazygit`、`~/.config/herdr`）は**ファイル単位**でリンクします。
+
+`mise dotfiles apply` は、宣言から消したエントリのリンクを残します。Linux と Windows でエントリを消したら、`mise run clean` でリポジトリへのリンクを全部外してから、`mise dotfiles apply -y` で張り直します。macOS では switch が古いリンクを自動で消します。
 
 よく使うコマンド:
 
 ```
-mise dotfiles status   # 各設定の applied / differs / missing を表示
-mise run install-apps  # Burewfileに登録したアプリケーションの登録
+mise run switch        # nix/ の宣言どおりにアプリとリンクを反映（macOS）
+mise dotfiles status   # 各設定の applied / differs / missing を表示（Linux / Windows）
 dottrack <path>        # 既存ファイルのリポジトリ管理の開始
 
-brew bundle add --cask [app name]
-  # リポジトリで管理するbrew caskアプリケーションの登録
+# cask を足すときは nix/home-manager/tools/ に my.casks = [ "<name>" ]; を書いて git add → switch
 ```
 
 ## macOS defaults
@@ -99,7 +96,7 @@ dot && mise bootstrap macos defaults status
 
 ## Terminal theme (cendre)
 
-Ghostty（macOS）のテーマは deploy コマンドで適用される。`theme = cendre`。Terminal.app / Windows Terminal は opt-in で、明示的にコマンドを実行する:
+Ghostty（macOS）のテーマは設定ファイル（`home/.config/ghostty`）で適用される。`theme = cendre`。Terminal.app / Windows Terminal は opt-in で、明示的にコマンドを実行する:
 
 ```
 dot && mise run theme
@@ -112,7 +109,8 @@ dot && mise run theme
 
 - [mise](https://mise.jdx.dev/) — タスクランナー、マシンブートストラップ
 - [sheldon](https://github.com/rossmacarthur/sheldon#readme) — zsh プラグインマネージャー
-- [Homebrew](https://docs.brew.sh/Manpage) — パッケージマネージャー（Brewfile / `install-apps`）
+- [Nix](https://nixos.org/)（nix-darwin + home-manager）— macOS のパッケージとアプリ（`mise run switch`）
+- [Homebrew](https://docs.brew.sh/Manpage) — macOS の cask / App Store（Nix から宣言）、Linux の Brewfile（`install-apps`）
 
 ## website
 

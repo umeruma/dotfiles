@@ -16,15 +16,15 @@ sidebar:
 
 ## Prerequisites
 
-`mise run install-apps`（macOS Brewfile / Windows winget）でインストールされる:
+macOS は `mise run switch`（`nix/home-manager/tools/`）、Windows は `mise run install-apps`（winget）でインストールされる:
 
 - `neovim`
-- `herdr`（macOS: Brewfile。Windows: 公式 `install.ps1`、`mise run install-herdr` / `install-apps`）
+- `herdr`（macOS: Nix。Windows: 公式 `install.ps1`、`mise run install-herdr` / `install-apps`）
 - `lazygit`
-- `git-delta`（lazygit の syntax-highlighted diff。macOS: Brewfile `git-delta` / Windows: `winget:dandavison.delta`。テーマは [cendre](https://cendretheme.com/) hard — `~/.config/delta/cendre.gitconfig` + bat `cendre` theme）
+- `git-delta`（lazygit の syntax-highlighted diff。macOS: Nix / Windows: `winget:dandavison.delta`。テーマは [cendre](https://cendretheme.com/) hard — `~/.config/delta/cendre.gitconfig` + bat `cendre` theme）
 - `bat`（delta の `syntax-theme = cendre` 用。`mise run theme` で `bat cache --build`）
 - `ripgrep`、`fd`（LazyVim の grep / ファイル検索に必須）
-- `tree-sitter-cli`（macOS: Brewfile。Windows は LazyVim/mason が入れる。パーサービルド用に `winget:BrechtSanders.WinLibs.POSIX.UCRT`）
+- `tree-sitter-cli`（macOS: Nix。Windows は LazyVim/mason が入れる。パーサービルド用に `winget:BrechtSanders.WinLibs.POSIX.UCRT`）
 - `crit`（エージェントの変更をブラウザ UI で行コメントレビューする。`crit <file>` / `crit <url>` で起動）
 
 Crit を Claude Code から `/crit` スラッシュコマンドで使う場合は、プラグインを別途インストールする（プラグイン実体は `~/.claude/plugins` にランタイム管理されるため symlink 対象にはしない）:
@@ -37,8 +37,8 @@ claude plugin install crit@crit
 ## Setup
 
 ```bash
-mise run install-apps
-mise run deploy
+mise run switch         # macOS（アプリとリンク）
+# Windows: mise run install-apps && mise dotfiles apply -y
 nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
 ```
 

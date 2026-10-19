@@ -13,7 +13,7 @@ curl インストーラー（`install`）は、mise が存在する前に必要�
 
 1. このリポジトリを `~/Codes/dotfiles` に clone（または pull）
 2. macOS では Xcode Command Line Tools をインストール（`init/init-macos.sh`）
-3. Homebrew をインストール（Brewfile を使った `install-apps` CLI パッケージ、GUIアプリケーションのインストールに利用）
+3. Linux では Homebrew をインストール（`linux/Brewfile` を使う `install-apps` 用）、macOS では Nix をインストール（`mise run switch` 用。Homebrew は nix-homebrew が入れる）
 4. mise 自体をインストール（`curl https://mise.run | sh`）
 5. `mise trust` + `mise bootstrap --yes --update` を実行
 
@@ -28,12 +28,11 @@ curl インストーラー（`install`）は、mise が存在する前に必要�
 | Phase | Config | This repo |
 | --- | --- | --- |
 | packages | `mise.linux.toml` の `[bootstrap.packages]` | Linux: `apt:build-essential`、`apt:zsh`（Debian 系）／`pacman:base-devel`、`pacman:zsh`（Arch 系）。使えない manager の行は mise が skip する |
-| dotfiles | `mise.dotfiles.toml`（共通）/ `mise.unix.toml` / `mise.windows.toml` / `mise.macos.toml` の `[dotfiles]` | `home/`・`home-win/` の宣言的 symlink allowlist（実行時書き込みのある dir はファイル単位、静的な設定 dir はディレクトリごと） |
+| dotfiles | `mise.linux.toml` / `mise.windows.toml` の `[dotfiles]` | `home/`・`home-win/` の宣言的 symlink allowlist（実行時書き込みのある dir はファイル単位）。macOS は `[dotfiles]` を持たず、home-manager がリンクする（`mise run switch`） |
 | macOS defaults | `mise.macos.toml` の `[bootstrap.macos.*]` / `[bootstrap.macos.defaults]` | Dock・Finder・キーボードなどスカラー値の設定（配列 / PlistBuddy は未移行） |
 | user | `[bootstrap.user]` | `login_shell = "/bin/zsh"`（`install` 内の旧 `chsh` ブロックを置き換え） |
-| task | `[tasks.bootstrap]` | `mise run deploy` を実行（`clean` 掃除 + `[dotfiles]` の冪等な再適用） |
 
-再実行しても安全: 宣言的なフェーズは収束するし、`bootstrap` タスクは冪等に保つ。
+再実行しても安全: 宣言的なフェーズは収束する。
 
 マシンを変更せずにプレビュー:
 
@@ -61,7 +60,7 @@ dot && mise bootstrap macos defaults apply --dry-run --yes
 | Piece | Why |
 | --- | --- |
 | `install-win` + `win/bootstrap.winget` | PowerShell 7 / Git / mise 自体を入れるステップ。mise が存在する前なので bootstrap では扱えない |
-| `macos/Brewfile` / `linux/Brewfile`（`mise run install-apps` 経由） | 意図的: `brew bundle add` / `brew bundle cleanup` の追加・追跡ワークフローが便利なため。bootstrap にはデプロイに必須のパッケージだけ残す |
+| `linux/Brewfile`（`mise run install-apps` 経由） | 意図的: `brew bundle add` / `brew bundle cleanup` の追加・追跡ワークフローが便利なため。bootstrap にはデプロイに必須のパッケージだけ残す |
 | Windows GUI アプリ（`mise.windows.toml` の `[bootstrap.packages]`） | `[bootstrap.packages]` に**宣言はする**が、`mise run install-apps`（= `mise bootstrap packages apply`）でのみ適用する opt-in 扱い。Brewfile と対称 |
 | Xcode CLT | 対話的な `xcode-select --install` |
 
