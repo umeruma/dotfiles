@@ -33,7 +33,7 @@ sidebar:
 - 特定のキーボード（デバイス ID 指定）で Command / Option の位置を入れ替え
 - `virtual_hid_keyboard` は `ansi` を指定（US 配列として扱う）
 
-デプロイは mise の `[dotfiles]` で行うが、Karabiner は `~/.config/karabiner` に実行時の書き込みがあるため **ファイル単位** で symlink している（[How it works](/overview#how-it-works) 参照）。Karabiner-Elements 本体は `mise run switch`（`nix/home-manager/tools/karabiner.nix` の cask）でインストール。
+設定は `~/.config` のまるごとリンク経由で `home/.config/karabiner` を読む（[How it works](/overview#how-it-works) 参照）。Karabiner が書き出す `automatic_backups` は `home/.config/.gitignore` で除外している。Karabiner-Elements 本体は `mise run switch`（`nix/home-manager/tools/karabiner.nix` の cask）でインストール。
 
 ## Windows: kanata
 
