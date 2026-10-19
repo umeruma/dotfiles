@@ -3,6 +3,14 @@
 # ~/.gitconfig) sets core.hooksPath=.githooks; gitleaks comes from [tools] in mise.toml.
 set -eu
 
+# Tools that stage hunks (Orca, gitsigns, lazygit) apply their own diff to the
+# index and skip the claude-settings clean filter, so drop `model` here too.
+f=home/.claude/settings.json
+if git show ":$f" 2>/dev/null | grep -q '"model"'; then
+  blob=$(git show ":$f" | jq 'del(.model)' | git hash-object -w --stdin)
+  git update-index --cacheinfo "100644,$blob,$f"
+fi
+
 if ! command -v mise >/dev/null 2>&1; then
   echo "pre-commit: mise not found; skipping gitleaks" >&2
   exit 0
