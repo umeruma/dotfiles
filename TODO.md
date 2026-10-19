@@ -7,16 +7,16 @@
 
 Nix（nix-darwin + home-manager）移行の残り作業。
 
-- [ ] Brewfile 外で入れたアプリ（cask / formula / App Store）を、移さずそのまま宣言する
-  - cask → `my.casks`、formula → `homebrew.brews`、App Store → `my.masApps`
-  - 2026-10-19 に一部を仕分け済み（消す / 宣言する）。残りは宣言していない cask（google-chrome、orca、kero など）、formula 全部、App Store の一部
+- [ ] Brewfile 外で入れたアプリ（cask / formula / App Store）を、移さずそのまま宣言するか消す
+  - cask → `my.casks`、formula → nixpkgs か `my.brews`、App Store → `my.masApps`
+  - 2026-10-19 に2回仕分け済み。残り:
+    - cask: aerospace, dropshare, firefox, google-chrome, pairpods, postman, teamviewer
+    - formula: age, aicommit2, carthage, container, deno, difftastic, git-filter-repo, hugo, k1low/tap/mo, mactop, static-web-server, subversion
+    - App Store: 1Password for Safari, Raycast Companion, Windows App
 - [ ] 全部宣言したら `nix/homebrew.nix` の `cleanup` を `"uninstall"` にする
   - 先に `brew bundle cleanup --file=<生成された Brewfile>` で、何も消えないことを確かめる
   - `homebrew.nix` のコメントにある `macos/Brewfile` はもうないので、そのとき直す
-- [ ] 気が向いたら仕分け（nixpkgs へ移す / 消す）
-  - 使用記録なし: pairpods, postman, teamviewer
-  - 不要そう: carthage
-  - App Store: Folder Quick Look, iPreview
+  - `docs/src/content/docs/nix.mdx` の「cask は switch で消えない」も直す
 
 ## Nix: Raycast
 
