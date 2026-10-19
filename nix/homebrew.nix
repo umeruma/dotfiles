@@ -1,7 +1,7 @@
 # Homebrew only installs what nixpkgs cannot: apps that are missing there,
 # install drivers / system extensions, or must live in /Applications.
 # Each tool file under nix/home-manager/tools declares its own casks and
-# App Store apps (my.casks / my.masApps); they are gathered here.
+# formulae and App Store apps (my.casks / my.brews / my.masApps); they are gathered here.
 { config, user, ... }:
 let
   hm = config.home-manager.users.${user};
@@ -28,6 +28,7 @@ in
       cleanup = "none";
     };
     casks = hm.my.casks;
+    brews = hm.my.brews;
     masApps = hm.my.masApps;
   };
 }

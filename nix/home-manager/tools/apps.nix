@@ -26,18 +26,23 @@
     "fission"
     "gyazo"
     "handbrake-app" # nixpkgs handbrake is broken on darwin
+    "homebrew-app" # BrewUI
+    "kaleidoscope"
+    "kero"
     "local"
+    "localsend"
     "loopback" # installs an audio driver
-    "macfuse" # installs a file system extension (ntfs-3g-mac, Mounty)
     "netnewswire"
     "nextdns-app" # nixpkgs nextdns is the CLI daemon, not the app
     "obscura-vpn"
     "orbstack"
+    "orca"
     # Self-updates and migrates its data forward; nixpkgs lags behind, and
     # an older build cannot open the migrated data.
     "raycast"
     "notion" # nixpkgs notion is a window manager
     "smoothcsv"
+    "soundsource" # installs an audio driver
     "transmit"
     "xcodes-app" # nixpkgs has only the xcodes CLI
     "yaak"

@@ -7,7 +7,7 @@
     builtins.filter (lib.hasSuffix ".nix") (builtins.attrNames (builtins.readDir ./tools))
   );
 
-  # Gathered into homebrew.casks / homebrew.masApps by nix/homebrew.nix
+  # Gathered into homebrew.casks / brews / masApps by nix/homebrew.nix
   options.my = {
     # Where this repo is checked out; links that point at the repo (not the
     # Nix store) use it, so edits apply without a switch.
@@ -16,6 +16,11 @@
       default = "${config.home.homeDirectory}/Codes/dotfiles";
     };
     casks = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+    };
+    # Formulae nixpkgs lacks; a tap formula is written in full (user/tap/name)
+    brews = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
     };
