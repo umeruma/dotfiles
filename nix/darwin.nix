@@ -14,6 +14,13 @@
   programs.zsh.enableCompletion = false;
   programs.zsh.promptInit = "";
 
+  # Touch ID for sudo (darwin-rebuild switch runs as root);
+  # reattach makes it work inside tmux / herdr
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true;
+  };
+
   system.primaryUser = user;
   users.users.${user}.home = "/Users/${user}";
 
