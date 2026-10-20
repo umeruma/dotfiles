@@ -1,5 +1,4 @@
 .DS_Store
-bin/
 # Written by Claude Code and the tools that hook into it (Orca, herdr, plugins);
 # nothing here is chosen by hand, so it is left to each machine.
 home/.claude/settings.json
