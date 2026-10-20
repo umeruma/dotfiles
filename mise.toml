@@ -7,13 +7,13 @@ login_shell = "/bin/zsh"
 
 [tasks.update]
 description = "Fetch latest changes"
-run = "zsh script/update.zsh"
-run_windows = "pwsh -NoProfile -File script/update-windows.ps1"
+run = "zsh script/unix/update.zsh"
+run_windows = "pwsh -NoProfile -File script/win/update-windows.ps1"
 
 [tasks.theme]
 description = "Install cendre theme (Terminal.app / Windows Terminal + bat cache for delta)"
-run = "zsh script/theme.zsh"
-run_windows = "pwsh -NoProfile -File script/theme-windows.ps1"
+run = "zsh script/unix/theme.zsh"
+run_windows = "pwsh -NoProfile -File script/win/theme-windows.ps1"
 
 [tools]
 gitleaks = "8"

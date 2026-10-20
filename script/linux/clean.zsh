@@ -4,7 +4,7 @@ emulate -L zsh
 set -eu
 set -o pipefail
 
-source "${0:A:h}/_lib.zsh"
+source "${0:A:h:h}/unix/_lib.zsh"
 
 local root
 root=$(repo_root)

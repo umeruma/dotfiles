@@ -4,7 +4,7 @@
   Bootstrap dotfiles on Windows (PowerShell 7, mise, dotfiles deploy).
 
 .DESCRIPTION
-  Clone to ~/Codes/dotfiles, apply win/bootstrap.winget, then run
+  Clone to ~/Codes/dotfiles, apply script/win/bootstrap.winget, then run
   mise dotfiles apply. Install GUI apps separately with: mise run install-apps
 
   Review this script before running:
@@ -160,7 +160,7 @@ function Ensure-Repository {
 function Invoke-BootstrapWinget {
   param([string]$RepoRoot)
 
-  $config = Join-Path $RepoRoot 'win/bootstrap.winget'
+  $config = Join-Path $RepoRoot 'script/win/bootstrap.winget'
   if (-not (Test-Path $config)) {
     throw "Bootstrap configuration not found: $config"
   }

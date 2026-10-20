@@ -1,5 +1,5 @@
 #Requires -Version 5.1
-# Mirror of script/update.zsh: fetch latest from origin/main.
+# Mirror of script/unix/update.zsh: fetch latest from origin/main.
 $ErrorActionPreference = 'Stop'
 
 . "$PSScriptRoot/_lib.ps1"

@@ -10,7 +10,7 @@ Write-DeveloperModeWarning
 
 # Remove every symlink / junction under the scan roots whose target points
 # into this repo — including dangling ones. Real files and dirs (app runtime
-# state) are never touched. Mirrors script/clean.zsh; `mise dotfiles` has no
+# state) are never touched. Mirrors script/linux/clean.zsh; `mise dotfiles` has no
 # unlink command, so removed [dotfiles] entries need this sweep to avoid
 # leaving stale links behind.
 

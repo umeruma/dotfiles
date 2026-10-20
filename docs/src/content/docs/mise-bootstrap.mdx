@@ -12,8 +12,8 @@ sidebar:
 curl インストーラー（`install`）は、mise が存在する前に必要なステップを担当する:
 
 1. このリポジトリを `~/Codes/dotfiles` に clone（または pull）
-2. macOS では Xcode Command Line Tools をインストール（`init/init-macos.sh`）
-3. Linux では Homebrew をインストール（`linux/Brewfile` を使う `install-apps` 用）、macOS では Nix をインストール（`mise run switch` 用。Homebrew は nix-homebrew が入れる）
+2. macOS では Xcode Command Line Tools をインストール（`script/macos/init-macos.sh`）
+3. Linux では Homebrew をインストール（`script/linux/Brewfile` を使う `install-apps` 用）、macOS では Nix をインストール（`mise run switch` 用。Homebrew は nix-homebrew が入れる）
 4. mise 自体をインストール（`curl https://mise.run | sh`）
 5. `mise trust` + `mise bootstrap --yes --update` を実行
 
@@ -71,8 +71,8 @@ dot && mise bootstrap macos defaults apply --dry-run --yes
 
 | Piece | Why |
 | --- | --- |
-| `install-win` + `win/bootstrap.winget` | PowerShell 7 / Git / mise 自体を入れるステップ。mise が存在する前なので bootstrap では扱えない |
-| `linux/Brewfile`（`mise run install-apps` 経由） | 意図的: `brew bundle add` / `brew bundle cleanup` の追加・追跡ワークフローが便利なため。bootstrap にはデプロイに必須のパッケージだけ残す |
+| `install-win` + `script/win/bootstrap.winget` | PowerShell 7 / Git / mise 自体を入れるステップ。mise が存在する前なので bootstrap では扱えない |
+| `script/linux/Brewfile`（`mise run install-apps` 経由） | 意図的: `brew bundle add` / `brew bundle cleanup` の追加・追跡ワークフローが便利なため。bootstrap にはデプロイに必須のパッケージだけ残す |
 | Windows GUI アプリ（`mise.windows.toml` の `[bootstrap.packages]`） | `[bootstrap.packages]` に**宣言はする**が、`mise run install-apps`（= `mise bootstrap packages apply`）でのみ適用する opt-in 扱い。Brewfile と対称 |
 | Xcode CLT | 対話的な `xcode-select --install` |
 
@@ -82,6 +82,6 @@ experimental な bootstrap に慣れてきたら:
 
 1. **Shell activation** — `.zshrc` に書いている `eval "$(mise activate zsh)"` を mise 管理にしたければ、オプションの `[bootstrap.mise_shell_activate]` を使う
 
-（完了済み: macOS defaults → `[bootstrap.macos.defaults]`、stow → `[dotfiles]`、PSDotFiles → `[dotfiles]`、`win/apps.winget` → `[bootstrap.packages]`、macOS の Brewfile とリンク → Nix。予定なし: `linux/Brewfile` → `[bootstrap.packages]` — `brew bundle` ワークフローは欠点ではなく機能なので）
+（完了済み: macOS defaults → `[bootstrap.macos.defaults]`、stow → `[dotfiles]`、PSDotFiles → `[dotfiles]`、`win/apps.winget` → `[bootstrap.packages]`、macOS の Brewfile とリンク → Nix。予定なし: `script/linux/Brewfile` → `[bootstrap.packages]` — `brew bundle` ワークフローは欠点ではなく機能なので）
 
 `mise bootstrap` はまだ experimental 扱いのため、このリポジトリの `mise.toml` では `settings.experimental = true` を設定している。

@@ -80,9 +80,9 @@ run = "mise dotfiles status"
 
 [tasks.clean]
 description = "Remove symlinks into the repo from $HOME (then: mise dotfiles apply)"
-run = "zsh script/clean.zsh"
+run = "zsh script/linux/clean.zsh"
 
 # macOS: `mise run switch` installs apps (flake.nix).
 [tasks.install-apps]
-description = "Install apps (linux/Brewfile + hugo)"
-run = "zsh script/install-apps.zsh"
+description = "Install apps (script/linux/Brewfile + hugo)"
+run = "zsh script/linux/install-apps.zsh"

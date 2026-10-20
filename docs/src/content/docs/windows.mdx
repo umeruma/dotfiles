@@ -11,7 +11,7 @@ Windows のセットアップも macOS / Linux と同じ mise の宣言的な仕
 
 - **mise `[dotfiles]`** — [`mise.windows.toml`](https://github.com/umeruma/dotfiles/blob/main/mise.windows.toml) の allowlist で [`home-win/`](https://github.com/umeruma/dotfiles/tree/main/home-win) と [`home/`](https://github.com/umeruma/dotfiles/tree/main/home) を `$HOME` にリンクする
 - **mise `[bootstrap.packages]`** — `winget:<id>` でアプリをインストールする
-- **[WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)** — [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) のみ。mise 自体を入れる鶏卵ステップで、mise が無い状態で走る唯一のもの
+- **[WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/)** — [`script/win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/script/win/bootstrap.winget) のみ。mise 自体を入れる鶏卵ステップで、mise が無い状態で走る唯一のもの
 
 `[dotfiles]` の分割は以下のとおり:
 
@@ -52,7 +52,7 @@ irm https://dot.umeru.ma/install-win | iex
 
 1. 必要なら PowerShell 7 をインストール
 2. リポジトリを `~/Codes/dotfiles` に clone（既存なら最新を pull）
-3. [`win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/win/bootstrap.winget) で `winget configure` を実行（PowerShell 7、Git、mise）
+3. [`script/win/bootstrap.winget`](https://github.com/umeruma/dotfiles/blob/main/script/win/bootstrap.winget) で `winget configure` を実行（PowerShell 7、Git、mise）
 4. `mise dotfiles apply -y` で `[dotfiles]` を適用
 
 Windows PowerShell 5.1 から始めた場合、スクリプトは PowerShell 7 で自分自身を再起動して残りを実行する。完了後もターミナルは開いたままで、最後に GUI アプリ用の `mise run install-apps` を案内するバナーが表示される。
@@ -80,7 +80,7 @@ mise run update
 mise dotfiles status
 ```
 
-symlink を削除するには（[`script/clean-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/clean-windows.ps1) がリポジトリを指すリンク/ジャンクションだけを掃く）。`mise dotfiles apply` は宣言から消したエントリのリンクを残すので、エントリを消したあとはこれを実行してから apply し直す:
+symlink を削除するには（[`script/win/clean-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/win/clean-windows.ps1) がリポジトリを指すリンク/ジャンクションだけを掃く）。`mise dotfiles apply` は宣言から消したエントリのリンクを残すので、エントリを消したあとはこれを実行してから apply し直す:
 
 ```
 mise run clean
@@ -94,7 +94,7 @@ GUI などのアプリは [`mise.windows.toml`](https://github.com/umeruma/dotfi
 mise run install-apps
 ```
 
-これは `mise bootstrap packages apply -y` のあと、[Cursor CLI](https://cursor.com/docs/cli/overview) と [herdr](https://herdr.dev/docs/install/) の公式 Windows インストーラを冪等に実行する（[`script/install-apps-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/install-apps-windows.ps1)）。macOS の Brewfile と同じく **opt-in**（`mise bootstrap` 本体からは切り離してある）。単体だけ入れる場合:
+これは `mise bootstrap packages apply -y` のあと、[Cursor CLI](https://cursor.com/docs/cli/overview) と [herdr](https://herdr.dev/docs/install/) の公式 Windows インストーラを冪等に実行する（[`script/win/install-apps-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/win/install-apps-windows.ps1)）。macOS の Brewfile と同じく **opt-in**（`mise bootstrap` 本体からは切り離してある）。単体だけ入れる場合:
 
 ```
 mise run install-cursor-cli

@@ -10,7 +10,7 @@ DOTFILES_SCRIPT_DIR=${${(%):-%x}:A:h}
 # Returns repository root (dotfiles root).
 repo_root() {
   local root
-  root=${DOTFILES_SCRIPT_DIR:h}
+  root=${DOTFILES_SCRIPT_DIR:h:h}
   print -r -- "$root"
 }
 

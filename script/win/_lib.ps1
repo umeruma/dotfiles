@@ -1,7 +1,7 @@
 # Shared helpers for Windows dotfiles scripts.
 
 function Get-RepoRoot {
-  $root = Resolve-Path (Join-Path $PSScriptRoot '..')
+  $root = Resolve-Path (Join-Path $PSScriptRoot '../..')
   return $root.Path
 }
 

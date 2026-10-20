@@ -92,24 +92,24 @@ run = "mise dotfiles status"
 
 [tasks.clean]
 description = "Remove symlinks into the repo from $HOME (then: mise dotfiles apply)"
-run = "pwsh -NoProfile -File script/clean-windows.ps1"
+run = "pwsh -NoProfile -File script/win/clean-windows.ps1"
 
 [tasks.install-fonts]
 description = "Download Moralerspace Neon for Windows Terminal (macOS: nix/home-manager/tools/fonts.nix)"
-run = "pwsh -NoProfile -File script/install-fonts-windows.ps1"
+run = "pwsh -NoProfile -File script/win/install-fonts-windows.ps1"
 
 [tasks.install-apps]
 description = "Install apps (winget + Cursor CLI + herdr)"
-run = "pwsh -NoProfile -File script/install-apps-windows.ps1"
+run = "pwsh -NoProfile -File script/win/install-apps-windows.ps1"
 
 [tasks.install-cursor-cli]
 description = "Install Cursor CLI (official installer)"
-run = "pwsh -NoProfile -File script/install-cursor-cli-windows.ps1"
+run = "pwsh -NoProfile -File script/win/install-cursor-cli-windows.ps1"
 
 [tasks.install-herdr]
 description = "Install herdr (official installer)"
-run = "pwsh -NoProfile -File script/install-herdr-windows.ps1"
+run = "pwsh -NoProfile -File script/win/install-herdr-windows.ps1"
 
 [tasks.setup-kanata]
 description = "Create kanata autostart shortcut"
-run = "pwsh -NoProfile -File script/setup-kanata.ps1"
+run = "pwsh -NoProfile -File script/win/setup-kanata.ps1"
