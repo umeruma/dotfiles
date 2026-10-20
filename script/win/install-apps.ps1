@@ -13,12 +13,12 @@ if ($LASTEXITCODE -ne 0) {
   throw "mise bootstrap packages apply failed (exit $LASTEXITCODE)"
 }
 
-& "$PSScriptRoot/install-cursor-cli-windows.ps1"
+& "$PSScriptRoot/install-cursor-cli.ps1"
 if ($LASTEXITCODE -ne 0) {
-  throw "install-cursor-cli-windows.ps1 failed (exit $LASTEXITCODE)"
+  throw "install-cursor-cli.ps1 failed (exit $LASTEXITCODE)"
 }
 
-& "$PSScriptRoot/install-herdr-windows.ps1"
+& "$PSScriptRoot/install-herdr.ps1"
 if ($LASTEXITCODE -ne 0) {
-  throw "install-herdr-windows.ps1 failed (exit $LASTEXITCODE)"
+  throw "install-herdr.ps1 failed (exit $LASTEXITCODE)"
 }

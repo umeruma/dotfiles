@@ -80,7 +80,7 @@ mise run update
 mise dotfiles status
 ```
 
-symlink を削除するには（[`script/win/clean-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/win/clean-windows.ps1) がリポジトリを指すリンク/ジャンクションだけを掃く）。`mise dotfiles apply` は宣言から消したエントリのリンクを残すので、エントリを消したあとはこれを実行してから apply し直す:
+symlink を削除するには（[`script/win/clean.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/win/clean.ps1) がリポジトリを指すリンク/ジャンクションだけを掃く）。`mise dotfiles apply` は宣言から消したエントリのリンクを残すので、エントリを消したあとはこれを実行してから apply し直す:
 
 ```
 mise run clean
@@ -94,7 +94,7 @@ GUI などのアプリは [`mise.windows.toml`](https://github.com/umeruma/dotfi
 mise run install-apps
 ```
 
-これは `mise bootstrap packages apply -y` のあと、[Cursor CLI](https://cursor.com/docs/cli/overview) と [herdr](https://herdr.dev/docs/install/) の公式 Windows インストーラを冪等に実行する（[`script/win/install-apps-windows.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/win/install-apps-windows.ps1)）。macOS の Brewfile と同じく **opt-in**（`mise bootstrap` 本体からは切り離してある）。単体だけ入れる場合:
+これは `mise bootstrap packages apply -y` のあと、[Cursor CLI](https://cursor.com/docs/cli/overview) と [herdr](https://herdr.dev/docs/install/) の公式 Windows インストーラを冪等に実行する（[`script/win/install-apps.ps1`](https://github.com/umeruma/dotfiles/blob/main/script/win/install-apps.ps1)）。macOS の Brewfile と同じく **opt-in**（`mise bootstrap` 本体からは切り離してある）。単体だけ入れる場合:
 
 ```
 mise run install-cursor-cli

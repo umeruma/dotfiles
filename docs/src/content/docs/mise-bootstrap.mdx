@@ -12,7 +12,7 @@ sidebar:
 curl インストーラー（`install`）は、mise が存在する前に必要なステップを担当する:
 
 1. このリポジトリを `~/Codes/dotfiles` に clone（または pull）
-2. macOS では Xcode Command Line Tools をインストール（`script/macos/init-macos.sh`）
+2. macOS では Xcode Command Line Tools をインストール（`script/macos/init.sh`）
 3. Linux では Homebrew をインストール（`script/linux/Brewfile` を使う `install-apps` 用）、macOS では Nix をインストール（`mise run switch` 用。Homebrew は nix-homebrew が入れる）
 4. mise 自体をインストール（`curl https://mise.run | sh`）
 5. `mise trust` + `mise bootstrap --yes --update` を実行

@@ -59,7 +59,7 @@ install() {
 
 	# macOS: Command Line Tools (interactive; not covered by mise bootstrap)
 	if [ "$uname_s" = "Darwin" ]; then
-		bash ./script/macos/init-macos.sh
+		bash ./script/macos/init.sh
 	fi
 
 	# Linux: Homebrew for `mise run install-apps` (script/linux/Brewfile).
