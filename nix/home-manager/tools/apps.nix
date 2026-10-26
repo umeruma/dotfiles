@@ -28,7 +28,6 @@
     "handbrake-app" # nixpkgs handbrake is broken on darwin
     "homebrew-app" # BrewUI
     "kaleidoscope"
-    "kero"
     "local"
     "localsend"
     "loopback" # installs an audio driver
