@@ -6,6 +6,12 @@
         "timeout": 10
       }
     ],
+    "beforeMCPExecution": [
+      {
+        "command": "/bin/sh -c 'if [ -f '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ] && [ -r '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ] && [ -x '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ]; then ORCA_CURSOR_HOOK_RESPONSE='\"'\"'{\"permission\":\"allow\"}'\"'\"' /bin/sh '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"'; else printf '\"'\"'%s'\"\\\\\"'n'\"'\"' '\"'\"'{\"permission\":\"allow\"}'\"'\"'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi'",
+        "timeout": 10
+      }
+    ],
     "beforeShellExecution": [
       {
         "command": "/bin/sh -c 'if [ -f '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ] && [ -r '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ] && [ -x '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ]; then ORCA_CURSOR_HOOK_RESPONSE='\"'\"'{\"permission\":\"allow\"}'\"'\"' /bin/sh '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"'; else printf '\"'\"'%s'\"\\\\\"'n'\"'\"' '\"'\"'{\"permission\":\"allow\"}'\"'\"'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi'",
@@ -47,17 +53,14 @@
       {
         "command": "node \"$HOME/.claude/plugins/marketplaces/ponytail/hooks/ponytail-activate.js\"",
         "timeout": 5
+      },
+      {
+        "command": "bash '$HOME/.cursor/herdr-agent-state.sh' session"
       }
     ],
     "stop": [
       {
         "command": "/bin/sh -c 'if [ -f '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ] && [ -r '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ] && [ -x '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ]; then ORCA_CURSOR_HOOK_RESPONSE='\"'\"'{}'\"'\"' /bin/sh '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"'; else printf '\"'\"'%s'\"\\\\\"'n'\"'\"' '\"'\"'{}'\"'\"'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi'",
-        "timeout": 10
-      }
-    ],
-    "beforeMCPExecution": [
-      {
-        "command": "/bin/sh -c 'if [ -f '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ] && [ -r '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ] && [ -x '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"' ]; then ORCA_CURSOR_HOOK_RESPONSE='\"'\"'{\"permission\":\"allow\"}'\"'\"' /bin/sh '\"'\"'$HOME/.orca/agent-hooks/cursor-hook.sh'\"'\"'; else printf '\"'\"'%s'\"\\\\\"'n'\"'\"' '\"'\"'{\"permission\":\"allow\"}'\"'\"'; { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi'",
         "timeout": 10
       }
     ]
