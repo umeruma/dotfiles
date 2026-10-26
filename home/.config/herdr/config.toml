@@ -10,6 +10,7 @@ onboarding = false
 # a bundled scheme, so herdr matches whatever the terminal is themed with.
 name = "terminal"
 
+auto_switch = false
 [experimental]
 # Prefix mode expects ASCII keys. Switch the macOS input source while it is
 # active so ctrl+b chords still register with a Japanese IME turned on.
@@ -23,3 +24,4 @@ cjk_ime_agents = ["claude", "codex"]
 
 [ui]
 agent_panel_sort = "spaces"
+status_indicators = "dots"
