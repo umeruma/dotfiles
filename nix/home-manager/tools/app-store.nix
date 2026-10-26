@@ -21,8 +21,6 @@
     "OpenIn" = 1643649331;
     "Pages" = 409201541;
     "pdmanager" = 6751735648;
-    # nixpkgs tailscale is the CLI daemon; this is the network extension app
-    "Tailscale" = 1475387142;
     "WorldWideWeb" = 1621370168;
     "Zavala" = 1546457750;
   };
