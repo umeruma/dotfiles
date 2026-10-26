@@ -25,5 +25,7 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   opts = {
     default_component_configs = component_configs,
+    -- show hidden (dotfiles / gitignored) by default; `H` still toggles
+    filesystem = { filtered_items = { visible = true } },
   },
 }
