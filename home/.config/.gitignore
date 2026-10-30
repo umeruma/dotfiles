@@ -41,6 +41,8 @@ tool_state
 # Runtime state beside tracked files
 herdr/*
 !herdr/config.toml
+herdr-app/*
+!herdr-app/settings.json
 karabiner/automatic_backups
 micro/backups
 micro/buffers
