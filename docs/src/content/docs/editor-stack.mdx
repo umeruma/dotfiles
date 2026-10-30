@@ -20,6 +20,7 @@ macOS は `mise run switch`（`nix/home-manager/tools/`）、Windows は `mise r
 
 - `neovim`
 - `herdr`（macOS: Nix。Windows: 公式 `install.ps1`、`mise run install-herdr` / `install-apps`）
+- `herdr-core`（`hc`。デスクトップアプリ Herdr の実行基盤。macOS のみ Nix。nixpkgs にないので、[latest.json](https://releases.herdr.dev/core/latest.json) の version と sha256 を `herdr.nix` に書いて上げる。`hc update` はストアに書けない）
 - `lazygit`
 - `git-delta`（lazygit の syntax-highlighted diff。macOS: Nix / Windows: `winget:dandavison.delta`。テーマは [cendre](https://cendretheme.com/) hard — `~/.config/delta/cendre.gitconfig` + bat `cendre` theme）
 - `bat`（delta の `syntax-theme = cendre` 用。`mise run theme` で `bat cache --build`）
