@@ -16,6 +16,7 @@ let
     "natural-japanese"
     "orca-cli"
     "orchestration"
+    "rex"
     "wt-slots"
   ];
 in
