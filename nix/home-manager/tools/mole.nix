@@ -5,4 +5,6 @@
 {
   my.casks = [ "mole-app" ];
   home.packages = [ pkgs.mole-cleaner ];
+
+  my.configIgnore = [ "mole" ];
 }

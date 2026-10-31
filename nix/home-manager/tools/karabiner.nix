@@ -3,4 +3,6 @@
 { ... }:
 {
   my.casks = [ "karabiner-elements" ];
+
+  my.configIgnore = [ "karabiner/automatic_backups" ];
 }

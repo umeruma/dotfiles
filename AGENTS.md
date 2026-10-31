@@ -30,7 +30,7 @@ This document is a guide for safe and productive collaboration between AI agents
 ## Coding and Structure Guidelines
 - macOS links dotfiles with home-manager (`nix/home-manager/dotfiles.nix`, or a tool's own `tools/<tool>.nix`) and `mise run switch`; it reads no `[dotfiles]`. Linux / Windows use `[dotfiles]` in `mise.linux.toml` / `mise.windows.toml` with `mise dotfiles apply`. A file shared by every OS is listed in all three places
 - macOS packages, apps, zsh settings and links are declared in Nix, one file per tool in `nix/home-manager/tools/` (package, cask / App Store app, aliases and config together). `git add` a new file before `mise run switch`; see `docs/src/content/docs/nix.mdx`
-- On macOS `~/.config` links whole to `home/.config`; ignore tool state and credentials in `home/.config/.gitignore`. On Linux / Windows, dirs that receive runtime writes get per-file entries — never whole-dir symlinks
+- On macOS `~/.config` links whole to `home/.config`; ignore tool state and credentials with `my.configIgnore` in the tool's file (generates `home/.config/.gitignore`; do not edit it). On Linux / Windows, dirs that receive runtime writes get per-file entries — never whole-dir symlinks
 - Fresh Unix setup converges via `mise bootstrap` (see `docs/src/content/docs/mise-bootstrap.mdx`)
 - Use `README.md` as an entry point; put detailed steps/background in `docs/`
 - Follow existing style (frontmatter, naming, hierarchy) when creating files

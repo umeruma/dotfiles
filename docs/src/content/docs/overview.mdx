@@ -68,7 +68,7 @@ macOS は home-manager、Linux と Windows は mise の `[dotfiles]` でリン�
 
 `~/.agents` や `~/.claude/*` など全 OS で同じファイルは、3か所に1回ずつ書いています。Mac は `[dotfiles]` を1件も読みません。読むと `mise bootstrap` が Nix と同じ場所にリンクを張り、home-manager とぶつかるためです。
 
-macOS では `~/.config` をまるごと `home/.config` にリンクしています（[babarot/dotfiles](https://github.com/babarot/dotfiles) と同じ方式）。ツールが書き込む状態ファイルや認証情報は [`home/.config/.gitignore`](https://github.com/umeruma/dotfiles/blob/main/home/.config/.gitignore) で除外します。新しいツールのファイルは untracked として出てくるので、そのつど追跡するか除外するかを決めます。
+macOS では `~/.config` をまるごと `home/.config` にリンクしています（[babarot/dotfiles](https://github.com/babarot/dotfiles) と同じ方式）。ツールが書き込む状態ファイルや認証情報は [`home/.config/.gitignore`](https://github.com/umeruma/dotfiles/blob/main/home/.config/.gitignore) で除外します。このファイルは各ツールの `my.configIgnore` から生成します（[Config ignore](/nix#config-ignore)）。新しいツールのファイルは untracked として出てくるので、そのつど追跡するか除外するかを決めます。
 
 Linux（Omarchy）は `~/.config` を Omarchy が管理しているので、まるごとリンクはしません。実行時に書き込みのあるディレクトリ（例: `~/.config/lazygit`）は**ファイル単位**でリンクします。
 

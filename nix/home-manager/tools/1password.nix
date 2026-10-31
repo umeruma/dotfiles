@@ -6,4 +6,7 @@
     "1password"
     "1password-cli"
   ];
+
+  # credentials
+  my.configIgnore = [ "1Password" "op" ];
 }

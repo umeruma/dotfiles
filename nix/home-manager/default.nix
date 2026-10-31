@@ -28,6 +28,11 @@
       type = lib.types.attrsOf lib.types.ints.positive;
       default = { };
     };
+    # Lines of home/.config/.gitignore (paths under ~/.config); written by dotfiles.nix
+    configIgnore = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+    };
   };
 
   config.home.stateVersion = "26.05";

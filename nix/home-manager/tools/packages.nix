@@ -15,4 +15,7 @@
     shellcheck
     websocat
   ];
+
+  # rclone: credentials; micro: runtime state beside its tracked config
+  my.configIgnore = [ "lftp" "rclone" "micro/backups" "micro/buffers" ];
 }

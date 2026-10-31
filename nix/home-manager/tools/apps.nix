@@ -46,4 +46,6 @@
     "xcodes-app" # nixpkgs has only the xcodes CLI
     "yaak"
   ];
+
+  my.configIgnore = [ "raycast" "zed" ];
 }

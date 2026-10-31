@@ -19,7 +19,7 @@
         return 1
       fi
       if [[ "$1" == .config/* ]]; then
-        echo "~/.config already links to home/.config: drop it from home/.config/.gitignore and git add it"
+        echo "~/.config already links to home/.config: drop it from my.configIgnore, switch and git add it"
         return 0
       fi
       mkdir -p "$DOTFILES_HOME/''${1:h}"
@@ -27,4 +27,7 @@
       echo "✓ Moved to home/$1. Link it from nix/home-manager/tools/<tool>.nix (or dotfiles.nix), git add, then: mise run switch"
     }
   '';
+
+  # credentials
+  my.configIgnore = [ "mise/age.txt" ];
 }

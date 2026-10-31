@@ -16,4 +16,6 @@ in
     alias cursor='cursor --classic'
     cua() { cursor-agent "$@"; }
   '';
+
+  my.configIgnore = [ "cursor" ];
 }
