@@ -57,9 +57,30 @@ zsh の alias や関数は、同じファイルに書きます。
 
 新しいファイルは、switch の前に `git add` します。flake は git が追跡していないファイルを読みません。
 
+### Disable a tool
+
+一時的に外すときは、拡張子を `.nix` 以外に変えて switch します。`default.nix` は `tools/` のうち `.nix` で終わるファイルしか読みません。ファイル名の頭に何か付けても外れません。
+
+```
+git mv nix/home-manager/tools/foo.nix nix/home-manager/tools/foo.nix.off
+dot switch
+```
+
+戻すときは名前を戻して switch します。外している間も、Homebrew で入れたものは残ります（次の節）。
+
 ### Remove a tool
 
-ファイル（または行）を消して switch します。ただし Homebrew で入れたもの（cask、formula、App Store）は、switch では消えません。dotfiles に入れずに手で入れるアプリもあるので、`nix/homebrew.nix` を `cleanup = "none"` にしているためです。`brew uninstall --cask <name>` などで消します。
+ファイル（または行）を消して switch します。パッケージ、zsh の設定、`home.file` のリンクはこれで消えます。ツールの設定ファイルのリンクも、`dotfiles.nix` ではなくそのツールのファイルに書きます。
+
+次のものは switch では消えないので、手で片付けます。
+
+| 残るもの | 理由 | 片付け方 |
+| --- | --- | --- |
+| Homebrew の cask・formula・App Store アプリ | 手で入れたアプリまで消さないよう、`cleanup = "none"` にしている | `brew uninstall --cask <name>` など |
+| `flake.nix` の `inputs`（crit、k） | inputs は flake にしか書けない | 該当の input を消して `nix flake lock` |
+| `home/.config/<tool>/` | `~/.config` をまるごとリンクしているので、ツールのファイルとは別に repo にある | ディレクトリを消す |
+| `home/.config/.gitignore` の行 | ツールごとに生成する案は見送り（[decisions](/decisions/)） | 該当の行を消す |
+| `home/.agents/skills/<skill>` と `claude.nix` の `skills` | スキルは Cursor や Copilot と共有している | 使わなくなったら両方から消す |
 
 ## Update
 

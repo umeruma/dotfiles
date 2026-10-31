@@ -7,7 +7,7 @@
     export MISE_STATUS_MESSAGE_SHOW_ENV=true
     export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
 
-    # dottrack <path>: move ~/<path> into home/, to be linked by dotfiles.nix
+    # dottrack <path>: move ~/<path> into home/, to be linked by its tool's file
     dottrack() {
       if [[ -z "$1" ]]; then
         echo "Usage: dottrack <file_or_directory>"
@@ -24,7 +24,7 @@
       fi
       mkdir -p "$DOTFILES_HOME/''${1:h}"
       mv "$target" "$DOTFILES_HOME/$1"
-      echo "✓ Moved to home/$1. Add it to nix/home-manager/dotfiles.nix, git add, then: mise run switch"
+      echo "✓ Moved to home/$1. Link it from nix/home-manager/tools/<tool>.nix (or dotfiles.nix), git add, then: mise run switch"
     }
   '';
 }
