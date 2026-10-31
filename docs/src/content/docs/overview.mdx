@@ -70,7 +70,7 @@ macOS は home-manager、Linux と Windows は mise の `[dotfiles]` でリン�
 
 macOS では `~/.config` をまるごと `home/.config` にリンクしています（[babarot/dotfiles](https://github.com/babarot/dotfiles) と同じ方式）。ツールが書き込む状態ファイルや認証情報は [`home/.config/.gitignore`](https://github.com/umeruma/dotfiles/blob/main/home/.config/.gitignore) で除外します。新しいツールのファイルは untracked として出てくるので、そのつど追跡するか除外するかを決めます。
 
-Linux（Omarchy）は `~/.config` を Omarchy が管理しているので、まるごとリンクはしません。実行時に書き込みのあるディレクトリ（例: `~/.config/lazygit`、`~/.config/herdr`）は**ファイル単位**でリンクします。
+Linux（Omarchy）は `~/.config` を Omarchy が管理しているので、まるごとリンクはしません。実行時に書き込みのあるディレクトリ（例: `~/.config/lazygit`）は**ファイル単位**でリンクします。
 
 `mise dotfiles apply` は、宣言から消したエントリのリンクを残します。Linux と Windows でエントリを消したら、`mise run clean` でリポジトリへのリンクを全部外してから、`mise dotfiles apply -y` で張り直します。macOS では switch が古いリンクを自動で消します。
 

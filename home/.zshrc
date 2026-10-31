@@ -157,11 +157,6 @@ alias cursor='cursor --classic'
 # Cursor CLI agent (brew cask cursor-cli)
 cua() { cursor-agent "$@"; }
 
-# --- herdr --------------------------------
-hr() { herdr "$@"; }
-# hdl / hdlm / hsl: dev layouts (editor + agent + terminal), ported from omarchy
-[[ -r "$HOME/.config/zsh/herdr.zsh" ]] && source "$HOME/.config/zsh/herdr.zsh"
-
 # --- Neovim -------------------------------
 # args pass through; n defaults to . (omarchy alias)
 n() { nvim "${@:-.}"; }

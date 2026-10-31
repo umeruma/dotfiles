@@ -15,7 +15,7 @@
   programs.zsh.promptInit = "";
 
   # Touch ID for sudo (darwin-rebuild switch runs as root);
-  # reattach makes it work inside tmux / herdr
+  # reattach makes it work inside tmux
   security.pam.services.sudo_local = {
     touchIdAuth = true;
     reattach = true;

@@ -21,7 +21,6 @@ emacs
 flashspace
 flutter
 goose
-herdr-web-ui
 homebrew
 istherenet
 KiwiDesk
@@ -39,13 +38,6 @@ zi
 tool_state
 
 # Runtime state beside tracked files
-herdr/*
-!herdr/config.toml
-herdr-app/*
-!herdr-app/settings.json
-!herdr-app/layouts/
-herdr-app/layouts/*
-!herdr-app/layouts/my-layout.json
 karabiner/automatic_backups
 micro/backups
 micro/buffers

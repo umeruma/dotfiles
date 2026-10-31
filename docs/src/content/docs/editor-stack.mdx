@@ -11,7 +11,7 @@ sidebar:
 | --- | --- | --- |
 | [LazyVim](https://www.lazyvim.org/) | Neovim ディストリビューション（エディタ） | `home/.config/nvim`（macOS → `~/.config/nvim` / Windows → `%LOCALAPPDATA%\nvim`） |
 | [lazygit](https://github.com/jesseduffield/lazygit) | Git の TUI | `home/.config/lazygit`（Unix）/ `home-win/.config/lazygit`（Windows → `%LOCALAPPDATA%\lazygit`） |
-| [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ | `home/.config/herdr`（Unix）/ `home-win/.config/herdr`（Windows → `%APPDATA%\herdr`） |
+| [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ（Windows のみ。macOS は Rex） | `home-win/.config/herdr`（→ `%APPDATA%\herdr`） |
 | [Crit](https://crit.md/) | AI エージェント向けのローカルレビューツール | なし（単一バイナリ） |
 
 ## Prerequisites
@@ -19,8 +19,7 @@ sidebar:
 macOS は `mise run switch`（`nix/home-manager/tools/`）、Windows は `mise run install-apps`（winget）でインストールされる:
 
 - `neovim`
-- `herdr`（macOS: Nix。Windows: 公式 `install.ps1`、`mise run install-herdr` / `install-apps`）
-- `herdr-core`（`hc`。デスクトップアプリ Herdr の実行基盤。macOS のみ Nix。nixpkgs にないので、[latest.json](https://releases.herdr.dev/core/latest.json) の version と sha256 を `herdr.nix` に書いて上げる。`hc update` はストアに書けない）
+- `herdr`（Windows のみ。公式 `install.ps1`、`mise run install-herdr` / `install-apps`）
 - `lazygit`
 - `git-delta`（lazygit の syntax-highlighted diff。macOS: Nix / Windows: `winget:dandavison.delta`。テーマは [cendre](https://cendretheme.com/) hard — `~/.config/delta/cendre.gitconfig` + bat `cendre` theme）
 - `bat`（delta の `syntax-theme = cendre` 用。`mise run theme` で `bat cache --build`）
@@ -49,29 +48,29 @@ nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
 
 `~/.config/nvim`（Windows では `%LOCALAPPDATA%\nvim`）は**ディレクトリごと**リンクしている。LazyVim が `lazy-lock.json` をリンク越しにリポジトリへ書き戻すため、プラグインのバージョンが git で追跡される。プラグイン本体は Unix では `~/.local/share/nvim`、Windows では `%LOCALAPPDATA%\nvim-data`、セッション状態はそれぞれ `~/.local/state/nvim` / nvim-data 配下に入るのでリポジトリは汚れない。
 
-`~/.config/herdr`（Windows では `%APPDATA%\herdr`）はログ・ソケット・`session.json` が同じディレクトリに書かれるので、`config.toml` だけを**ファイル単位**でリンクしている（`~/.config/lazygit` と同じ扱い）。Windows 用設定は CJK IME 向けに `host_cursor = "native"`（[Windows support](https://herdr.dev/docs/windows-beta/)）。
+`%APPDATA%\herdr` はログ・ソケット・`session.json` が同じディレクトリに書かれるので、`config.toml` だけを**ファイル単位**でリンクしている（`~/.config/lazygit` と同じ扱い）。
 
 ## herdr config
 
-設定なしでも動く。このリポジトリでは 3 点だけ変えている:
+設定なしでも動く。このリポジトリ（Windows）では次の点だけ変えている:
 
-- `theme.name = "terminal"` — Ghostty のテーマ（cendre）にそのまま追従させる
-- `experimental.switch_ascii_input_source_in_prefix` — prefix（`ctrl+b`）を押している間だけ macOS の入力ソースを ASCII に切り替える。日本語入力中でも prefix コマンドが通る
+- `theme.name = "terminal"` — Windows Terminal のテーマ（cendre）にそのまま追従させる
 - `experimental.reveal_hidden_cursor_for_cjk_ime` — Claude Code / Codex のように自前でカーソルを描く TUI で、IME の候補ウィンドウがカーソルを追従するようにする。`cjk_ime_agents` で対象を絞っているのは、全面適用すると Neovim のノーマルモードでカーソルが二重に見えるため
+- `ui.host_cursor = "native"` — IME の候補ウィンドウの位置を正しくする。出力が多いとちらつくことがある（[Windows support](https://herdr.dev/docs/windows-beta/)）
 
 コメント付きのデフォルト全文は `herdr --default-config`、設定の検証は `herdr config check`、起動中のサーバーへの反映は `herdr server reload-config`。
 
 ## Daily use
 
 ```bash
-herdr / hr   # セッションを起動 / attach（prefix は ctrl+b、ヘルプは prefix+?）
+herdr / hr   # Windows のみ。セッションを起動 / attach（prefix は ctrl+b、ヘルプは prefix+?）
 nvim / nv    # LazyVim（リーダーキーは space）。`nv +100 file.rs` もそのまま通る
 lazygit / lg # Git TUI（Files で A = Cursor AI コミットメッセージ）
 ```
 
 diff は [delta](https://github.com/dandavison/delta)（`git.diffRenderers`）+[cendre](https://cendretheme.com/) hard（`.gitconfig` が `~/.config/delta/cendre.gitconfig` を include。syntax は bat の `cendre` theme）。行番号クリックでエディタへジャンプ（hyperlinks）。`|` で renderer 切替。
 
-`hr` / `nv` / `lg` は `~/.zshrc` の薄いシェル関数（`hr nv` の組み合わせも可）。
+`nv` / `lg` は `~/.zshrc`（Windows は PowerShell プロファイル）の薄いシェル関数。`hr` は PowerShell プロファイルだけにある。
 
 lazygit の `A` は **staged の diff だけ** を `cursor-agent`（`composer-2.5-fast`）に渡す。生成中は下ステータスの `loadingText`（中央オーバーレイは非対応）。完了後は lazygit の保存メッセージ（`.git/LAZYGIT_PENDING_COMMIT`、Esc で閉じたときに復元されるもの）に書き込み、nvim 内（LazyVim の lazygit 統合）なら `$NVIM` の RPC ソケット経由で `c` を注入してプリフィル済みの commit パネルを開く。Enter は自分で押す。nvim 外ではポップアップで「c を押せ」と案内する。要: `cursor-agent login`（または `CURSOR_API_KEY`）と stage 済み。ヘルパー本体は macOS が `generate-commit-msg.sh`、Windows が `generate-commit-msg.ps1`（`mise.windows.toml` が `%LOCALAPPDATA%\lazygit` にリンク）。
 

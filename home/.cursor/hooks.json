@@ -48,14 +48,8 @@
     ],
     "sessionStart": [
       {
-        "command": "bash \"$HOME/.cursor/herdr-agent-state.sh\" session"
-      },
-      {
         "command": "node \"$HOME/.claude/plugins/marketplaces/ponytail/hooks/ponytail-activate.js\"",
         "timeout": 5
-      },
-      {
-        "command": "bash '$HOME/.cursor/herdr-agent-state.sh' session"
       }
     ],
     "stop": [

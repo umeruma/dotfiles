@@ -54,7 +54,6 @@
 # static config dirs (whole-dir links; new repo files show up automatically)
 # nvim / ghostty are not linked: Omarchy ships its own theme-synced configs.
 # runtime-write dirs: per-file links only
-"~/.config/herdr/config.toml" = { source = "home/.config/herdr/config.toml", mode = "symlink" }
 "~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
 # bat themes dir: only this file; cache lives beside it.
 "~/.config/bat/themes/cendre.tmTheme" = { source = "extras/bat/cendre.tmTheme", mode = "symlink" }
