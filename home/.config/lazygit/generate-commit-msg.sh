@@ -5,7 +5,8 @@
 # (.git/LAZYGIT_PENDING_COMMIT, the one it restores after Esc), so `c` opens
 # the commit panel already filled in. When lazygit runs inside a Neovim
 # terminal (LazyVim integration), `c` is injected through nvim's RPC socket
-# ($NVIM) — no macOS permissions needed. Otherwise we exit 1 with a hint so
+# ($NVIM) — no macOS permissions needed. In a Rex pane it goes through
+# `rex send` ($REX_BLOCK) instead. Otherwise we exit 1 with a hint so
 # lazygit shows it as a popup and you press `c` yourself.
 set -euo pipefail
 
@@ -115,6 +116,17 @@ if [ -n "${NVIM:-}" ]; then
   (
     sleep 0.3
     nvim --server "$NVIM" --remote-send 'c'
+  ) >/dev/null 2>&1 &
+  disown 2>/dev/null || true
+  exit 0
+fi
+
+# Rex terminal (https://www.superlogical.com/rex): type `c` into this pane.
+rex=$(command -v rex || echo "${REX_BIN_DIR:-}/rex")
+if [ -n "${REX_BLOCK:-}" ] && [ -x "$rex" ]; then
+  (
+    sleep 0.3
+    "$rex" send -b "$REX_BLOCK" c
   ) >/dev/null 2>&1 &
   disown 2>/dev/null || true
   exit 0
