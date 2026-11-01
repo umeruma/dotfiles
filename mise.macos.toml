@@ -42,6 +42,8 @@ AppleICUForce24HourTime = true
 AppleShowAllExtensions = true
 NSNavPanelExpandedStateForSaveMode = true
 PMPrintingExpandedStateForPrint = true
+# Ctrl+Cmd + drag anywhere in a window to move it
+NSWindowShouldDragOnGesture = true
 "com.apple.trackpad.forceClick" = false
 "com.apple.trackpad.scaling" = 2.0
 "com.apple.mouse.doubleClickThreshold" = 0.5
