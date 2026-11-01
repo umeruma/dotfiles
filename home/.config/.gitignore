@@ -10,6 +10,7 @@ lftp
 rclone
 micro/backups
 micro/buffers
+opencode
 mole
 mise/age.txt
 karabiner/automatic_backups
@@ -31,7 +32,6 @@ goose
 homebrew
 istherenet
 KiwiDesk
-opencode
 ovis
 snapzy
 swiftpm
