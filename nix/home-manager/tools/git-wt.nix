@@ -28,6 +28,8 @@ in
 
     # ga <branch>: add a worktree and switch to it. gd [branch]: delete it from the main worktree.
     ga() { git wt "$@"; }
+    # wtt <branch>: add a worktree and open it in a new Rex tab
+    wtt() { local p; p="$(git wt --nocd "$1")" && rex window new "$1" -c "$p"; }
     gd() {
       local target="''${1:-$(git branch --show-current)}"
       cd "$(git rev-parse --path-format=absolute --git-common-dir)/.." && git wt -d "$target"
