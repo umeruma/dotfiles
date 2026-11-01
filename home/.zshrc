@@ -149,13 +149,21 @@ export FZF_DEFAULT_OPTS="--color=16 --layout=reverse --border --height=80%"
 ff() { fzf --preview 'bat --style=numbers --color=always {}' "$@"; }
 eff() { local f; f="$(ff)" && [[ -n "$f" ]] && "$EDITOR" "$f"; }
 
+# --- Claude Code --------------------------
+alias c=claude
+
 # --- Cursor -------------------------------
 # Cursor IDE (Editor Window; skip Agents/Glass on launch)
 # Note: `cu` is taken by /usr/bin/cu (serial dial-up), so use `cur` instead.
 alias cursor='cursor --classic'
 
 # Cursor CLI agent (brew cask cursor-cli)
-cua() { cursor-agent "$@"; }
+ca() { cursor-agent "$@"; }
+
+# a: pick an installed coding agent with fzy and launch it with the given args
+a() {
+  local x; x="$(for x in claude cursor-agent opencode fm; do (( $+commands[$x] )) && print $x; done | fzy)" && "$x" "$@"
+}
 
 # --- Neovim -------------------------------
 # args pass through; n defaults to . (omarchy alias)

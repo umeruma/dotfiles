@@ -14,7 +14,7 @@ in
   programs.zsh.initContent = ''
     # Editor Window; skip Agents/Glass on launch
     alias cursor='cursor --classic'
-    cua() { cursor-agent "$@"; }
+    ca() { cursor-agent "$@"; }
   '';
 
   my.configIgnore = [ "cursor" ];

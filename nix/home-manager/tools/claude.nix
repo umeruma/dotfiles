@@ -20,6 +20,7 @@ in
 {
   my.casks = [ "claude" ];
   home.packages = [ pkgs.claude-code ];
+  programs.zsh.shellAliases.c = "claude";
 
   home.file = {
     ".claude/CLAUDE.md" = link "home/.claude/CLAUDE.md";

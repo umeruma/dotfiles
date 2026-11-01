@@ -47,7 +47,7 @@
         /opt/homebrew/bin(N-/) /opt/homebrew/sbin(N-/)
       )
 
-      export HOMEBREW_FORBIDDEN_FORMULAE="python python3 pip npm pnpm yarn claude"
+      export HOMEBREW_FORBIDDEN_FORMULAE="python python3 pip npm pnpm yarn claude opencode"
 
       # AI agent subprocesses (Cursor, Claude Code, Codex, opencode, Gemini, …).
       # Export AI_AGENT=1 to force the agent side.
@@ -67,6 +67,11 @@
     '';
 
     initContent = ''
+      # a: pick an installed coding agent with fzy and launch it with the given args
+      a() {
+        local x; x="$(for x in claude cursor-agent opencode fm; do (( $+commands[$x] )) && print $x; done | fzy)" && "$x" "$@"
+      }
+
       # Arrow keys: walk history filtered by what is already typed (omarchy inputrc)
       bindkey '^[[A' history-beginning-search-backward
       bindkey '^[[B' history-beginning-search-forward

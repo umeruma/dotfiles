@@ -54,6 +54,7 @@ if (Get-Command git-wt -ErrorAction SilentlyContinue) {
     git wt -d $target
   }
 }
+function c { claude @args }
 function lg { lazygit @args }
 function hr { if ($args.Count) { herdr @args } else { herdr } }
 

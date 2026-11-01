@@ -33,7 +33,6 @@ in
     "homebrew"
     "istherenet"
     "KiwiDesk"
-    "opencode"
     "ovis"
     "snapzy"
     "swiftpm"
