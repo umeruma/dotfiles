@@ -13,6 +13,7 @@ let
     "orca-cli"
     "orchestration"
     "rex"
+    "wt-close"
     "wt-slots"
   ];
 in
