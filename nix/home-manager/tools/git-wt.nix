@@ -29,6 +29,7 @@ in
 
     # ga <branch>: add a worktree and switch to it. gd [branch]: delete it from the main worktree.
     ga() { git wt "$@"; }
+    # wtt = "worktree tab": the Rex-dependent counterpart of the plain git-wt helpers above
     # wtt <branch>: add a worktree and open it in a new Rex tab
     # wtt close: confirm [Y/n], delete the current worktree (safe -d), then close this Rex tab
     wtt() {

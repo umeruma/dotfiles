@@ -1,6 +1,6 @@
 ---
-name: wt-close
-description: "Use when finishing work in a git-wt worktree: stop the servers, daemons and background tasks running from it, check it is safe to delete, then delete the worktree and close its Rex tab via `wtt close` with a [Y/n] prompt. Use for: wt閉じる, worktree片付け, 作業終わったのでworktree削除, タブ閉じて, wtt close, wt-close."
+name: wtt-close
+description: "Use when finishing work in a git-wt worktree: stop the servers, daemons and background tasks running from it, check it is safe to delete, then delete the worktree and close its Rex tab via `wtt close` with a [Y/n] prompt. Use for: wt閉じる, worktree片付け, 作業終わったのでworktree削除, タブ閉じて, wtt close, wtt-close."
 argument-hint: "[optional: worktree path or branch; defaults to the session's worktree]"
 ---
 
