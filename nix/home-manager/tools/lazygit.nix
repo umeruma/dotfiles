@@ -7,7 +7,5 @@
     delta
   ];
 
-  programs.zsh.initContent = ''
-    lg() { lazygit "''${@:-.}"; }
-  '';
+  programs.zsh.shellAliases.lg = "lazygit";
 }

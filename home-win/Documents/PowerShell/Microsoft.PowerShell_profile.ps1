@@ -54,7 +54,7 @@ if (Get-Command git-wt -ErrorAction SilentlyContinue) {
     git wt -d $target
   }
 }
-function lg { if ($args.Count) { lazygit @args } else { lazygit . } }
+function lg { lazygit @args }
 function hr { if ($args.Count) { herdr @args } else { herdr } }
 
 # starship prompt (shared config: ~/.config/starship.toml)

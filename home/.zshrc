@@ -162,7 +162,7 @@ cua() { cursor-agent "$@"; }
 n() { nvim "${@:-.}"; }
 
 # --- lazygit (git UI) ---------------------
-lg() { lazygit "${@:-.}"; }
+alias lg=lazygit
 
 # --- gh (GitHub CLI) ----------------------
 # https://cli.github.com/manual/gh_repo_gitignore_view
