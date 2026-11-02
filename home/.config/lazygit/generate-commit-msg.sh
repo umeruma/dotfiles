@@ -21,10 +21,11 @@ fail() {
 if [ -n "${LAZYGIT_AI_CMD:-}" ]; then
   read -r -a AGENT <<<"$LAZYGIT_AI_CMD"
 else
-  SYSTEM='You write git commit messages in Conventional Commits format and output nothing else.
-The first line MUST start with a lowercase type from: feat, fix, docs, style, refactor, perf, test, chore, ci;
-then an optional (scope), a colon and a space, then a lowercase imperative description.
-Never start with a capitalized verb such as "Update" or "Add".'
+  # Rules come from the commit template (~/.gitmessage), with its "# " stripped.
+  template=$(git config --path commit.template 2>/dev/null || true)
+  [ -r "$template" ] || fail "commit.template not readable (link home/.gitmessage)"
+  SYSTEM="You write git commit messages and output nothing else. Follow these rules exactly:
+$(sed -e 's/^# \{0,1\}//' "$template")"
   AGENT=(claude -p --model haiku --tools "" --strict-mcp-config --setting-sources "" --no-session-persistence
     --system-prompt "$SYSTEM")
 fi

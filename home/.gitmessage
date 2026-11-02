@@ -1,0 +1,19 @@
+# <type>(<scope>): <description>
+#
+# Conventional Commits (https://www.conventionalcommits.org).
+# type: lowercase, one of
+#   feat     new behavior
+#   fix      broken behavior made right
+#   docs     documentation only
+#   style    formatting only, no logic change
+#   refactor same behavior, different code
+#   perf     faster or lighter
+#   test     tests only
+#   chore    tooling, config, dependencies
+#   ci       CI/CD only
+# scope: optional, the area touched (e.g. zsh, git-wt, lazygit)
+# description: English, lowercase imperative ("add", not "Add" / "added"),
+#   72 characters max, no trailing period
+#
+# Body (optional, after a blank line): 1-3 sentences on what changed and why.
+# Footer: "Fixes #123" when an issue applies.

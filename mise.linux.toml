@@ -60,6 +60,7 @@
 "~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
 "~/.config/micro/plug/editorconfig" = { source = "home/.config/micro/plug/editorconfig", mode = "symlink" }
 "~/.gitconfig" = { source = "home/.gitconfig", mode = "symlink" }
+"~/.gitmessage" = { source = "home/.gitmessage", mode = "symlink" }
 # Claude Code plugins are declared, not vendored: ~/.claude/plugins holds git
 # clones and version-stamped caches, so only the declaration is tracked here.
 # Claude Code writes back through this link, so settings it manages itself

@@ -1,6 +1,8 @@
 [core]
   excludesfile = ~/.gitignore
   symlinks = true
+[commit]
+  template = ~/.gitmessage # Conventional Commits rules; also read by lazygit's AI commit
 [init]
   defaultBranch = main
 [user]

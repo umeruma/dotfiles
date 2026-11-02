@@ -12,4 +12,5 @@ in
 
   home.file.".gitconfig" = link ".gitconfig";
   home.file.".gitignore" = link ".gitignore"; # core.excludesfile
+  home.file.".gitmessage" = link ".gitmessage"; # commit.template
 }

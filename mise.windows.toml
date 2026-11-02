@@ -43,6 +43,7 @@
 
 [dotfiles]
 "~/.gitconfig" = { source = "home-win/.gitconfig", mode = "symlink" }
+"~/.gitmessage" = { source = "home/.gitmessage", mode = "symlink" }
 "~/.config/mise/config.toml" = { source = "home-win/.config/mise/config.toml", mode = "symlink" }
 "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1" = { source = "home-win/Documents/PowerShell/Microsoft.PowerShell_profile.ps1", mode = "symlink" }
 "~/Documents/kanata/kanata.kbd" = { source = "home-win/Documents/kanata/kanata.kbd", mode = "symlink" }
