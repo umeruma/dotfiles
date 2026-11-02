@@ -25,6 +25,6 @@ customCommands:
   - key: 'A'
     context: 'files'
     description: 'AI commit message → open prefilled commit panel'
-    loadingText: 'Generating commit message with Cursor…'
+    loadingText: 'Generating commit message…'
     command: '$HOME/.config/lazygit/generate-commit-msg.sh'
     output: none

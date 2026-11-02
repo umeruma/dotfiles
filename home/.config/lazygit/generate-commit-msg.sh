@@ -15,13 +15,20 @@ fail() {
   exit 1
 }
 
-if ! command -v cursor-agent >/dev/null 2>&1 && ! command -v agent >/dev/null 2>&1; then
-  fail "cursor-agent not found (nix/home-manager/tools/cursor.nix)"
+# Generator: the prompt is appended as `-- "$PROMPT"`. Override with LAZYGIT_AI_CMD, e.g.
+#   LAZYGIT_AI_CMD='cursor-agent -p --mode ask --output-format text --trust --model composer-2.5-fast'
+# The default skips settings, MCP and session files: ~3s instead of cursor-agent's ~10s.
+if [ -n "${LAZYGIT_AI_CMD:-}" ]; then
+  read -r -a AGENT <<<"$LAZYGIT_AI_CMD"
+else
+  SYSTEM='You write git commit messages in Conventional Commits format and output nothing else.
+The first line MUST start with a lowercase type from: feat, fix, docs, style, refactor, perf, test, chore, ci;
+then an optional (scope), a colon and a space, then a lowercase imperative description.
+Never start with a capitalized verb such as "Update" or "Add".'
+  AGENT=(claude -p --model haiku --tools "" --strict-mcp-config --setting-sources "" --no-session-persistence
+    --system-prompt "$SYSTEM")
 fi
-
-# TODO: make the generator swappable via an env var (e.g. LAZYGIT_AI_CMD="claude -p") instead of hardcoding cursor-agent.
-AGENT=(cursor-agent)
-command -v cursor-agent >/dev/null 2>&1 || AGENT=(agent)
+command -v "${AGENT[0]}" >/dev/null 2>&1 || fail "${AGENT[0]} not found (set LAZYGIT_AI_CMD to another generator)"
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   fail "not a git repository"
@@ -64,14 +71,13 @@ errfile=$(mktemp)
 trap 'rm -f "$errfile"' EXIT
 
 set +e
-RAW=$("${AGENT[@]}" -p --mode ask --output-format text --trust \
-  --model composer-2.5-fast -- "$PROMPT" 2>"$errfile")
+RAW=$("${AGENT[@]}" -- "$PROMPT" 2>"$errfile")
 agent_status=$?
 set -e
 
 if [ "$agent_status" -ne 0 ]; then
   err=$(cat "$errfile" 2>/dev/null || true)
-  fail "cursor-agent failed (try: cursor-agent login, or export CURSOR_API_KEY)${err:+: $err}"
+  fail "${AGENT[0]} failed${err:+: $err}"
 fi
 
 # Drop code fences, blank lines, and surrounding whitespace / quotes per line.
@@ -86,16 +92,18 @@ done < <(
     sed -e '/^$/d'
 )
 
-# Prefer the Conventional Commits subject even if the model put prose first
-# (otherwise that prose becomes summary and "fix(...): ..." lands in description).
+# Take the first Conventional Commits line even if the model put prose first;
+# without one, fail rather than write a non-conforming message.
 conv='^(feat|fix|docs|style|refactor|perf|test|chore|ci)(\([^)]*\))?(!)?:[[:space:]]+[^[:space:]]'
-subject_idx=0
+nl=$'\n'
+subject_idx=-1
 for i in "${!lines[@]}"; do
   if [[ "${lines[$i]}" =~ $conv ]]; then
     subject_idx=$i
     break
   fi
 done
+(( subject_idx >= 0 )) || fail "no Conventional Commits subject in ${AGENT[0]} output:${nl}${RAW}"
 
 subject="${lines[$subject_idx]:-}"
 if (( subject_idx + 1 < ${#lines[@]} )); then
@@ -105,10 +113,9 @@ else
   body=
 fi
 
-[ -n "$subject" ] || fail "empty commit subject from cursor-agent"
+[ -n "$subject" ] || fail "empty commit subject from ${AGENT[0]}"
 
 # lazygit preserved-message format: summary + "\n" + description (no blank line).
-nl=$'\n'
 printf '%s' "$subject${body:+$nl}$body" >| "$(git rev-parse --git-dir)/LAZYGIT_PENDING_COMMIT"
 
 if [ -n "${NVIM:-}" ]; then
