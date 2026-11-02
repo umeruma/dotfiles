@@ -69,7 +69,9 @@
     initContent = ''
       # a: pick an installed coding agent with fzy and launch it with the given args
       a() {
-        local x; x="$(for x in claude cursor-agent opencode fm; do (( $+commands[$x] )) && print $x; done | fzy)" && "$x" "$@"
+        local x; x="$(for x in claude cursor-agent opencode fm; do (( $+commands[$x] )) && print $x; done | fzy)" || return
+        print -r -- "❯ $x''${*:+ $*}"
+        "$x" "$@"
       }
 
       # Arrow keys: walk history filtered by what is already typed (omarchy inputrc)
