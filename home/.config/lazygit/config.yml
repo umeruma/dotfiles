@@ -11,6 +11,10 @@ os:
 # Syntax-highlighted diffs via delta (https://github.com/dandavison/delta).
 # Cycle renderers with `|`. See https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_DiffRenderers.md
 git:
+  # Keep the body as written (one line per paragraph); hard wraps at 72 split
+  # sentences and `code` spans mid-way.
+  commit:
+    autoWrapCommitMessage: false
   diffRenderers:
     - command: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 

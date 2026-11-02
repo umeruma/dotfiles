@@ -15,5 +15,6 @@
 # description: English, lowercase imperative ("add", not "Add" / "added"),
 #   72 characters max, no trailing period
 #
-# Body (optional, after a blank line): 1-3 sentences on what changed and why.
+# Body (optional, after a blank line): 1-3 sentences on what changed and why,
+#   one paragraph per line (do not hard-wrap).
 # Footer: "Fixes #123" when an issue applies.
