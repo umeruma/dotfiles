@@ -1,9 +1,9 @@
 # GUI apps with no settings or shell config of their own here.
-# nixpkgs apps are pinned by flake.lock and land in ~/Applications/Home Manager Apps;
+# nixpkgs apps are pinned by flake.lock and land in /Applications/Nix Apps;
 # casks are apps nixpkgs lacks or that install drivers / system extensions.
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
+  my.apps = with pkgs; [
     discord
     meetingbar
     openusage

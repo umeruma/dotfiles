@@ -1,6 +1,6 @@
 # System-level settings. macOS defaults and the login shell stay in
 # mise.macos.toml / mise.toml ([bootstrap.*]); this file only wires Nix up.
-{ inputs, user, ... }:
+{ config, inputs, user, ... }:
 {
   # Nix itself is installed and managed by the Determinate installer
   nix.enable = false;
@@ -20,6 +20,8 @@
     touchIdAuth = true;
     reattach = true;
   };
+
+  environment.systemPackages = config.home-manager.users.${user}.my.apps;
 
   system.primaryUser = user;
   users.users.${user}.home = "/Users/${user}";

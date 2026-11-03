@@ -15,6 +15,11 @@
       type = lib.types.str;
       default = "${config.home.homeDirectory}/Codes/dotfiles";
     };
+    # nixpkgs GUI apps; nix-darwin copies them to /Applications/Nix Apps
+    apps = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = [ ];
+    };
     casks = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
@@ -36,4 +41,5 @@
   };
 
   config.home.stateVersion = "26.05";
+  config.targets.darwin.copyApps.enable = false;
 }
