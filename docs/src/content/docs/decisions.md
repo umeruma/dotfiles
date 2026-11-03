@@ -23,7 +23,6 @@ sidebar:
 ## Apps
 
 - **AltTab**: 使い始めた DockDoor Pro に同じ機能があるので外した。（[51e3a06](https://github.com/umeruma/dotfiles/commit/51e3a06)）
-- **Bartender**: 弊害が大きく、使わない方がメリットが多いと判断した。（[c59241f](https://github.com/umeruma/dotfiles/commit/c59241f)）
 - **Raycast を nixpkgs から入れる**: cask に戻した。Raycast は自己更新し、そのたびにデータを新しい形式へ移行する。nixpkgs の版（2.7.3.0）は cask（2.8.2.0）より古く、移行済みのデータを開けなかった。（[b28c562](https://github.com/umeruma/dotfiles/commit/b28c562)）
 - **Elgato Wave XLR / Wave Link**: 使うのをやめ、オーディオインターフェースを常駐アプリが不要な Zoom AMS-22 に替えた。Wave XLR は PC スイッチャーで切り替えると、色設定がおかしくなったり音量がリセットされたりした。Wave Link は OS 側で入出力を切り替えたうえで、Wave Link 上でも出力を切り替える必要があり、二度手間だった。（[3327221](https://github.com/umeruma/dotfiles/commit/3327221)）
 
