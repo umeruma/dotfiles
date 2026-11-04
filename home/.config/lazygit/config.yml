@@ -2,6 +2,7 @@
 
 gui:
   commitHashLength: 0
+  fileTreeSortOrder: foldersFirst
 
 promptToReturnFromSubprocess: false
 
