@@ -17,6 +17,7 @@
     "OpenIn" = 1643649331;
     "Pages" = 409201541;
     "pdmanager" = 6751735648;
+    "Slack" = 803453959;
     "WorldWideWeb" = 1621370168;
     "Zavala" = 1546457750;
   };

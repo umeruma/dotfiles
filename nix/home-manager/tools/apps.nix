@@ -7,7 +7,6 @@
     discord
     meetingbar
     openusage
-    slack
     utm
     vscode
     zed-editor
