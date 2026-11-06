@@ -13,6 +13,7 @@ let
     "orca-cli"
     "orchestration"
     "rex"
+    "security-audit"
     "wtt-close"
     "wt-slots"
   ];
