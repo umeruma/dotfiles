@@ -6,6 +6,7 @@
 # this directory. Ignore a tool's state; track a config edited by hand. A
 # new untracked file here is a tool you have not decided on yet.
 
+zed/prompts
 lftp
 rclone
 micro/backups
@@ -17,7 +18,6 @@ karabiner/automatic_backups
 gh
 cursor
 raycast
-zed
 1Password
 op
 .wrangler

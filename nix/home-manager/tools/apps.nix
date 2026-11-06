@@ -10,7 +10,6 @@
     openusage
     utm
     vscode
-    zed-editor
   ];
 
   my.casks = [
@@ -47,5 +46,5 @@
     "yaak"
   ];
 
-  my.configIgnore = [ "raycast" "zed" ];
+  my.configIgnore = [ "raycast" ];
 }
