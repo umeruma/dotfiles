@@ -22,6 +22,7 @@ sidebar:
 
 ## Apps
 
+- **DockDoor Pro**: Dock のカスタマイズに飽きた。ウィンドウ切り替えは AltTab で足りるので、cask をコメントアウトした。
 - **Bartender**: ディスプレイを繋ぎ直したときなどに、メニューバーのアイコンが消えることがあったのでやめた。
 - **Slack を nixpkgs・cask から入れる**: App Store（`my.masApps`）から入れる。直接配布版は、常駐プロセスで自分のアップデートを管理しようとしてくる。cask も同じ直接配布版なので、cask では入れない。
 - **Raycast を nixpkgs から入れる**: cask に戻した。Raycast は自己更新し、そのたびにデータを新しい形式へ移行する。nixpkgs の版（2.7.3.0）は cask（2.8.2.0）より古く、移行済みのデータを開けなかった。（[b28c562](https://github.com/umeruma/dotfiles/commit/b28c562)）

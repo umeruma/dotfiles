@@ -20,7 +20,7 @@
     "clop"
     "deskpad"
     "devonthink"
-    "dockdoor-pro" # Dock replacement with widgets, profiles and window previews
+    # "dockdoor-pro" # Dock replacement with widgets, profiles and window previews
     "drawio"
     "figma"
     "fission"
