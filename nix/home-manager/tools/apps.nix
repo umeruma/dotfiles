@@ -4,6 +4,7 @@
 { pkgs, ... }:
 {
   my.apps = with pkgs; [
+    alt-tab-macos
     discord
     meetingbar
     openusage
