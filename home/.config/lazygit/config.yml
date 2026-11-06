@@ -6,9 +6,6 @@ gui:
 
 promptToReturnFromSubprocess: false
 
-os:
-  editPreset: 'vscode'
-
 # Syntax-highlighted diffs via delta (https://github.com/dandavison/delta).
 # Cycle renderers with `|`. See https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_DiffRenderers.md
 git:
