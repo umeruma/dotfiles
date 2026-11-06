@@ -4,7 +4,6 @@
 { pkgs, ... }:
 {
   my.apps = with pkgs; [
-    alt-tab-macos
     discord
     meetingbar
     openusage
@@ -14,6 +13,8 @@
 
   my.casks = [
     "airparrot"
+    # nixpkgs builds it ad-hoc signed, so the Screen Recording grant never sticks
+    "alt-tab"
     "blender"
     "cleanmymac"
     "clop"
