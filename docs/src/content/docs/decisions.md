@@ -48,7 +48,7 @@ sidebar:
 
 - **Makefile → Just → mise tasks**: Just を経由して、最終的に mise に一本化。ツールとタスクの入口が `mise` 1つになる。（[c3c91a6](https://github.com/umeruma/dotfiles/commit/c3c91a6)、[3771669](https://github.com/umeruma/dotfiles/commit/3771669)、[6b460ef](https://github.com/umeruma/dotfiles/commit/6b460ef)）
 - **`mise run help`**: 削除。中身は `mise tasks` を呼ぶだけだった。
-- **`mise run install-fonts`（macOS）**: `nix/home-manager/tools/fonts.nix` に移した。Moralerspace は nixpkgs から全系統を、ChaliceIcons はコミットを固定して取ってくる。Windows は今もこのタスクで入れる。
+- **`mise run install-fonts`（macOS）**: `nix/home-manager/tools/fonts.nix` に移した。Moralerspace は nixpkgs から全系統を取ってくる。Windows は今もこのタスクで入れる。
 
 ## Shell
 
@@ -61,6 +61,7 @@ sidebar:
 ## Editor
 
 - **Doom Emacs**: LazyVim に移行。Doom Emacs は初回のコンパイルが遅かった。Emacs には独自の操作体系もあり、すでに使っている lazygit などのツールとの相性を考えると自分には LazyVim の方が合っていた。（[635f5d9](https://github.com/umeruma/dotfiles/commit/635f5d9)）
+- **nvim の Chalice アイコン → 記号表示**: Chalice は私用領域（U+E000〜E011）のグリフで、Ghostty の `font-codepoint-map` で ChaliceIcons フォントに割り当てて表示していた。この割り当てができない端末（Rex、Windows Terminal）では出ない。分類（`home/.config/nvim/file-icons.toml`）は Chalice のまま残し、各分類を2文字幅の記号（`{}` `>_` など）で出す形にして全 OS で揃えた。フォントと割り当て設定は消した。
 
 ## Docs
 

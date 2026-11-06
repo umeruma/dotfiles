@@ -125,7 +125,7 @@ mise run theme           # cendre scheme + profiles.defaults.font
 1. `extras/windows-terminal/cendre.json` を `%LOCALAPPDATA%\Microsoft\Windows Terminal\Fragments\cendre\` にコピー（Preview があればそちらにも）
 2. Store / unpackaged の `settings.json` に `profiles.defaults.colorScheme = "cendre"` と `font.face = "Moralerspace Neon"` をパッチ（ファイル丸ごと symlink はしない）
 
-Windows Terminal を再起動すれば反映される（OS 再起動は不要）。nvim の Chalice アイコンは macOS（Ghostty の `font-codepoint-map`）のみ。Windows は `mini.icons` の `style = "ascii"`（WT は PUA を別フォントに割り当てられない／Nerd Font も不要）。
+Windows Terminal を再起動すれば反映される（OS 再起動は不要）。nvim のアイコンは全 OS 共通で、`file-icons.toml` の分類ごとの2文字幅の記号（Nerd Font もアイコン用フォントも不要）。
 
 ## Kanata (keyboard remapper)
 

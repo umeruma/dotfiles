@@ -1,14 +1,3 @@
--- Chalice folder/file fallbacks used by Snacks explorer (dir_open is not via mini.icons).
--- Codepoints match home/.config/nvim/chalice-icons.toml [glyphs]
---
--- Windows: do not emit Chalice PUA — WT has no Ghostty-style codepoint-map, so
--- those codepoints render as Segoe Fluent Icons. Leave Snacks/LazyVim defaults.
-local is_windows = vim.fn.has("win32") == 1
-
-local function chalice(code)
-  return vim.fn.nr2char(tonumber(code, 16)) .. " "
-end
-
 --- Dirs: same name color as files + trailing `/` (tree and flat/search views).
 local function fix_dir_name(parts)
   for _, part in ipairs(parts) do
@@ -42,6 +31,10 @@ local function explorer_format(item, picker)
 end
 
 local picker_opts = {
+  formatters = { file = { icon_width = 3 } },
+  icons = {
+    files = { dir = "[] ", dir_open = "][ ", file = "-- " },
+  },
   sources = {
     explorer = {
       hidden = true, -- show dotfiles (.config, .zshrc, …)
@@ -51,21 +44,12 @@ local picker_opts = {
   },
 }
 
-if not is_windows then
-  picker_opts.icons = {
-    files = {
-      dir = chalice("E000"),
-      dir_open = chalice("E001"),
-      file = chalice("E002"),
-    },
-  }
-end
-
 return {
   {
     "folke/snacks.nvim",
     opts = {
       picker = picker_opts,
+      lazygit = { config = { gui = { nerdFontsVersion = "" } } },
     },
   },
 }
