@@ -40,6 +40,7 @@
     # an older build cannot open the migrated data.
     "raycast"
     "notion" # nixpkgs notion is a window manager
+    "saffsanity/sill/sill"
     "smoothcsv"
     "soundsource" # installs an audio driver
     "transmit"
