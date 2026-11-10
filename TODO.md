@@ -4,9 +4,8 @@
 
 ## improve の計画（2026-11-11）
 
-`plans/README.md` が索引。計画 5 件は実行して main にマージ済み（`e329c9e`〜`a0d49b2` の 9 コミット、未 push）。
+`plans/README.md` が索引。計画 5 件は実行して main にマージ済み（`e329c9e`〜`a0d49b2` の 9 コミット）。
 
-- [ ] push する
 - [ ] 日本語を見直す
   - 003 で書き換えた docs: `editor-stack.mdx`、`windows.mdx`、`nix.mdx`、`mise-bootstrap.mdx`
   - `plans/README.md`（索引）
