@@ -25,7 +25,6 @@ git:
 # message), then open the commit panel prefilled by injecting `c` via nvim's
 # RPC socket when running inside Neovim, or `rex send` in a Rex pane.
 # Elsewhere: popup says "press c".
-# The script is linked via mise.macos.toml.
 customCommands:
   - key: 'A'
     context: 'files'

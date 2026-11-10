@@ -58,16 +58,13 @@
 # nvim / ghostty are not linked: Omarchy ships its own theme-synced configs.
 # runtime-write dirs: per-file links only
 "~/.config/lazygit/config.yml" = { source = "home/.config/lazygit/config.yml", mode = "symlink" }
+"~/.config/lazygit/generate-commit-msg.sh" = { source = "home/.config/lazygit/generate-commit-msg.sh", mode = "symlink" }
 # bat themes dir: only this file; cache lives beside it.
 "~/.config/bat/themes/cendre.tmTheme" = { source = "extras/bat/cendre.tmTheme", mode = "symlink" }
 "~/.config/micro/bindings.json" = { source = "home/.config/micro/bindings.json", mode = "symlink" }
 "~/.config/micro/plug/editorconfig" = { source = "home/.config/micro/plug/editorconfig", mode = "symlink" }
 "~/.gitconfig" = { source = "home/.gitconfig", mode = "symlink" }
 "~/.gitmessage" = { source = "home/.gitmessage", mode = "symlink" }
-# Claude Code plugins are declared, not vendored: ~/.claude/plugins holds git
-# clones and version-stamped caches, so only the declaration is tracked here.
-# Claude Code writes back through this link, so settings it manages itself
-# (theme, marketplaces it adds) land in the repo as real changes.
 "~/.cursor/hooks.json" = { source = "home/.cursor/hooks.json", mode = "symlink" }
 # mise's own global config: declares tools that must resolve outside a project
 # (GUI apps inherit the persistent PATH, not a shell with `mise activate`).
