@@ -8,7 +8,6 @@
     meetingbar
     openusage
     utm
-    vscode
   ];
 
   my.casks = [
