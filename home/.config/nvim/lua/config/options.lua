@@ -19,3 +19,5 @@ vim.opt.guicursor:append("a:blinkwait700-blinkoff400-blinkon250")
 -- omarchy-nvim defaults
 vim.opt.relativenumber = false
 vim.g.autoformat = false
+
+vim.opt.colorcolumn = "80"

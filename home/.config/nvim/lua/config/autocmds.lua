@@ -36,3 +36,10 @@ then
     debounce:start(100, 0, reload)
   end)
 end
+
+local function color_column()
+  local separator = vim.api.nvim_get_hl(0, { name = "WinSeparator", link = false })
+  vim.api.nvim_set_hl(0, "ColorColumn", { bg = separator.fg })
+end
+color_column()
+vim.api.nvim_create_autocmd("ColorScheme", { callback = color_column })
