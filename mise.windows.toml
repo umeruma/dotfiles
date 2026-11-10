@@ -1,5 +1,5 @@
 # Loaded on Windows only (merged with mise.toml).
-# Applied by `mise run install-apps` (= `mise bootstrap packages apply`).
+# Applied by `mise run install-apps` (`mise bootstrap packages apply`, then the Cursor CLI and herdr installers).
 # Requires mise >= 2026.9.3, which added winget as a bootstrap package manager.
 
 [bootstrap.packages]

@@ -35,9 +35,9 @@ nix-darwin、home-manager、Homebrew の順に反映し、宣言から消した�
 
 入れ方は、上から順に探します。
 
-1. **nixpkgs**: `home.packages`。探すときは `nix search nixpkgs <name>`。
+1. **nixpkgs**: CLI は `home.packages`、GUI アプリは `my.apps`（`/Applications/Nix Apps` に入る）。探すときは `nix search nixpkgs <name>`。
 2. **ほかの flake**: `flake.nix` の `inputs` に足す（例: `crit.nix`）。
-3. **Homebrew cask**: `my.casks`。nixpkgs にないもの、ドライバやシステム拡張を入れるもの、自己更新でデータを移行するもの（Raycast）。
+3. **Homebrew cask**: `my.casks`。formula は `my.brews`。nixpkgs にないもの、ドライバやシステム拡張を入れるもの、自己更新でデータを移行するもの（Raycast）。
 4. **App Store**: `my.masApps`。ID は `mas list` で調べる（`app-store.nix`）。
 5. **GitHub Releases など**: `fetchurl` で取ってくる（例: `azookey.nix`）。
 
@@ -47,7 +47,7 @@ zsh の alias や関数は、同じファイルに書きます。ツールが `~
 # nix/home-manager/tools/keka.nix
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.keka ];
+  my.apps = [ pkgs.keka ];
 
   programs.zsh.shellAliases.keka = "${pkgs.keka}/Applications/Keka.app/Contents/MacOS/Keka --cli";
 }

@@ -64,14 +64,14 @@ nvim --headless "+Lazy! sync" +qa   # プラグインの初回インストール
 
 ```bash
 herdr / hr   # Windows のみ。セッションを起動 / attach（prefix は ctrl+b、ヘルプは prefix+?）
-nvim / nv    # LazyVim（リーダーキーは space）。`nv +100 file.rs` もそのまま通る
-lazygit / lg # Git TUI（Files で A = Cursor AI コミットメッセージ）
+nvim / n     # LazyVim（リーダーキーは space）。`n +100 file.rs` もそのまま通る
+lazygit / lg # Git TUI（Files で A = AI コミットメッセージ）
 ```
 
 diff は [delta](https://github.com/dandavison/delta)（`git.diffRenderers`）+[cendre](https://cendretheme.com/) hard（`.gitconfig` が `~/.config/delta/cendre.gitconfig` を include。syntax は bat の `cendre` theme）。行番号クリックでエディタへジャンプ（hyperlinks）。`|` で renderer 切替。
 
-`nv` / `lg` は `~/.zshrc`（Windows は PowerShell プロファイル）の薄いシェル関数。`hr` は PowerShell プロファイルだけにある。
+`n` / `lg` は `~/.zshrc`（Windows は PowerShell プロファイル）の薄いシェル関数。`hr` は PowerShell プロファイルだけにある。
 
-lazygit の `A` は **staged の diff だけ** を `cursor-agent`（`composer-2.5-fast`）に渡す。生成中は下ステータスの `loadingText`（中央オーバーレイは非対応）。完了後は lazygit の保存メッセージ（`.git/LAZYGIT_PENDING_COMMIT`、Esc で閉じたときに復元されるもの）に書き込み、nvim 内（LazyVim の lazygit 統合）なら `$NVIM` の RPC ソケット経由で `c` を注入してプリフィル済みの commit パネルを開く。Enter は自分で押す。nvim 外ではポップアップで「c を押せ」と案内する。要: `cursor-agent login`（または `CURSOR_API_KEY`）と stage 済み。ヘルパー本体は macOS が `generate-commit-msg.sh`、Windows が `generate-commit-msg.ps1`（`mise.windows.toml` が `%LOCALAPPDATA%\lazygit` にリンク）。
+lazygit の `A` は **staged の diff だけ** を AI に渡す。macOS / Linux は `claude -p --model haiku`（`LAZYGIT_AI_CMD` で差し替え可）、Windows は `cursor-agent`（`composer-2.5-fast`）。生成中は下ステータスの `loadingText`（中央オーバーレイは非対応）。完了後は lazygit の保存メッセージ（`.git/LAZYGIT_PENDING_COMMIT`、Esc で閉じたときに復元されるもの）に書き込み、nvim 内（LazyVim の lazygit 統合）なら `$NVIM` の RPC ソケット経由で `c` を注入してプリフィル済みの commit パネルを開く。Enter は自分で押す。nvim 外ではポップアップで「c を押せ」と案内する。要: stage 済みであること。macOS / Linux は `claude` と `commit.template`（`~/.gitmessage`）、Windows は `cursor-agent login`（または `CURSOR_API_KEY`）。ヘルパー本体は macOS / Linux が `generate-commit-msg.sh`、Windows が `generate-commit-msg.ps1`（`mise.windows.toml` が `%LOCALAPPDATA%\lazygit` にリンク）。
 
 LazyVim のプラグイン追加は `home/.config/nvim/lua/plugins/` に `.lua` を置くだけでよい（`example.lua` が雛形）。`lazy-lock.json` の差分はそのままコミットする。

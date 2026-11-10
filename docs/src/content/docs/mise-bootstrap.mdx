@@ -73,7 +73,7 @@ dot && mise bootstrap macos defaults apply --dry-run --yes
 | --- | --- |
 | `install-win` + `script/win/bootstrap.winget` | PowerShell 7 / Git / mise 自体を入れるステップ。mise が存在する前なので bootstrap では扱えない |
 | `script/linux/Brewfile`（`mise run install-apps` 経由） | 意図的: `brew bundle add` / `brew bundle cleanup` の追加・追跡ワークフローが便利なため。bootstrap にはデプロイに必須のパッケージだけ残す |
-| Windows GUI アプリ（`mise.windows.toml` の `[bootstrap.packages]`） | `[bootstrap.packages]` に**宣言はする**が、`mise run install-apps`（= `mise bootstrap packages apply`）でのみ適用する opt-in 扱い。Brewfile と対称 |
+| Windows GUI アプリ（`mise.windows.toml` の `[bootstrap.packages]`） | `[bootstrap.packages]` に**宣言はする**が、`mise run install-apps`（`mise bootstrap packages apply` と Cursor CLI / herdr のインストーラ）でのみ適用する opt-in 扱い。Brewfile と対称 |
 | Xcode CLT | 対話的な `xcode-select --install` |
 
 ## Gradual migration ideas

@@ -8,7 +8,7 @@
 bash -c "$(curl -fsSL https://dot.umeru.ma/install)"
 ```
 
-This clones to `~/Codes/dotfiles`, installs mise if needed, then runs `mise bootstrap` (packages, login shell, deploy). Optional GUI/CLI apps: `mise run install-apps`.
+This clones to `~/Codes/dotfiles`, installs mise if needed, then runs `mise bootstrap` (packages, login shell, deploy). Apps: on macOS they are installed by `mise run switch` (run at the end of bootstrap); on Linux, optionally run `mise run install-apps`.
 
 ### Windows
 

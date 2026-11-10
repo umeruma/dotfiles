@@ -41,7 +41,6 @@ if (-not (Get-Command herdr -ErrorAction SilentlyContinue)) {
   }
 }
 
-# nv = New-Variable is a built-in PowerShell alias; drop it for LazyVim parity with zsh.
 function n { if ($args.Count) { nvim @args } else { nvim . } }
 
 # git-wt: `git wt <branch>` cd's into the worktree; ga / gd mirror home/.zshrc
