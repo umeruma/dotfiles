@@ -43,6 +43,7 @@
 "~/.claude/skills/orca-cli" = { source = "home/.agents/skills/orca-cli", mode = "symlink" }
 "~/.claude/skills/orchestration" = { source = "home/.agents/skills/orchestration", mode = "symlink" }
 "~/.claude/skills/security-audit" = { source = "home/.agents/skills/security-audit", mode = "symlink" }
+"~/.claude/skills/improve" = { source = "home/.agents/skills/improve", mode = "symlink" }
 # Cursor marketplace plugins (install state itself lives in Cursor's state DB).
 "~/.cursor/settings.json" = { source = "home/.cursor/settings.json", mode = "symlink" }
 # cendre for delta (git include); bat theme is per-OS (config-dir differs).

@@ -9,6 +9,7 @@ let
     "dev-crit"
     "dev-server"
     "git-wt"
+    "improve"
     "natural-japanese"
     "orca-cli"
     "orchestration"
