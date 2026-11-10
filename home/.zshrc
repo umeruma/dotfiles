@@ -109,30 +109,32 @@ fi
 
 # --- git-wt (git worktree manager) --------
 # https://github.com/k1LoW/git-wt?tab=readme-ov-file
-eval "$(git wt --init zsh)"
+if command -v git-wt >/dev/null 2>&1; then
+    eval "$(git wt --init zsh)"
 
-wt() {
-  local line
-  line="$(git wt | tail -n +2 | fzy)" || return
-  [[ -n "$line" ]] || return
-  git wt "$(printf '%s\n' "$line" | awk '{print $(NF-1)}')"
-}
+    wt() {
+      local line
+      line="$(git wt | tail -n +2 | fzy)" || return
+      [[ -n "$line" ]] || return
+      git wt "$(printf '%s\n' "$line" | awk '{print $(NF-1)}')"
+    }
 
-wr() {
-  # git-wt で管理されているディレクトリを fzy で選択して削除
-  local line
-  line="$(git wt | tail -n +2 | fzy)" || return
-  [[ -n "$line" ]] || return
-  local dir="$(printf '%s\n' "$line" | awk '{print $(NF-1)}')"
-  git wt -d "$dir"
-}
+    wr() {
+      # git-wt で管理されているディレクトリを fzy で選択して削除
+      local line
+      line="$(git wt | tail -n +2 | fzy)" || return
+      [[ -n "$line" ]] || return
+      local dir="$(printf '%s\n' "$line" | awk '{print $(NF-1)}')"
+      git wt -d "$dir"
+    }
 
-# ga <branch>: add a worktree and switch to it. gd [branch]: delete it from the main worktree.
-ga() { git wt "$@"; }
-gd() {
-  local target="${1:-$(git branch --show-current)}"
-  cd "$(git rev-parse --path-format=absolute --git-common-dir)/.." && git wt -d "$target"
-}
+    # ga <branch>: add a worktree and switch to it. gd [branch]: delete it from the main worktree.
+    ga() { git wt "$@"; }
+    gd() {
+      local target="${1:-$(git branch --show-current)}"
+      cd "$(git rev-parse --path-format=absolute --git-common-dir)/.." && git wt -d "$target"
+    }
+fi
 
 export XDG_CONFIG_HOME="$HOME/.config"
 

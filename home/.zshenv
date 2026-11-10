@@ -41,13 +41,12 @@ path=($dotfiles_path $path)
 # Homebrew settings (agents run brew too)
 # Avoid installing certain formulae via Homebrew
 # Link: https://docs.brew.sh/Manpage#:~:text=fishcompletion%2C%20zshcompletion%2C%20stageonly.-,HOMEBREW_FORBIDDEN_FORMULAE,-A%20space-separated%20list
-export HOMEBREW_FORBIDDEN_FORMULAE="python python3 pip npm pnpm yarn claude"
+export HOMEBREW_FORBIDDEN_FORMULAE="python python3 pip npm pnpm yarn claude opencode"
 
 # -------------------------
 # AI agents
 # -------------------------
 # AI agent subprocesses (Cursor, Claude Code, Codex, opencode, Gemini, …)
-# Used by .zshrc to skip interactive-only sheldon plugins (enhancd).
 # Export AI_AGENT=1 to force the agent side.
 # - CURSOR_AGENT=1: Cursor IDE agent and cursor-agent CLI
 # - AGENT: codex sets "codex", opencode sets "1" (with OPENCODE=1)
