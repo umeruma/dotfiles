@@ -1,2 +1,14 @@
 [tools]
 bun = "1.3.14"
+
+[tasks.dev]
+description = "Start the docs dev server"
+run = "bun run dev"
+
+[tasks.build]
+description = "Build the docs site"
+run = "bun run build"
+
+[tasks.check]
+description = "Typecheck and lint the docs"
+run = ["bun run typecheck", "bun run lint:docs"]

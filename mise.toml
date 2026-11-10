@@ -15,6 +15,11 @@ description = "Install cendre theme (Terminal.app / Windows Terminal + bat cache
 run = "zsh script/unix/theme.zsh"
 run_windows = "pwsh -NoProfile -File script/win/theme.ps1"
 
+[tasks.check]
+description = "Check dotfiles consistency (link sources, skill lists, shell syntax, flake)"
+run = "zsh script/unix/check.zsh"
+run_windows = "pwsh -NoProfile -Command \"Write-Host '(skip) check: run on macOS or Linux'\""
+
 [tools]
 gitleaks = "8"
 

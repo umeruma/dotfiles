@@ -16,10 +16,10 @@ This document is a guide for safe and productive collaboration between AI agents
 6. Record changes, results, and follow-ups concisely
 
 ## Quality Gates (Keep Green)
-- Build: Ensure builds and scripts are not broken
-- Lint/Typecheck: Pass static analysis
-- Tests: All existing tests must PASS; if none, record a small manual check
-- Example report: `Build: PASS / Lint: PASS / Tests: N/A`
+- `mise run check`: link sources exist, skill lists agree across OSes, shell syntax, shellcheck, `nix flake check --no-build` (macOS)
+- `cd docs && mise run check`: `astro check` and `nimbus-docs lint`, after changing anything under `docs/`
+- Windows scripts have no automated check; record a small manual check
+- Example report: `check: PASS / docs check: PASS`
 
 ## Safety and Prohibited Actions
 - Avoid leaking secrets (tokens, cookies, environment variables)
