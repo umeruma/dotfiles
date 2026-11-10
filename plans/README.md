@@ -1,16 +1,16 @@
 # Implementation Plans
 
-improve スキルが 2026-11-11 に作成（対象コミット `6e8371d`）。依存関係に反しない限り、下の順に実行する。実行する側は、計画を最後まで読んでから始め、STOP conditions を守り、終わったら自分の行の Status を更新する。
+improve スキルが 2026-11-11 に作成（対象コミット `6e8371d`）。下の 5 件はすべて実行済みなので、計画書のファイルは削除した。中身は `git show 48c94e8:plans/<番号>-<名前>.md` で読める（一覧は `git show --stat 48c94e8`）。
 
 ## Execution order & status
 
 | Plan | Title | Priority | Effort | Depends on | Status |
 |------|-------|----------|--------|------------|--------|
-| [001](001-add-check-task.md) | `mise run check` で整合性を 1 コマンドで確かめる | P1 | S | — | DONE（main にマージ済み: `e329c9e`、`0ce2890`） |
-| [002](002-repair-linux-path.md) | Linux のセットアップ経路を実態に合わせて直す | P1 | S | 001 | DONE（main にマージ済み: `17a753b`、`9d5fccc`、`7a0335f`、`db44781`。Linux 実機は未確認） |
-| [003](003-fix-stale-docs.md) | 実態と食い違っているドキュメントを直す | P2 | S | 001 | DONE（main にマージ済み: `d0846c1`。日本語の見直しは未了） |
-| [004](004-fix-windows-commit-helper.md) | Windows の lazygit コミットメッセージ生成に改行を保った diff を渡す | P2 | S | — | DONE（main にマージ済み: `2c3d117`。Windows 実機は未確認） |
-| [005](005-fix-windows-clean-script.md) | Windows の `mise run clean` が外すべきリンクだけを漏れなく外す | P2 | S | — | DONE（main にマージ済み: `a0d49b2`。Windows 実機は未確認） |
+| 001 | `mise run check` で整合性を 1 コマンドで確かめる | P1 | S | — | DONE（main にマージ済み: `e329c9e`、`0ce2890`） |
+| 002 | Linux のセットアップ経路を実態に合わせて直す | P1 | S | 001 | DONE（main にマージ済み: `17a753b`、`9d5fccc`、`7a0335f`、`db44781`。Linux 実機は未確認） |
+| 003 | 実態と食い違っているドキュメントを直す | P2 | S | 001 | DONE（main にマージ済み: `d0846c1`。日本語の見直しは未了） |
+| 004 | Windows の lazygit コミットメッセージ生成に改行を保った diff を渡す | P2 | S | — | DONE（main にマージ済み: `2c3d117`。Windows 実機は未確認） |
+| 005 | Windows の `mise run clean` が外すべきリンクだけを漏れなく外す | P2 | S | — | DONE（main にマージ済み: `a0d49b2`。Windows 実機は未確認） |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED（理由を 1 行で） | REJECTED（理由を 1 行で。別の形で直った、方針をやめた、など）
 
