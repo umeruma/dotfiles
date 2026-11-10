@@ -23,8 +23,8 @@ if ($LASTEXITCODE -ne 0) { Fail 'not a git repository' }
 git diff --cached --quiet 2>$null
 if ($LASTEXITCODE -eq 0) { Fail 'no staged changes (stage files first)' }
 
-$stat = git diff --cached --stat
-$diff = git diff --cached
+$stat = (git diff --cached --stat | Out-String).TrimEnd()
+$diff = (git diff --cached | Out-String).TrimEnd()
 if ($diff.Length -gt 24000) {
   $diff = $diff.Substring(0, 24000) + "`n`n[staged diff truncated]"
 }
