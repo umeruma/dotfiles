@@ -16,9 +16,11 @@ Write-DeveloperModeWarning
 
 $scanRoots = @(
   '.gitconfig'
+  '.gitmessage'
   '.claude'
   '.config'
   '.copilot'
+  '.cursor'
   '.agents'
   'Documents\PowerShell'
   'Documents\kanata'
@@ -63,7 +65,8 @@ function Remove-RepoLink {
   # Cannot use Resolve-Path: dangling links must still match.
   $target = [System.IO.Path]::GetFullPath($target)
 
-  if (-not $target.StartsWith($RepoRoot, [StringComparison]::OrdinalIgnoreCase)) {
+  $prefix = $RepoRoot.TrimEnd('\', '/') + [System.IO.Path]::DirectorySeparatorChar
+  if ($target -ne $RepoRoot -and -not $target.StartsWith($prefix, [StringComparison]::OrdinalIgnoreCase)) {
     return $false
   }
 
@@ -109,7 +112,7 @@ foreach ($root in $scanRoots) {
 }
 
 # Prune dirs the sweep may have emptied, so whole-dir [dotfiles] entries can be
-# applied in their place. ~/.agents is the only dir entry on Windows.
+# applied in their place.
 foreach ($dir in @("$HOME\.agents")) {
   $item = Get-Item -LiteralPath $dir -Force -ErrorAction SilentlyContinue
   if ($item -is [System.IO.DirectoryInfo] -and -not (Test-ReparsePoint -Item $item)) {
