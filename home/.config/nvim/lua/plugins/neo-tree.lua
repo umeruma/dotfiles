@@ -11,7 +11,7 @@ return {
         default = "--",
       },
     },
-    -- show hidden (dotfiles / gitignored) by default; `H` still toggles
-    filesystem = { filtered_items = { visible = true } },
+    -- dotfiles are not dimmed; gitignored stay dimmed and `H` still toggles them
+    filesystem = { filtered_items = { visible = true, hide_dotfiles = false } },
   },
 }
