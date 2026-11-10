@@ -6,7 +6,9 @@
 vim.opt.conceallevel = 0
 
 -- 折り返し表示（LazyVim デフォルトは wrap=false）
--- vim.opt.wrap = true
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.breakindent = true
 
 -- .mdx は標準では検出されず ft=conf に落ちるので markdown 扱いにする
 vim.filetype.add({ extension = { mdx = "markdown" } })
