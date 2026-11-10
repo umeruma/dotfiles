@@ -37,7 +37,6 @@ Status values: TODO | IN PROGRESS | DONE | BLOCKED（理由を 1 行で） | REJ
 
 - `install-win` の堅牢化: `mise dotfiles apply` の前に `mise trust` を呼んでいない（`install-win:211-215`。Unix 版は `install:108` で呼ぶ）。Developer Mode が無効でも警告だけで先へ進み、リンクではなくコピーを作る（`install-win:233-234`）。`home-win/.config/mise/config.toml` に、Unix 版にある `[settings]`（`trusted_config_paths`、`experimental`）が無い。Windows 実機で確かめてから計画にする。
 - Windows の細かい疑い（未検証）: `script/win/install-apps.ps1:16-24` が `.ps1` の呼び出しのあとに `$LASTEXITCODE` を見ている。`script/win/theme.ps1` がバックアップなしで Windows Terminal の `settings.json` を書き直す。`mise.windows.toml:3` が求める mise の最低バージョン（2026.9.3）を、どこも強制していない。
-- `home/.config/cloudflare/` が未追跡のまま ignore されていない。追跡しないなら、`nix/home-manager/dotfiles.nix` の `my.configIgnore` に `"cloudflare"` を足して `mise run switch` する。中身は端末の識別子を含む状態ファイルで、認証情報ではない。
 - `home/.gitconfig:37-38` の `credential.helper = osxkeychain` が Linux にもリンクされる。Linux では警告が出るだけで動作は続く。macOS と共有のファイルなので、分け方に判断が要る。
 - Windows の `home-win/.gitconfig` に `core.excludesfile` と `init.defaultBranch` が無く、`~/.gitignore` もリンクされていない。意図的かどうか未確認。
 

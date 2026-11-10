@@ -24,6 +24,7 @@ in
     ".wrangler" # credentials
     "github-copilot" # credentials
     "aicommit2"
+    "cloudflare"
     "codeburn"
     "configstore"
     "emacs"

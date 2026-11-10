@@ -15,7 +15,6 @@
   - Linux: シェルの起動、lazygit の `A`、`mise run clean`（002）
 - [ ] 計画にしなかった指摘を判断する（詳細は `plans/README.md`）
   - `install-win`: `mise trust` を呼んでいない。Developer Mode が無効でも先へ進む
-  - `home/.config/cloudflare/` を `my.configIgnore` に足すか、追跡するか
   - `home/.gitconfig` の `credential.helper = osxkeychain` が Linux にもリンクされる
   - Windows: `install-apps.ps1` の `$LASTEXITCODE` 判定、`theme.ps1` のバックアップ、mise の最低バージョン
   - `home-win/.gitconfig` に `core.excludesfile` と `init.defaultBranch` が無い
