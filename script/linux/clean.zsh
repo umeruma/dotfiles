@@ -10,13 +10,14 @@ local root
 root=$(repo_root)
 
 # Remove every symlink under the scan roots whose target points into the
-# repo's home/ tree — including dangling links. Real files and dirs
+# repo — including dangling links. Real files and dirs
 # (app runtime state) are never touched.
 
-print -r -- "Removing symlinks pointing into $root/home ..."
+print -r -- "Removing symlinks pointing into $root ..."
 
 local -a scan_roots=(
-  "$HOME/.zshenv" "$HOME/.zprofile" "$HOME/.zshrc" "$HOME/.gitconfig"
+  "$HOME/.zshenv" "$HOME/.zprofile" "$HOME/.zshrc"
+  "$HOME/.gitconfig" "$HOME/.gitmessage" "$HOME/.gitignore"
   "$HOME/.hammerspoon" "$HOME/.config"
   "$HOME/.claude" "$HOME/.cursor" "$HOME/.copilot" "$HOME/.agents"
 )
@@ -29,7 +30,7 @@ for p in "${scan_roots[@]}"; do
     target=$(readlink "$link")
     [[ $target = /* ]] || target="${link:h}/$target"
     target=${target:a}
-    if [[ $target == "$root/home" || $target == "$root/home/"* ]]; then
+    if [[ $target == "$root" || $target == "$root/"* ]]; then
       print -r -- "unlink: $link -> $target"
       rm "$link"
       removed=$(( removed + 1 ))
