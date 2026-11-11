@@ -17,7 +17,7 @@ git:
   commit:
     autoWrapCommitMessage: false
   diffRenderers:
-    - command: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+    - command: delta --dark --paging=never --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 
 
 # Files: A = generate (bottom loader via loadingText; centered overlay is not
