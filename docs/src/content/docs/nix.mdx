@@ -78,7 +78,7 @@ dot switch
 | --- | --- | --- |
 | Homebrew の cask・formula・App Store アプリ | 手で入れたアプリまで消さないよう、`cleanup = "none"` にしている | `brew uninstall --cask <name>` など |
 | Claude Code のプラグイン（`my.claudePlugins`） | `~/.claude/plugins` は Claude Code が管理している | `claude plugin uninstall <plugin>@<marketplace>` |
-| `flake.nix` の `inputs`（crit、k） | inputs は flake にしか書けない | 該当の input を消して `nix flake lock` |
+| `flake.nix` の `inputs`（crit、revdiff、k） | inputs は flake にしか書けない | 該当の input を消して `nix flake lock` |
 | `home/.config/<tool>/` | `~/.config` をまるごとリンクしているので、ツールのファイルとは別に repo にある | ディレクトリを消す |
 | `home/.agents/skills/<skill>` と `claude.nix` の `skills` | スキルは Cursor や Copilot と共有している | 使わなくなったら両方から消す |
 
@@ -101,7 +101,7 @@ my.configIgnore = [ "gh" ]; # ~/.config/gh（認証情報）
 | What | How |
 | --- | --- |
 | nixpkgs などの入力 | `nix flake update` のあと switch。1つだけ上げるなら `nix flake update <input>` |
-| タグで固定した入力（crit） | `flake.nix` のタグを書き換え、`nix flake update crit` のあと switch |
+| タグで固定した入力（crit、revdiff） | `flake.nix` のタグを書き換え、`nix flake update <input>` のあと switch |
 | cask | switch では上げない（`upgrade = false`）。アプリの自己更新に任せるか、`brew upgrade --cask <name>` |
 | App Store | App Store に任せる |
 | `fetchurl` で固定したもの（azooKey） | `version` と `hash` を書き換えて switch |
