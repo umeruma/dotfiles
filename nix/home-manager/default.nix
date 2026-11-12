@@ -38,6 +38,11 @@
       type = lib.types.listOf lib.types.str;
       default = [ ];
     };
+    # Claude Code plugins as "plugin@marketplace" = "owner/repo"; installed by claude.nix
+    claudePlugins = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = { };
+    };
   };
 
   config.home.stateVersion = "26.05";

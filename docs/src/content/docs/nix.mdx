@@ -41,7 +41,7 @@ nix-darwin、home-manager、Homebrew の順に反映し、宣言から消した�
 4. **App Store**: `my.masApps`。ID は `mas list` で調べる（`app-store.nix`）。
 5. **GitHub Releases など**: `fetchurl` で取ってくる（例: `azookey.nix`）。
 
-zsh の alias や関数は、同じファイルに書きます。ツールが `~/.config` に書き込む状態ファイルや認証情報は、`my.configIgnore` で除外します（[Config ignore](#config-ignore)）。
+zsh の alias や関数は、同じファイルに書きます。ツールが `~/.config` に書き込む状態ファイルや認証情報は、`my.configIgnore` で除外します（[Config ignore](#config-ignore)）。Claude Code のプラグインは `my.claudePlugins` に `"plugin@marketplace" = "owner/repo"` の形で書くと、switch のときに入っていなければ入ります（例: `revdiff.nix`）。
 
 ```nix
 # nix/home-manager/tools/keka.nix
@@ -77,6 +77,7 @@ dot switch
 | 残るもの | 理由 | 片付け方 |
 | --- | --- | --- |
 | Homebrew の cask・formula・App Store アプリ | 手で入れたアプリまで消さないよう、`cleanup = "none"` にしている | `brew uninstall --cask <name>` など |
+| Claude Code のプラグイン（`my.claudePlugins`） | `~/.claude/plugins` は Claude Code が管理している | `claude plugin uninstall <plugin>@<marketplace>` |
 | `flake.nix` の `inputs`（crit、k） | inputs は flake にしか書けない | 該当の input を消して `nix flake lock` |
 | `home/.config/<tool>/` | `~/.config` をまるごとリンクしているので、ツールのファイルとは別に repo にある | ディレクトリを消す |
 | `home/.agents/skills/<skill>` と `claude.nix` の `skills` | スキルは Cursor や Copilot と共有している | 使わなくなったら両方から消す |

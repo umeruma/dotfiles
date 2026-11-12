@@ -190,7 +190,7 @@ Start-Process "$([Environment]::GetFolderPath('Startup'))\Kanata.lnk"
 
 プラグインも `~/.claude/settings.json` も追跡しない（全 OS 共通）。settings.json の中身は、Claude Code と、hook を足すツール（Orca、herdr など）やプラグインが書き込むものなので、マシンごとに任せる。
 
-プラグインは、ツールのドキュメントどおりにマシンごとに入れる（`/plugin` スラッシュコマンドは対話ターミナルが必要なので、シェルコマンドを使う）:
+macOS では、プラグインをツールのファイルの `my.claudePlugins` に書けば switch で入る（[Nix](/nix)）。Linux と Windows では、ツールのドキュメントどおりにマシンごとに入れる（`/plugin` スラッシュコマンドは対話ターミナルが必要なので、シェルコマンドを使う）:
 
 ```
 claude plugin marketplace add <owner>/<repo>
