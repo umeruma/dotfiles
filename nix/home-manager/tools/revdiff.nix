@@ -16,6 +16,9 @@ in
       launcher "launch-plan-review.sh";
   };
 
+  # Bundled themes revdiff writes on first run; --init-themes recreates them.
+  my.configIgnore = [ "revdiff/themes" ];
+
   my.claudePlugins = {
     "revdiff@revdiff" = "umputun/revdiff";
     "revdiff-planning@revdiff" = "umputun/revdiff";
