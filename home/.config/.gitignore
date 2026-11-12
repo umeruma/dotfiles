@@ -7,7 +7,8 @@
 # new untracked file here is a tool you have not decided on yet.
 
 zed/prompts
-revdiff/themes
+revdiff/themes/*
+!revdiff/themes/cendre
 lftp
 rclone
 micro/backups

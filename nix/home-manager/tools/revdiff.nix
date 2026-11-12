@@ -17,7 +17,10 @@ in
   };
 
   # Bundled themes revdiff writes on first run; --init-themes recreates them.
-  my.configIgnore = [ "revdiff/themes" ];
+  my.configIgnore = [
+    "revdiff/themes/*"
+    "!revdiff/themes/cendre"
+  ];
 
   my.claudePlugins = {
     "revdiff@revdiff" = "umputun/revdiff";

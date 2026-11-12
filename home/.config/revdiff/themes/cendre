@@ -1,0 +1,27 @@
+# name: cendre
+# description: cendre hard, colors from https://github.com/Aejkatappaja/cendre extras/hunk/cendre.toml
+# author: umeruma
+
+# chroma has no cendre style; gruvbox is the closest warm built-in.
+chroma-style = gruvbox
+color-accent = #ea9875
+color-border = #362f2c
+color-normal = #e6d5c2
+color-muted = #73665b
+color-selected-fg = #171311
+color-selected-bg = #ea9875
+color-annotation = #f4a21c
+color-cursor-fg = #ea9875
+color-cursor-bg = #2f1e17
+color-add-fg = #43b16a
+color-add-bg = #202515
+color-remove-fg = #d25780
+color-remove-bg = #301d1b
+color-modify-fg = #f4a21c
+color-modify-bg = #2a2422
+color-tree-bg = #0f0c0a
+color-diff-bg = #171311
+color-status-fg = #171311
+color-status-bg = #ea9875
+color-search-fg = #171311
+color-search-bg = #f4a21c
