@@ -32,6 +32,8 @@ in
       export PATH="${pkgs.git}/bin:$PATH"
       claude=${pkgs.claude-code}/bin/claude
       jq=${pkgs.jq}/bin/jq
+      markets=$($claude plugin marketplace list --json 2>/dev/null || echo '[]')
+      plugins=$($claude plugin list --json 2>/dev/null || echo '[]')
     ''
     + lib.concatStrings (
       lib.mapAttrsToList (
@@ -42,10 +44,11 @@ in
           repo' = lib.escapeShellArg repo;
         in
         ''
-          if ! $claude plugin marketplace list --json 2>/dev/null | $jq -e --arg n ${market} 'any(.[]; .name == $n)' >/dev/null; then
+          if ! $jq -e --arg n ${market} 'any(.[]; .name == $n)' <<<"$markets" >/dev/null; then
             run $claude plugin marketplace add ${repo'} || echo "claude: marketplace add ${repo} failed" >&2
+            markets=$($claude plugin marketplace list --json 2>/dev/null || echo '[]')
           fi
-          if ! $claude plugin list --json 2>/dev/null | $jq -e --arg id ${id'} 'any(.[]; .id == $id)' >/dev/null; then
+          if ! $jq -e --arg id ${id'} 'any(.[]; .id == $id)' <<<"$plugins" >/dev/null; then
             run $claude plugin install ${id'} || echo "claude: installing ${id} failed" >&2
           fi
         ''
