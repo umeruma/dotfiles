@@ -3,7 +3,7 @@ description: "Global personal preferences for all projects"
 applyTo: "**"
 ---
 
-- 返答は常に日本語で行う
+- 返答はユーザーが質問した言語で行う
 - 不明瞭な指示は質問して明確にする
 
 ## 作業
