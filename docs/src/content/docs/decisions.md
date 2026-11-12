@@ -63,6 +63,7 @@ sidebar:
 
 - **Doom Emacs**: LazyVim に移行。Doom Emacs は初回のコンパイルが遅かった。Emacs には独自の操作体系もあり、すでに使っている lazygit などのツールとの相性を考えると自分には LazyVim の方が合っていた。（[635f5d9](https://github.com/umeruma/dotfiles/commit/635f5d9)）
 - **nvim の Chalice アイコン → 記号表示**: Chalice は私用領域（U+E000〜E011）のグリフで、Ghostty の `font-codepoint-map` で ChaliceIcons フォントに割り当てて表示していた。この割り当てができない端末（Rex、Windows Terminal）では出ない。分類（`home/.config/nvim/file-icons.toml`）は Chalice のまま残し、各分類を2文字幅の記号（`{}` `>_` など）で出す形にして全 OS で揃えた。フォントと割り当て設定は消した。
+- **[leaf](https://github.com/DeepanshuMishraa/leaf)（見送り・移行候補）**: crit を TUI に替える候補。diff の行コメントを Rex のエージェントペインへ直接送れて、Rex との相性は一番いい。ただ、2026-11 時点では作られて1か月でリリースがなく、`cargo install` でしか入らない。行コメントは diff だけで、plan.md などのドキュメントにはコメントを貯められない。なので先に revdiff を試している。リリースが出て、ドキュメントにもコメントできるようになったら見直す。
 
 ## Docs
 
