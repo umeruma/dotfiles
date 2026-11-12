@@ -13,6 +13,7 @@ Lazyvimを試している。急いでいるときはCursor or Zedを使う。
 | [lazygit](https://github.com/jesseduffield/lazygit) | Git の TUI | `home/.config/lazygit`（Unix）/ `home-win/.config/lazygit`（Windows → `%LOCALAPPDATA%\lazygit`） |
 | [herdr](https://herdr.dev/) | コーディングエージェント用のマルチプレクサ（Windows のみ。macOS は Rex） | `home-win/.config/herdr`（→ `%APPDATA%\herdr`） |
 | [Crit](https://crit.md/) | AI エージェント向けのローカルレビューツール | なし（単一バイナリ） |
+| [revdiff](https://revdiff.com/) | AI エージェント向けの TUI レビューツール（試用中） | なし（単一バイナリ） |
 
 ## Prerequisites
 
@@ -26,13 +27,13 @@ macOS は `mise run switch`（`nix/home-manager/tools/`）、Windows は `mise r
 - `ripgrep`、`fd`（LazyVim の grep / ファイル検索に必須）
 - `tree-sitter-cli`（macOS: Nix。Windows は LazyVim/mason が入れる。パーサービルド用に `winget:BrechtSanders.WinLibs.POSIX.UCRT`）
 - `crit`（エージェントの変更をブラウザ UI で行コメントレビューする。`crit <file>` / `crit <url>` で起動）
+- `revdiff`（diff やファイルに TUI で注釈を付け、終了時にエージェントへ返す）
 
-Crit を Claude Code から `/crit` スラッシュコマンドで使う場合は、プラグインを別途インストールする（プラグイン実体は `~/.claude/plugins` にランタイム管理されるため symlink 対象にはしない）:
+crit は Web ページのレビュー（`dev-crit`）に使う。revdiff は Web ページを扱えない。Claude Code の `/crit` スキルは、プラグインではなく `crit install claude-code` で `~/.claude/skills/` に入れる。プラグインにはプランを作ったときに crit を開くフックが付いていて、revdiff のフックとぶつかるため。`crit.nix` の activation が、switch のたびに今の crit で入れ直す。
 
-```bash
-claude plugin marketplace add tomasz-tomczyk/crit
-claude plugin install crit@crit
-```
+revdiff はプラグインで入れる（`/revdiff main` などで起動）。プランを作ったときに自動で開くのは、`revdiff-planning` のほう。プラグインの実体は `~/.claude/plugins` にあり、Claude Code が管理する。`revdiff.nix` の `my.claudePlugins` に書いておけば、switch のときに入っていなければ入る（このときはネットワークが要る）。`revdiff.nix` を消してもプラグインは残るので、`claude plugin uninstall` で消す。
+
+どちらのプラグインも Rex を検出できず、そのままだとエラーになる。そこで `revdiff.nix` が、自作のランチャー（`home/.claude/revdiff/` の `launch-revdiff.sh` と `launch-plan-review.sh`）を各プラグインの `~/.claude/plugins/data/*/scripts/` にリンクしている。Rex の中では、エージェントのウィンドウの上にフロートペインで revdiff を開く（フロートできなければズーム）。閉じたらフォーカスをエージェントのペインに戻す。Rex の外では、同梱のランチャーに処理を渡す。
 
 ## Setup
 

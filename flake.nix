@@ -19,6 +19,10 @@
       url = "github:tomasz-tomczyk/crit/v0.23.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    revdiff = {
+      url = "github:umputun/revdiff/v1.15.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # zsh plugin not in nixpkgs, sourced as-is
     k = {
       url = "github:supercrabtree/k";
