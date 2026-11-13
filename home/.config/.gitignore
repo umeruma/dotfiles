@@ -9,6 +9,7 @@
 zed/prompts
 revdiff/themes/*
 !revdiff/themes/cendre
+revdiff/history
 lftp
 rclone
 micro/backups

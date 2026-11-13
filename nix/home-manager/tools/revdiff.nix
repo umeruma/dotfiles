@@ -17,9 +17,11 @@ in
   };
 
   # Bundled themes revdiff writes on first run; --init-themes recreates them.
+  # history/ keeps each review's annotations per repo.
   my.configIgnore = [
     "revdiff/themes/*"
     "!revdiff/themes/cendre"
+    "revdiff/history"
   ];
 
   my.claudePlugins = {
