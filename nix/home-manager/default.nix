@@ -43,6 +43,11 @@
       type = lib.types.attrsOf lib.types.str;
       default = { };
     };
+    # Claude Code HTTP MCP servers (user scope) as name = url; added by claude.nix
+    claudeMcpServers = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = { };
+    };
   };
 
   config.home.stateVersion = "26.05";

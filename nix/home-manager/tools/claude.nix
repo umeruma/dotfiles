@@ -25,8 +25,8 @@ in
   home.packages = [ pkgs.claude-code ];
   programs.zsh.shellAliases.c = "claude";
 
-  # ~/.claude/plugins and settings.json are Claude Code's, so this only adds
-  # what is missing; removing an entry does not uninstall the plugin.
+  # ~/.claude/plugins, settings.json and ~/.claude.json are Claude Code's, so
+  # this only adds what is missing; removing an entry does not uninstall it.
   home.activation.claudePlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] (
     ''
       export PATH="${pkgs.git}/bin:$PATH"
@@ -53,6 +53,13 @@ in
           fi
         ''
       ) config.my.claudePlugins
+    )
+    + lib.concatStrings (
+      lib.mapAttrsToList (name: url: ''
+        if ! $jq -e --arg n ${lib.escapeShellArg name} '.mcpServers // {} | has($n)' ~/.claude.json >/dev/null 2>&1; then
+          run $claude mcp add -s user --transport http ${lib.escapeShellArg name} ${lib.escapeShellArg url} || echo "claude: mcp add ${name} failed" >&2
+        fi
+      '') config.my.claudeMcpServers
     )
   );
 

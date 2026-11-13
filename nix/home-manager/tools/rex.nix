@@ -3,6 +3,8 @@
 # (https://www.superlogical.com/rex/docs/automate/cli).
 { ... }:
 {
+  my.claudeMcpServers.superlogical = "https://www.superlogical.com/rex/community-mcp";
+
   programs.zsh.initContent = ''
     if [ -n "$REX_BIN_DIR" ]; then
       export PATH="$REX_BIN_DIR:$PATH"
