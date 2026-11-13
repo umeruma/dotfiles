@@ -12,6 +12,8 @@ applyTo: "**"
 - git worktree の指定がない限り、基本は現在の作業ツリーで進める
 - 現在の作業ツリーが main なら、その main 上で作業を続行する
 - 別 worktree が必要なケースだけ、必要性を確認または提案する
+- worktree は `git wt <branch>`（k1LoW/git-wt）で作り、`git worktree add` を直接使わない。リモートのブランチを見るためだけに作るときも同じ
+- 置き場所は git config の `wt.basedir`（`../<repo>-wt/<branch>`）に任せる
 
 ## コード設計
 
