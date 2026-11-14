@@ -7,6 +7,7 @@
 # new untracked file here is a tool you have not decided on yet.
 
 zed/prompts
+rex/rex_durable.lua
 revdiff/themes/*
 !revdiff/themes/cendre
 revdiff/history

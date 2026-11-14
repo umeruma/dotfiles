@@ -4,6 +4,7 @@
 { ... }:
 {
   my.claudeMcpServers.superlogical = "https://www.superlogical.com/rex/community-mcp";
+  my.configIgnore = [ "rex/rex_durable.lua" ];
 
   programs.zsh.initContent = ''
     if [ -n "$REX_BIN_DIR" ]; then

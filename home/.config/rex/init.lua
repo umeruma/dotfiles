@@ -22,4 +22,9 @@ rex.action{
   end,
 }
 
-rex.bind("shift+cmd+t", "wt_tab")
+rex.bind("shift+cmd+w", "wt_tab")
+
+-- rex-durable / rex-undo live in ~/.local/share/rex-ext, outside this repo;
+-- remove these lines once Rex restores tabs and closed panes itself.
+pcall(require, "rex_durable")
+pcall(require, "rex_undo")
