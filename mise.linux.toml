@@ -37,6 +37,7 @@
 "~/.claude/skills/git-wt" = { source = "home/.agents/skills/git-wt", mode = "symlink" }
 "~/.claude/skills/dev-crit" = { source = "home/.agents/skills/dev-crit", mode = "symlink" }
 "~/.claude/skills/wt-slots" = { source = "home/.agents/skills/wt-slots", mode = "symlink" }
+"~/.claude/skills/sdev-init" = { source = "home/.agents/skills/sdev-init", mode = "symlink" }
 "~/.claude/skills/rex" = { source = "home/.agents/skills/rex", mode = "symlink" }
 "~/.claude/skills/wtt-close" = { source = "home/.agents/skills/wtt-close", mode = "symlink" }
 # Installed via `npx skills add -g` (tracked through ~/.agents); declared here so fresh machines get the Claude Code link too.

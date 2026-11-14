@@ -14,6 +14,7 @@ let
     "orca-cli"
     "orchestration"
     "rex"
+    "sdev-init"
     "security-audit"
     "wtt-close"
     "wt-slots"
