@@ -64,6 +64,7 @@ sidebar:
 - **Doom Emacs**: LazyVim に移行。Doom Emacs は初回のコンパイルが遅かった。Emacs には独自の操作体系もあり、すでに使っている lazygit などのツールとの相性を考えると自分には LazyVim の方が合っていた。（[635f5d9](https://github.com/umeruma/dotfiles/commit/635f5d9)）
 - **nvim の Chalice アイコン → 記号表示**: Chalice は私用領域（U+E000〜E011）のグリフで、Ghostty の `font-codepoint-map` で ChaliceIcons フォントに割り当てて表示していた。この割り当てができない端末（Rex、Windows Terminal）では出ない。分類（`home/.config/nvim/file-icons.toml`）は Chalice のまま残し、各分類を2文字幅の記号（`{}` `>_` など）で出す形にして全 OS で揃えた。フォントと割り当て設定は消した。
 - **[leaf](https://github.com/DeepanshuMishraa/leaf)（2026-11-14 から試用中）**: crit を TUI に替える候補。diff の行コメントを Rex のエージェントペインへ直接送れて、Rex との相性は一番いい。11-12 には、リリースがなく `cargo install` でしか入らないこと、plan.md などのドキュメントにコメントを貯められないことから見送った。11-13 にリリースと Homebrew tap が出たので入れた。ドキュメントへの保存できるコメントは今もないので、プランは diff にして `leaf diff` で開く（[editor-stack](/editor-stack)）。
+- **[rex-navigator.nvim](https://github.com/baggiponte/rex-navigator.nvim) の Rex 側モジュール（見送り）**: ctrl-h/j/k/l を Rex 全体に割り当てるので、シェルや Claude Code など nvim 以外のペインで本来の動きをしなくなる。nvim 側のプラグインだけ入れ、Rex 側は cmd+shift+h/j/k/l で同じことをする小さな版を自前で書いた（`home/.config/rex/rex_navigator.lua`）。cmd+alt+h は macOS の「ほかを隠す」と被るので使わない。
 
 ## Docs
 
