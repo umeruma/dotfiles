@@ -28,3 +28,4 @@ rex.bind("shift+cmd+w", "wt_tab")
 -- remove these lines once Rex restores tabs and closed panes itself.
 pcall(require, "rex_durable")
 pcall(require, "rex_undo")
+pcall(require, "rex_open")
