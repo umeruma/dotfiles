@@ -23,6 +23,7 @@ in
 {
   my.casks = [ "claude" ];
   my.claudePlugins."ponytail@ponytail" = "DietrichGebert/ponytail";
+  my.configIgnore = [ "ponytail" ];
   home.packages = [ pkgs.claude-code ];
   programs.zsh.shellAliases.c = "claude";
 
