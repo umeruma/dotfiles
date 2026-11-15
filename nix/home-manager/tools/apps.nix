@@ -49,7 +49,6 @@
     "kaleidoscope"
     "local"
     "orbstack"
-    "orca"
     "smoothcsv"
     "transmit"
     "xcodes-app" # nixpkgs has only the xcodes CLI
