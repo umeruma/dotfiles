@@ -5,7 +5,7 @@
 # is installed. Root: nix-darwin activates system files.
 [tasks.switch]
 description = "Apply flake.nix (packages, apps, zsh) with darwin-rebuild"
-run = "sudo /nix/var/nix/profiles/default/bin/nix run --inputs-from . nix-darwin#darwin-rebuild -- switch --flake .#AME"
+run = "sudo -H env NIX_CONFIG='warn-dirty = false' /nix/var/nix/profiles/default/bin/nix run --inputs-from . nix-darwin#darwin-rebuild -- switch --flake .#AME"
 
 [bootstrap.macos.dock]
 autohide = true
