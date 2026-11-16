@@ -10,6 +10,7 @@ let
     "dev-server"
     "git-wt"
     "improve"
+    "magicdns-url"
     "natural-japanese"
     "orca-cli"
     "orchestration"
