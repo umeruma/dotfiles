@@ -29,6 +29,7 @@ sidebar:
 - **AltTab を nixpkgs から入れる**: cask にした。nixpkgs 版はソースからビルドされ、ad-hoc 署名になる。そのため画面収録の権限を何度許可しても定着せず、起動のたびにダイアログが出た。
 - **Elgato Wave XLR / Wave Link**: 使うのをやめ、オーディオインターフェースを常駐アプリが不要な Zoom AMS-22 に替えた。Wave XLR は PC スイッチャーで切り替えると、色設定がおかしくなったり音量がリセットされたりした。Wave Link は OS 側で入出力を切り替えたうえで、Wave Link 上でも出力を切り替える必要があり、二度手間だった。（[3327221](https://github.com/umeruma/dotfiles/commit/3327221)）
 - **AirParrot**: 作業環境が変わり、使わなくなった。
+- **azooKey / Mozkey**: 日本語入力は Meltype にした。英語やコードが混ざっても、IME を切り替えずにそのまま打てるため。
 
 ## Deploy
 

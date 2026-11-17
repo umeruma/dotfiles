@@ -39,7 +39,7 @@ nix-darwin、home-manager、Homebrew の順に反映し、宣言から消した�
 2. **ほかの flake**: `flake.nix` の `inputs` に足す（例: `crit.nix`）。
 3. **Homebrew cask**: `my.casks`。formula は `my.brews`。nixpkgs にないもの、ドライバやシステム拡張を入れるもの、自己更新でデータを移行するもの（Raycast）。
 4. **App Store**: `my.masApps`。ID は `mas list` で調べる（`app-store.nix`）。
-5. **GitHub Releases など**: `fetchurl` で取ってくる（例: `azookey.nix`）。
+5. **GitHub Releases など**: `fetchurl` で取ってくる（例: `ghui.nix`）。
 
 zsh の alias や関数は、同じファイルに書きます。ツールが `~/.config` に書き込む状態ファイルや認証情報は、`my.configIgnore` で除外します（[Config ignore](#config-ignore)）。Claude Code のプラグインは `my.claudePlugins` に `"plugin@marketplace" = "owner/repo"` の形で書くと、switch のときに入っていなければ入ります（例: `revdiff.nix`）。HTTP の MCP サーバーは `my.claudeMcpServers` に `name = "url"` の形で書くと、user スコープに追加されます（例: `rex.nix`）。
 
@@ -105,7 +105,7 @@ my.configIgnore = [ "gh" ]; # ~/.config/gh（認証情報）
 | タグで固定した入力（crit、revdiff、leaf） | `flake.nix` のタグを書き換え、`nix flake update <input>` のあと switch |
 | cask | switch では上げない（`upgrade = false`）。アプリの自己更新に任せるか、`brew upgrade --cask <name>` |
 | App Store | App Store に任せる |
-| `fetchurl` で固定したもの（azooKey） | `version` と `hash` を書き換えて switch |
+| `fetchurl` で固定したもの（ghui） | `version` と `hash` を書き換えて switch |
 
 `hash` は次のコマンドで取れます。古いまま switch しても、エラーに正しい値が出ます。
 
