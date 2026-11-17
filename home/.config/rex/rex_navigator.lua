@@ -39,10 +39,25 @@ local function at_edge(ctx, dir)
   return false
 end
 
-local tab_action = {
-  vertical   = { up = "client.tab.previous", down = "client.tab.next" },
-  horizontal = { left = "client.tab.previous", right = "client.tab.next" },
+local tab_step = {
+  vertical   = { up = -1, down = 1 },
+  horizontal = { left = -1, right = 1 },
 }
+
+local function step_tab(ctx, step)
+  local v = rex.session.view{ session_id = ctx.session_id }
+  local ws = v and v.windows or {}
+  local i
+  for n, w in ipairs(ws) do
+    if w.window_id == v.active_window_id then i = n end
+  end
+  local inside = i and ws[i + step]
+  if inside then
+    rex.client.queue(step > 0 and "client.tab.next" or "client.tab.previous", {})
+  else
+    rex.client.queue(step > 0 and "session.next" or "session.previous", {})
+  end
+end
 
 for key, dir in pairs{ h = "left", j = "down", k = "up", l = "right" } do
   rex.action{
@@ -54,9 +69,9 @@ for key, dir in pairs{ h = "left", j = "down", k = "up", l = "right" } do
         rex.client.queue("pane.send_key", { key = "ctrl+" .. key })
         return
       end
-      local tab = tab_action[tabs_vertical() and "vertical" or "horizontal"][dir]
-      if tab and at_edge(ctx, dir) then
-        rex.client.queue(tab, {})
+      local step = tab_step[tabs_vertical() and "vertical" or "horizontal"][dir]
+      if step and at_edge(ctx, dir) then
+        step_tab(ctx, step)
       else
         rex.client.queue("pane.focus", { direction = dir, wrap = true })
       end
