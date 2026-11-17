@@ -8,14 +8,55 @@ local function in_nvim(ctx)
   return false
 end
 
+local function tabs_vertical()
+  local r = rex.exec.start{ "defaults", "read", "com.superlogical.rex", "Workspace.tabStyle" }:wait()
+  return r.ok and r.stdout:match("vertical") ~= nil
+end
+
+local function find_rect(node, block_id)
+  if not node then return nil end
+  if node.block_id == block_id then return node.rect end
+  if node.split then
+    return find_rect(node.split.before, block_id) or find_rect(node.split.after, block_id)
+  end
+end
+
+local function at_edge(ctx, dir)
+  local v = rex.session.view{ session_id = ctx.session_id }
+  for _, w in ipairs(v and v.windows or {}) do
+    for _, l in ipairs(w.layers or {}) do
+      local r = l.kind == "tiled" and find_rect(l.layout, ctx.block_id)
+      if r then
+        local x, y, wd, ht = r[1], r[2], r[3], r[4]
+        -- 1e-6: rects are normalized floats, so a pane on the edge can be off by rounding
+        if dir == "left" then return x <= 1e-6 end
+        if dir == "right" then return x + wd >= 1 - 1e-6 end
+        if dir == "up" then return y <= 1e-6 end
+        return y + ht >= 1 - 1e-6
+      end
+    end
+  end
+  return false
+end
+
+local tab_action = {
+  vertical   = { up = "client.tab.previous", down = "client.tab.next" },
+  horizontal = { left = "client.tab.previous", right = "client.tab.next" },
+}
+
 for key, dir in pairs{ h = "left", j = "down", k = "up", l = "right" } do
   rex.action{
     name    = "navigate_" .. dir,
-    title   = "Navigate " .. dir .. " through Neovim and Rex",
+    title   = "Navigate " .. dir .. " through Neovim, Rex panes and tabs",
     repeats = true,
     run     = function(ctx)
       if in_nvim(ctx) then
         rex.client.queue("pane.send_key", { key = "ctrl+" .. key })
+        return
+      end
+      local tab = tab_action[tabs_vertical() and "vertical" or "horizontal"][dir]
+      if tab and at_edge(ctx, dir) then
+        rex.client.queue(tab, {})
       else
         rex.client.queue("pane.focus", { direction = dir, wrap = true })
       end
