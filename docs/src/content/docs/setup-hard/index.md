@@ -7,11 +7,11 @@ sidebar:
 
 ## keyboard: 
 
-[HHKB ANSI layout](https://hhkb.io/layout/)
+[KBDfans Agar Mini](https://kbdfans.com/products/agar-mini)
+
+HHKB 寄りのロウスタッガード配列（ANSI）。以前は [HHKB ANSI layout](https://hhkb.io/layout/) を使っていた。
 
 IME 切り替えの設定（macOS: Karabiner / Windows: kanata）は [IME Switching](/setup-hard/ime-switching/) を参照。
-
-<img width="320" alt="" src="https://i.gyazo.com/1eaad11921cce165baed6c8b222f77cc.jpg"/>
 
 ## mouse: 
 
