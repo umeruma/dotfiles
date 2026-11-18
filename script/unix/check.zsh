@@ -22,7 +22,7 @@ for f in mise.linux.toml mise.windows.toml; do
 done
 
 # Rex does not exist on Windows, so its skills are not linked there.
-local -a skills windows_skip=(rex wtt-close)
+local -a skills windows_skip=(leaf-open rex wtt-close)
 skills=(${(f)"$(sed -n '/^  skills = \[/,/^  \];/p' nix/home-manager/tools/claude.nix | grep -o '"[^"]*"' | tr -d '"')"})
 (( ${#skills} )) || fail "nix/home-manager/tools/claude.nix: skills list not found"
 for s in $skills; do

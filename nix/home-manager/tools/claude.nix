@@ -10,6 +10,7 @@ let
     "dev-server"
     "git-wt"
     "improve"
+    "leaf-open"
     "magicdns-url"
     "natural-japanese"
     "orca-cli"

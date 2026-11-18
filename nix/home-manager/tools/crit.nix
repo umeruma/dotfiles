@@ -1,7 +1,8 @@
 # Inline code review for AI agent workflows (https://crit.md). Not in
 # nixpkgs; built from crit's own flake (see flake.nix inputs).
 # Claude Code's /crit skills come from `crit install`, not the plugin: the
-# plugin's ExitPlanMode hook would open crit alongside revdiff-planning.
+# plugin's ExitPlanMode hook would open crit on every plan; plans open in
+# leaf through the leaf-open skill instead.
 { inputs, lib, pkgs, ... }:
 let
   crit = inputs.crit.packages.${pkgs.stdenv.hostPlatform.system}.default;

@@ -12,8 +12,6 @@ in
 
   home.file = {
     ".claude/plugins/data/revdiff-revdiff/scripts/launch-revdiff.sh" = launcher "launch-revdiff.sh";
-    ".claude/plugins/data/revdiff-planning-revdiff/scripts/launch-plan-review.sh" =
-      launcher "launch-plan-review.sh";
   };
 
   # Bundled themes revdiff writes on first run; --init-themes recreates them.
@@ -26,6 +24,5 @@ in
 
   my.claudePlugins = {
     "revdiff@revdiff" = "umputun/revdiff";
-    "revdiff-planning@revdiff" = "umputun/revdiff";
   };
 }
