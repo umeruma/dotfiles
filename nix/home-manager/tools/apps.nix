@@ -18,6 +18,7 @@
     "alt-tab" # nixpkgs build is ad-hoc signed, so Screen Recording never sticks
     "cleanmymac"
     # "dockdoor-pro" # Dock replacement with widgets, profiles and window previews
+    "hiddenbar" # nixpkgs hidden-bar lags (1.10 vs 1.13)
     "netnewswire"
     "raycast" # nixpkgs lags behind and can't open self-updated data
     "saffsanity/sill/sill"
