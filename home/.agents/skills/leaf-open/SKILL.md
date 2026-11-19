@@ -5,7 +5,7 @@ description: "Use when showing the user a markdown file you just wrote or update
 
 # leaf で md を見せる
 
-新しく書いた・直した md（計画、レポート、メモなど）をユーザーに見せるときは、Rex のフローティングペインで leaf を開く。leaf はコメントを付けられない。直してほしい点は返信でもらう。
+新しく書いた・直した md（計画、レポート、メモなど）をユーザーに見せるときは、Rex のフローティングペインで leaf を開く。leaf で選んだ行へのコメント（ctrl+enter / Enter）は `LEAF_AGENT_PANE` のペインに送られる。指定しないと別のエージェントのペインに届くことがあるので、必ず自分のペイン（`$REX_BLOCK`）を渡す。
 
 ## Rex の中（`$REX_BLOCK` があり、`rex` と `leaf` が PATH にある）
 
@@ -17,7 +17,7 @@ rex split -s "$REX_SESSION" -b "$REX_BLOCK" --split=below -c "$PWD" --label leaf
       "{\"block_id\":\"$REX_BLOCK\",\"bounds\":[0.05,0.05,0.9,0.9]}" >/dev/null 2>&1 ||
       "$1" zoom --on >/dev/null 2>&1 || true
     shift; exec "$@"' \
-  sh "$(command -v rex)" "$(command -v leaf)" <絶対パス>
+  sh "$(command -v rex)" env "LEAF_AGENT_PANE=$REX_BLOCK" "$(command -v leaf)" <絶対パス>
 ```
 
 - `--wait` は付けない。付けると leaf を閉じるまでエージェントが止まる
