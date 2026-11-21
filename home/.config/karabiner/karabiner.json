@@ -46,6 +46,15 @@
                 {
                     "identifiers": {
                         "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 9479,
+                        "vendor_id": 40283
+                    },
+                    "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
                         "product_id": 24647,
                         "vendor_id": 6127
                     },
