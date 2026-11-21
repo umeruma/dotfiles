@@ -1,6 +1,6 @@
 return {
-  "baggiponte/rex-navigator.nvim",
-  main = "rex-navigator",
+  "fillin-c/rex-pane-nav",
+  main = "rex-pane-nav",
   lazy = false,
   opts = {},
 }
