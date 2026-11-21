@@ -21,6 +21,13 @@
     reattach = true;
   };
 
+  # Stay reachable for Sill over Tailscale while on AC. `power.*` cannot
+  # target AC only, and restartAfterPowerFailure fails on laptops.
+  system.activationScripts.postActivation.text = ''
+    pmset -c sleep 0
+    if pmset -g cap | grep -q autorestart; then pmset -a autorestart 1; fi
+  '';
+
   environment.systemPackages = config.home-manager.users.${user}.my.apps;
 
   system.primaryUser = user;
