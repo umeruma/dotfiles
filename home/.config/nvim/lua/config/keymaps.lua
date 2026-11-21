@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 
 if vim.env.REX_SESSION and vim.env.REX_SESSION ~= "" then
-  for key, dir in pairs({ h = "Left", j = "Down", k = "Up", l = "Right" }) do
-    vim.keymap.set("n", "<C-" .. key .. ">", "<Plug>(RexNavigate" .. dir .. ")")
+  for _, key in ipairs({ "h", "j", "k", "l" }) do
+    vim.keymap.set("n", "<C-" .. key .. ">", function() require("rex-pane-nav").navigate(key) end)
   end
 end
