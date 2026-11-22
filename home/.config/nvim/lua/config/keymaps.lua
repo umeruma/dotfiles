@@ -7,3 +7,5 @@ if vim.env.REX_SESSION and vim.env.REX_SESSION ~= "" then
     vim.keymap.set("n", "<C-" .. key .. ">", function() require("rex-pane-nav").navigate(key) end)
   end
 end
+
+require("config.yank-ref")
