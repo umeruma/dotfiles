@@ -191,14 +191,14 @@ alias keka="/Applications/Keka.app/Contents/MacOS/Keka --cli"
 # =========================
 # eza when present (omarchy aliases), plain ls otherwise. No icons: font may lack NF glyphs.
 if command -v eza >/dev/null 2>&1; then
-    alias ls="eza --group-directories-first"
-    alias ll="eza -lh --group-directories-first"
-    alias la="eza -lah --group-directories-first"
+    alias ls="eza -xF --group-directories-first"
+    alias ll="eza -lhF --group-directories-first"
+    alias la="eza -lahF --group-directories-first"
     alias lt="eza --tree --level=2 --long --git"
 else
-    alias ls="ls -G"
-    alias ll="ls -lG"
-    alias la="ls -laG"
+    alias ls="ls -GxF"
+    alias ll="ls -lGF"
+    alias la="ls -laGF"
 fi
 
 # =========================
