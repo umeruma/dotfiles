@@ -31,12 +31,15 @@ tmp=$(mktemp -d)
 trap 'rm -rf $tmp' EXIT
 for f in "$@"; do
   ext=${${f:e}:l}
-  name=$(openssl rand -hex 16)${ext:+.$ext}
-  cp "$f" "$tmp/$name"  # 元ファイルは触らない
+  d=$(mktemp -d $tmp/XXXXXX)
+  cp "$f" "$d/$(openssl rand -hex 16)${ext:+.$ext}"  # 元ファイルは触らない
+  # webm は Clop が mp4 に変換して大きくなるので圧縮しない
   case $ext in
-    png|jpg|jpeg|gif|webp|heic|avif|tiff|mp4|mov|webm|mkv|pdf)
-      $CLOP optimise --behaviour inplace --no-progress "$tmp/$name" >&2 ;;
+    png|jpg|jpeg|gif|webp|heic|avif|tiff|mp4|mov|mkv|pdf)
+      $CLOP optimise --behaviour inplace --no-progress $d/* >&2 ;;
   esac
-  $RCLONE copyto "$tmp/$name" "r2:$BUCKET/$name" --s3-no-check-bucket
-  echo "$BASE_URL/$name"
+  # Clop は拡張子を変えることがある（mov → mp4 など）ので、残ったファイルを拾う
+  out=($d/*)
+  $RCLONE copyto $out[1] "r2:$BUCKET/${out[1]:t}" --s3-no-check-bucket
+  echo "$BASE_URL/${out[1]:t}"
 done
