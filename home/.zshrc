@@ -90,12 +90,12 @@ export MISE_STATUS_MESSAGE_SHOW_TOOLS=true
 
 # --- zoxide (smarter cd) ------------------
 # Replaces enhancd (unmaintained). `cd <query>` jumps by frecency;
-# bare `cd` / `cdi` pick from history with fzy, like enhancd did.
+# bare `cd` / `cdi` pick from history plus dirs under $PWD with fzy, like enhancd did.
 if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh --cmd cd)"
     cdi() {
         local dir
-        dir="$(zoxide query -l | fzy --prompt '❯ ')" || return
+        dir="$({ zoxide query -l; find "$PWD" -mindepth 1 -maxdepth 2 -type d -not -path '*/.*' 2>/dev/null; } | awk '!seen[$0]++' | fzy --prompt '❯ ')" || return
         __zoxide_cd "$dir"
     }
     cd() { if (( $# == 0 )); then cdi; else __zoxide_z "$@"; fi; }
@@ -191,14 +191,14 @@ alias keka="/Applications/Keka.app/Contents/MacOS/Keka --cli"
 # =========================
 # eza when present (omarchy aliases), plain ls otherwise. No icons: font may lack NF glyphs.
 if command -v eza >/dev/null 2>&1; then
-    alias ls="eza --group-directories-first"
-    alias ll="eza -lh --group-directories-first"
-    alias la="eza -lah --group-directories-first"
+    alias ls="eza -xF --group-directories-first"
+    alias ll="eza -lhF --group-directories-first"
+    alias la="eza -lahF --group-directories-first"
     alias lt="eza --tree --level=2 --long --git"
 else
-    alias ls="ls -G"
-    alias ll="ls -lG"
-    alias la="ls -laG"
+    alias ls="ls -GxF"
+    alias ll="ls -lGF"
+    alias la="ls -laGF"
 fi
 
 # =========================

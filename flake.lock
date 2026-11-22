@@ -193,11 +193,11 @@
     "rex-pane-nav": {
       "flake": false,
       "locked": {
-        "lastModified": 1795305067,
-        "narHash": "sha256-fFV1msjmcAjbhSBv9jHMJFzVLWPHzhmq93v0q2UMgV0=",
+        "lastModified": 1795324712,
+        "narHash": "sha256-3GKGExeJLsXHK2PIj2gwymVNzWY48fRBVMWBZ4Y5rXc=",
         "owner": "fillin-c",
         "repo": "rex-pane-nav",
-        "rev": "5ffa7464cc95c5b033635c80879fecca481e863b",
+        "rev": "8df281ec4063845dbf883b4bd94cbb5bfadbf289",
         "type": "github"
       },
       "original": {
