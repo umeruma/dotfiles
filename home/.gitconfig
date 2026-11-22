@@ -27,8 +27,9 @@
 [includeIf "gitdir:~/Codes/dotfiles/"]
   path = ~/Codes/dotfiles/repo.gitconfig
 [pull]
-  rebase = false
-  ff = false
+  rebase = true
+[rebase]
+  autoStash = true
 
 # cendre hard for delta — https://cendretheme.com / extras/delta
 [include]
