@@ -32,6 +32,9 @@ pcall(require, "rex_open")
 
 -- rex-pane-nav is linked by Nix (nix/home-manager/tools/rex.nix); tabs matches Workspace.tabStyle there
 local ok, err = pcall(function()
-  dofile(os.getenv("HOME") .. "/.local/share/rex-pane-nav/rex/pane_nav.lua").setup{ tabs = "vertical" }
+  dofile(os.getenv("HOME") .. "/.local/share/rex-pane-nav/rex/pane_nav.lua").setup{
+    tabs = "vertical",
+    rex  = os.getenv("HOME") .. "/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex",
+  }
 end)
 if not ok then rex.log("rex-pane-nav: not loaded: " .. tostring(err)) end
