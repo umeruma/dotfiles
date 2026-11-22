@@ -45,6 +45,9 @@ sidebar:
   - `.git/info/exclude` に書く方法は選ばない。clone 直後は ignore が効かず、認証情報が untracked として見えてしまう。
   - home-manager の `programs.git.ignores` は使わない。グローバルな ignore（`~/.config/git/ignore`）なので、手書きの `.gitconfig` の `excludesfile` と競合し、生成物が repo 内の `home/.config/git/` にできる。ツールごとの値が集まるのはモジュールシステムのリスト連結の働きなので、自前のオプションで同じことができる。
   - tools にファイルがないアプリ（emacs、flutter など）の分は `dotfiles.nix` にまとめる。
+- **switch の sudo を楽にする**: nix-darwin は system activation を root で実行するので、`mise run switch` には sudo が要る。
+  - `security.pam.services.sudo_local.watchIdAuth`（pam_watchid）は入れない。システム設定で Apple Watch によるロック解除を有効にすれば、`touchIdAuth` の pam_tid だけで Apple Watch の承認が出る。
+  - darwin-rebuild の sudoers NOPASSWD は入れない。flake はユーザー権限で書き換えられるので、ユーザー権限のプロセスなら何でも root を取れてしまう。
 
 ## Tasks
 
