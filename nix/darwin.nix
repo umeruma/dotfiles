@@ -21,6 +21,20 @@
     reattach = true;
   };
 
+  # A remote terminal (Rex on iOS) cannot answer or cancel the Touch ID
+  # prompt, and sudo ignores Ctrl-C while it waits. `sudo /usr/bin/true`
+  # authenticates by password only and caches the credentials for the pane.
+  environment.etc."pam.d/sudo_password".text = ''
+    auth       sufficient     pam_smartcard.so
+    auth       required       pam_opendirectory.so
+    account    required       pam_permit.so
+    password   required       pam_deny.so
+    session    required       pam_permit.so
+  '';
+  security.sudo.extraConfig = ''
+    Defaults!/usr/bin/true pam_service=sudo_password
+  '';
+
   # Stay reachable for Sill over Tailscale while on AC. `power.*` cannot
   # target AC only, and restartAfterPowerFailure fails on laptops.
   system.activationScripts.postActivation.text = ''

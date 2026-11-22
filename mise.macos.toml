@@ -5,7 +5,12 @@
 # is installed. Root: nix-darwin activates system files.
 [tasks.switch]
 description = "Apply flake.nix (packages, apps, zsh) with darwin-rebuild"
-run = "sudo -H env NIX_CONFIG='warn-dirty = false' /nix/var/nix/profiles/default/bin/nix run --inputs-from . nix-darwin#darwin-rebuild -- switch --flake .#AME"
+# Nobody at the Mac (no keyboard / mouse input for 15s) means a remote
+# terminal: authenticate by password first, as Touch ID would block there.
+run = [
+  "if [ \"$(ioreg -c IOHIDSystem | awk '/HIDIdleTime/ {print int($NF/1e9); exit}')\" -gt 15 ]; then sudo /usr/bin/true; fi",
+  "sudo -H env NIX_CONFIG='warn-dirty = false' /nix/var/nix/profiles/default/bin/nix run --inputs-from . nix-darwin#darwin-rebuild -- switch --flake .#AME",
+]
 
 [bootstrap.macos.dock]
 autohide = true

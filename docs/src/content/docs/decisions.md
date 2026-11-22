@@ -48,6 +48,7 @@ sidebar:
 - **switch の sudo を楽にする**: nix-darwin は system activation を root で実行するので、`mise run switch` には sudo が要る。
   - `security.pam.services.sudo_local.watchIdAuth`（pam_watchid）は入れない。システム設定で Apple Watch によるロック解除を有効にすれば、`touchIdAuth` の pam_tid だけで Apple Watch の承認が出る。
   - darwin-rebuild の sudoers NOPASSWD は入れない。flake はユーザー権限で書き換えられるので、ユーザー権限のプロセスなら何でも root を取れてしまう。
+  - リモートの端末（iOS の Rex など）からは Touch ID に応答できず、待っている間の sudo は Ctrl-C も効かない。そこで `sudo /usr/bin/true` だけは Touch ID 抜きの PAM サービス（`sudo_password`）で認証させる。`mise run switch` は Mac の入力が15秒以上ないとき、先にこれを実行する。パスワードは必ず要るので NOPASSWD のような穴にはならない。
 
 ## Tasks
 
