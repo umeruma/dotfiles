@@ -190,6 +190,22 @@
         "type": "github"
       }
     },
+    "rex-pane-nav": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795305067,
+        "narHash": "sha256-fFV1msjmcAjbhSBv9jHMJFzVLWPHzhmq93v0q2UMgV0=",
+        "owner": "fillin-c",
+        "repo": "rex-pane-nav",
+        "rev": "5ffa7464cc95c5b033635c80879fecca481e863b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fillin-c",
+        "repo": "rex-pane-nav",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "crit": "crit",
@@ -199,7 +215,8 @@
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs",
-        "revdiff": "revdiff"
+        "revdiff": "revdiff",
+        "rex-pane-nav": "rex-pane-nav"
       }
     },
     "systems": {

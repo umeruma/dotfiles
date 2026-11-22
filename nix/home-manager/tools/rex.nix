@@ -1,10 +1,13 @@
 # Rex (https://www.superlogical.com/rex). The app is installed by hand; its
 # terminals export REX_BIN_DIR, which must lead PATH for the `rex` CLI
 # (https://www.superlogical.com/rex/docs/automate/cli).
-{ ... }:
+{ inputs, ... }:
 {
   my.claudeMcpServers.superlogical = "https://www.superlogical.com/rex/community-mcp";
   my.configIgnore = [ "rex/rex_durable.lua" ];
+
+  # Read by rex/init.lua and the Neovim plugin spec (nvim/lua/plugins/rex-navigator.lua)
+  home.file.".local/share/rex-pane-nav".source = inputs.rex-pane-nav;
 
   # App settings live in defaults, not init.lua, and Rex documents no way to
   # sync them; these are its internal keys and may change between previews.
