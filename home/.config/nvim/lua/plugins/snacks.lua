@@ -41,6 +41,11 @@ local picker_opts = {
       -- ignored = true, -- also show gitignored files (uncomment if needed)
       format = explorer_format,
     },
+    files_changed_first = {
+      multi = { "git_status", "files" },
+      format = "file",
+      transform = "unique_file",
+    },
   },
 }
 
@@ -50,6 +55,13 @@ return {
     opts = {
       picker = picker_opts,
       lazygit = { config = { gui = { nerdFontsVersion = "" } } },
+    },
+    keys = {
+      {
+        "<leader><space>",
+        function() Snacks.picker.pick("files_changed_first", { cwd = LazyVim.root() }) end,
+        desc = "Find Files, changed first (Root Dir)",
+      },
     },
   },
 }
