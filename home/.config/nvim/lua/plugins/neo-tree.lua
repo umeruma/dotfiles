@@ -12,6 +12,9 @@ return {
       },
     },
     -- dotfiles are not dimmed; gitignored stay dimmed and `H` still toggles them
-    filesystem = { filtered_items = { visible = true, hide_dotfiles = false } },
+    filesystem = {
+      filtered_items = { visible = true, hide_dotfiles = false },
+      hijack_netrw_behavior = "disabled",
+    },
   },
 }
