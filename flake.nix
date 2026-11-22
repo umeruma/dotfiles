@@ -32,6 +32,11 @@
       url = "github:supercrabtree/k";
       flake = false;
     };
+    # Rex / Neovim pane navigation, linked as-is (tools/rex.nix)
+    rex-pane-nav = {
+      url = "github:fillin-c/rex-pane-nav";
+      flake = false;
+    };
   };
 
   outputs =

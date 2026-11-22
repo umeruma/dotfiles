@@ -29,4 +29,9 @@ rex.bind("shift+cmd+w", "wt_tab")
 pcall(require, "rex_durable")
 pcall(require, "rex_undo")
 pcall(require, "rex_open")
-pcall(require, "rex_navigator")
+
+-- rex-pane-nav is linked by Nix (nix/home-manager/tools/rex.nix); tabs matches Workspace.tabStyle there
+local ok, err = pcall(function()
+  dofile(os.getenv("HOME") .. "/.local/share/rex-pane-nav/rex/pane_nav.lua").setup{ tabs = "vertical" }
+end)
+if not ok then rex.log("rex-pane-nav: not loaded: " .. tostring(err)) end
