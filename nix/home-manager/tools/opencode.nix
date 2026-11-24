@@ -2,6 +2,7 @@
 { pkgs, ... }:
 {
   home.packages = [ pkgs.opencode ];
+  programs.zsh.shellAliases.o = "opencode";
 
   my.configIgnore = [ "opencode" ];
 }
