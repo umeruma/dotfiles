@@ -13,4 +13,5 @@ in
   home.file.".gitconfig" = link ".gitconfig";
   home.file.".gitignore" = link ".gitignore"; # core.excludesfile
   home.file.".gitmessage" = link ".gitmessage"; # commit.template
+  home.file."Codes_DL/.gitconfig" = link "Codes_DL/.gitconfig"; # work identity
 }

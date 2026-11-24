@@ -1,0 +1,4 @@
+# Work identity for repos under ~/Codes_DL (included from ~/.gitconfig)
+[user]
+  name = Takumi Saito
+  email = takumi@digitallove.jp
