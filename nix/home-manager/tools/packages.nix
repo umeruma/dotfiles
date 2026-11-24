@@ -3,6 +3,7 @@
 {
   home.packages = with pkgs; [
     cargo
+    cloudflared
     ffmpeg
     gifsicle
     imagemagick
