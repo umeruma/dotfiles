@@ -65,10 +65,22 @@ in
         fi
       '') config.my.claudeMcpServers
     )
+    + ''
+      settings=~/.claude/settings.json
+      hook=${config.home.homeDirectory}/.claude/hooks/osc7577-resume.sh
+      [ -f "$settings" ] || echo '{}' >"$settings"
+      for event in SessionStart SessionEnd; do
+        if ! $jq -e --arg e "$event" --arg c "$hook" '.hooks[$e] // [] | any(.[].hooks[]?; .command == $c)' "$settings" >/dev/null; then
+          tmp=$(mktemp)
+          $jq --arg e "$event" --arg c "$hook" '.hooks[$e] += [{hooks: [{type: "command", command: $c, timeout: 5}]}]' "$settings" >"$tmp" && run mv "$tmp" "$settings"
+        fi
+      done
+    ''
   );
 
   home.file = {
     ".claude/CLAUDE.md" = link "home/.claude/CLAUDE.md";
+    ".claude/hooks/osc7577-resume.sh" = link "home/.claude/hooks/osc7577-resume.sh";
   }
   // lib.genAttrs (map (s: ".claude/skills/${s}") skills) (
     n: link "home/.agents/skills/${lib.removePrefix ".claude/skills/" n}"

@@ -24,12 +24,13 @@ rex.action{
 
 rex.bind("shift+cmd+w", "wt_tab")
 
--- rex-durable lives in ~/.local/share/rex-ext, outside this repo; remove it once
--- Rex restores programs itself. rex-undo / rex-open are linked by Nix
--- (nix/home-manager/tools/rex.nix).
-pcall(require, "rex_durable")
+-- rex-undo / rex-open are linked by Nix (nix/home-manager/tools/rex.nix).
 pcall(require, "rex_undo")
 pcall(require, "rex_open")
+
+-- lg and n report these through osc7577_exec (nix/home-manager/tools/rex.nix)
+rex.set("resume.trust.lazygit", { command = { "lazygit" } })
+rex.set("resume.trust.nvim", { command = { "nvim", rex.match.under("~") } })
 
 -- rex-pane-nav is linked by Nix (nix/home-manager/tools/rex.nix); tabs matches Workspace.tabStyle there
 local ok, err = pcall(function()

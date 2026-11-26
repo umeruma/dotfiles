@@ -40,6 +40,14 @@ revdiff はプラグインで入れる（`/revdiff main` などで起動）。�
 
 プランやレポートなど、エージェントが書いた md は `leaf-open` スキルで leaf に開く。プラグインのフックではなくスキルにしたのは、Claude Code 以外のエージェントでも同じように動かすため。コメントは付けられないので、直してほしい点は返信で伝える。`leaf rex install`（コマンドパレット連携）は、`home/.config/rex/init.lua` に Nix ストアのパスを書き込むので入れていない。
 
+Rex を再起動したとき、Claude Code は元の会話に戻る。Claude Code は [Program Resume Protocol（OSC 7577）](https://www.superlogical.com/rex/docs/build/program-resume)に対応していないので、`home/.claude/hooks/osc7577-resume.sh` が代わりに Rex へ `claude --resume <session_id>` を伝えている。`SessionStart`（起動・`/clear`・`/resume`）のたびに送り直し、`/exit` で終えたときだけ消す。`settings.json` は Claude Code が管理するファイルなので、`claude.nix` は switch のときにこの hook を足すだけで、消すときは手で外す。
+
+opencode も同じように戻る。opencode 1.19 も OSC 7577 に対応していないので、`home/.config/opencode/tui.json` で読み込む TUI プラグイン（`tui-plugins/osc7577-resume.ts`）が、表示中のセッションを `opencode --session <id>` として伝える。表示中のセッションが変わったことを知らせるイベントがプラグインには来ないので、1 秒ごとに確かめている。
+
+この hook とプラグインは、Claude Code や opencode が自分で OSC 7577 を送るようになるまでのつなぎ。対応したかどうかは、バイナリの中の `OSC7577` を探して確かめる（`strings "$(dirname "$(readlink -f "$(which claude)")")/.claude-wrapped" | grep -c OSC7577` が 0 なら未対応。opencode は `.opencode-wrapped`）。対応したら、Claude Code は `osc7577-resume.sh` と `claude.nix` の hook 登録、それに `~/.claude/settings.json` の hook を消す。opencode は `tui-plugins/` と `tui.json` の `plugin` を消す。両方が送っていても、Rex は後から届いたほうを使うだけなので、消し忘れても壊れはしない。
+
+`lg`（lazygit）と `n`（nvim）も同じように戻る。どちらも `rex.nix` の zsh 関数 `osc7577_exec` を通して起動し、`n` は開いたパスを絶対パスにして伝える。Rex は信頼ルールに合うコマンドしか戻さないので、`home/.config/rex/init.lua` に `resume.trust.lazygit` と `resume.trust.nvim`（`~` の下のパスだけ）を足している（[Resume rules](https://www.superlogical.com/rex/docs/customize/resume-rules)）。Rex が戻したプログラムは `osc7577_exec` を通らないので、伝え直さない。
+
 ## Setup
 
 ```bash

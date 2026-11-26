@@ -7,5 +7,6 @@
     delta
   ];
 
-  programs.zsh.shellAliases.lg = "lazygit";
+  # osc7577_exec (rex.nix) lets Rex bring it back after a restart
+  programs.zsh.shellAliases.lg = "osc7577_exec lazygit";
 }

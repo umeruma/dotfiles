@@ -4,7 +4,6 @@
 { inputs, ... }:
 {
   my.claudeMcpServers.superlogical = "https://www.superlogical.com/rex/community-mcp";
-  my.configIgnore = [ "rex/rex_durable.lua" ];
 
   # Read by rex/init.lua and the Neovim plugin spec (nvim/lua/plugins/rex-navigator.lua)
   home.file.".local/share/rex-pane-nav".source = inputs.rex-pane-nav;
@@ -44,5 +43,26 @@
     if [ -n "$REX_BIN_DIR" ]; then
       export PATH="$REX_BIN_DIR:$PATH"
     fi
+
+    # Exec the command and report it to the terminal for resume after a restart
+    # (OSC 7577), for the same pid. Rex trusts it only if a resume.trust rule in
+    # rex/init.lua names it.
+    osc7577_exec() {
+      [[ -n $OSC7577_TOKEN ]] || { "$@"; return; }
+      (
+        zmodload -F zsh/system p:sysparams
+        local a body mac
+        local -a argv64
+        for a in "$@"; do argv64+=$(print -rn -- "$a" | base64 | tr -d '\n'); done
+        body="pid=''${sysparams[pid]}:time=$(date +%s):argv=''${(j:,:)argv64}:cwd=$(print -rn -- "$PWD" | base64 | tr -d '\n')"
+        # print is a builtin, so the token does not show up in the process list
+        mac=$(print -rn -- "$body:$OSC7577_TOKEN" | shasum -a 256 | cut -c1-64)
+        # Rex checks the pid's program when the report arrives, so send it after
+        # wrappers such as nixpkgs' nvim script have exec'd the real binary
+        { sleep 1; print -rn -- $'\e]7577;'"$body:mac=$mac"$'\e\\' >/dev/tty; } &!
+        unset OSC7577_TOKEN
+        exec "$@"
+      )
+    }
   '';
 }

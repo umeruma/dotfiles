@@ -8,7 +8,6 @@
 
 zed/prompts
 suzuri/prompts
-rex/rex_durable.lua
 revdiff/themes/*
 !revdiff/themes/cendre
 revdiff/history
@@ -16,7 +15,9 @@ lftp
 rclone
 micro/backups
 micro/buffers
-opencode
+opencode/*
+!opencode/tui.json
+!opencode/tui-plugins
 mole
 mise/age.txt
 karabiner/automatic_backups
