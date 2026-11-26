@@ -190,6 +190,22 @@
         "type": "github"
       }
     },
+    "rex-open": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794235323,
+        "narHash": "sha256-y6yWnv0107MbpPdBJOa3Me4O55rH1JRqYfidL7Q0WoY=",
+        "owner": "HaydenMeloche",
+        "repo": "rex-open",
+        "rev": "e30fbe6f38aa23c05927bb6964d6db3d411d5020",
+        "type": "github"
+      },
+      "original": {
+        "owner": "HaydenMeloche",
+        "repo": "rex-open",
+        "type": "github"
+      }
+    },
     "rex-pane-nav": {
       "flake": false,
       "locked": {
@@ -206,6 +222,22 @@
         "type": "github"
       }
     },
+    "rex-undo": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794815493,
+        "narHash": "sha256-fBRIkJrsv7UJCtU0c8m4AqPfwQuoITzpLYlB/LVM8Yg=",
+        "owner": "lakshaybhushan",
+        "repo": "rex-undo-extension",
+        "rev": "e74f488ef040ae792f8d437698d55fe09f28ac15",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lakshaybhushan",
+        "repo": "rex-undo-extension",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "crit": "crit",
@@ -216,7 +248,9 @@
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs",
         "revdiff": "revdiff",
-        "rex-pane-nav": "rex-pane-nav"
+        "rex-open": "rex-open",
+        "rex-pane-nav": "rex-pane-nav",
+        "rex-undo": "rex-undo"
       }
     },
     "systems": {

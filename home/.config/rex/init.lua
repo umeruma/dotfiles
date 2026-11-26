@@ -24,8 +24,9 @@ rex.action{
 
 rex.bind("shift+cmd+w", "wt_tab")
 
--- rex-durable / rex-undo live in ~/.local/share/rex-ext, outside this repo;
--- remove these lines once Rex restores tabs and closed panes itself.
+-- rex-durable lives in ~/.local/share/rex-ext, outside this repo; remove it once
+-- Rex restores programs itself. rex-undo / rex-open are linked by Nix
+-- (nix/home-manager/tools/rex.nix).
 pcall(require, "rex_durable")
 pcall(require, "rex_undo")
 pcall(require, "rex_open")

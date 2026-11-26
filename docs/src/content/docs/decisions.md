@@ -70,6 +70,7 @@ sidebar:
 - **nvim の Chalice アイコン → 記号表示**: Chalice は私用領域（U+E000〜E011）のグリフで、Ghostty の `font-codepoint-map` で ChaliceIcons フォントに割り当てて表示していた。この割り当てができない端末（Rex、Windows Terminal）では出ない。分類（`home/.config/nvim/file-icons.toml`）は Chalice のまま残し、各分類を2文字幅の記号（`{}` `>_` など）で出す形にして全 OS で揃えた。フォントと割り当て設定は消した。
 - **[leaf](https://github.com/DeepanshuMishraa/leaf)（2026-11-14 から試用中）**: crit を TUI に替える候補。diff の行コメントを Rex のエージェントペインへ直接送れて、Rex との相性は一番いい。11-12 には、リリースがなく `cargo install` でしか入らないこと、plan.md などのドキュメントにコメントを貯められないことから見送った。11-13 にリリースと Homebrew tap が出たので入れた。ドキュメントへの保存できるコメントは今もないので、プランは diff にして `leaf diff` で開く（[editor-stack](/editor-stack)）。
 - **[rex-navigator.nvim](https://github.com/baggiponte/rex-navigator.nvim) → [rex-pane-nav](https://github.com/fillin-c/rex-pane-nav)**: rex-navigator.nvim の Rex 側モジュールは ctrl-h/j/k/l を Rex 全体に割り当てるので、シェルや Claude Code など nvim 以外のペインで本来の動きをしなくなる。そこで cmd+shift+h/j/k/l で同じことをする版を書き、端のペインでタブやセッションへ移る動きも足した。人に紹介しやすいように、nvim 側も含めて rex-pane-nav として切り出した。nvim の端から Rex への引き継ぎは、Tailscale 経由のアプリだと接続先ではなく自分のサーバーの設定でキーを処理するので、ペインの owner のアプリに `client.perform` で移動させる。cmd+alt+h は macOS の「ほかを隠す」と被るので使わない。
+- **Rex 拡張を `~/.local/share/rex-ext` に手で clone する → flake input でリンク**: [rex-undo](https://github.com/lakshaybhushan/rex-undo-extension)・[rex-open](https://github.com/HaydenMeloche/rex-open) は、Rex 本体に同じ機能が入るまでのつなぎとして、リポジトリの外に手で入れていた。そのため、clone と `install.sh` を実行した Mac にしか入らなかった。rex-pane-nav と同じく Nix で管理し、各 `install.sh` は実行しない。rex-undo の Claude Code SessionStart フックは入れていない。
 
 ## Docs
 

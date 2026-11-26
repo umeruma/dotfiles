@@ -37,6 +37,15 @@
       url = "github:fillin-c/rex-pane-nav";
       flake = false;
     };
+    # Rex extensions, linked as-is (tools/rex.nix)
+    rex-undo = {
+      url = "github:lakshaybhushan/rex-undo-extension";
+      flake = false;
+    };
+    rex-open = {
+      url = "github:HaydenMeloche/rex-open";
+      flake = false;
+    };
   };
 
   outputs =
