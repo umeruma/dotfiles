@@ -29,6 +29,7 @@ sidebar:
 - **AltTab を nixpkgs から入れる**: cask にした。nixpkgs 版はソースからビルドされ、ad-hoc 署名になる。そのため画面収録の権限を何度許可しても定着せず、起動のたびにダイアログが出た。
 - **Elgato Wave XLR / Wave Link**: 使うのをやめ、オーディオインターフェースを常駐アプリが不要な Zoom AMS-22 に替えた。Wave XLR は PC スイッチャーで切り替えると、色設定がおかしくなったり音量がリセットされたりした。Wave Link は OS 側で入出力を切り替えたうえで、Wave Link 上でも出力を切り替える必要があり、二度手間だった。（[3327221](https://github.com/umeruma/dotfiles/commit/3327221)）
 - **AirParrot**: 作業環境が変わり、使わなくなった。
+- **Hammerspoon / AutoHideMenuAppWithDeskPad**: DeskPad の起動中にメニューバーを隠すためだけに入れていた。画面共有でメニューバーが映っても気にならなくなったので外した。
 - **azooKey / Mozkey**: 日本語入力は Meltype にした。英語やコードが混ざっても、IME を切り替えずにそのまま打てるため。
 
 ## Deploy
@@ -36,7 +37,7 @@ sidebar:
 - **GNU Stow**: mise の `[dotfiles]` に置き換え。リンクするものを allowlist で宣言する。（[96fcef0](https://github.com/umeruma/dotfiles/commit/96fcef0)）
 - **PSDotFiles（Windows）**: `[dotfiles]` が Windows の symlink を扱えるようになったので置き換え。Developer Mode がないと mise は symlink ではなくコピーするので、Developer Mode が必須になった。（[5f1e66c](https://github.com/umeruma/dotfiles/commit/5f1e66c)）
 - **`macos/defaults.sh`**: `mise.macos.toml` の `[bootstrap.macos.defaults]` に移した。（[6507146](https://github.com/umeruma/dotfiles/commit/6507146)）
-- **ランタイムに書き込むディレクトリのまるごと symlink（Linux / Windows）**: 禁止。lazygit・micro・herdr などはファイル単位でリンクする。過去に移行で dangling symlink が11本出たため。macOS は `~/.config` をまるごと `home/.config` にリンクし、状態ファイルは `home/.config/.gitignore` で除外する方式に変えた（babarot/dotfiles と同じ）。hammerspoon は `~/.config` の外なので、今もファイル単位。
+- **ランタイムに書き込むディレクトリのまるごと symlink（Linux / Windows）**: 禁止。lazygit・micro・herdr などはファイル単位でリンクする。過去に移行で dangling symlink が11本出たため。macOS は `~/.config` をまるごと `home/.config` にリンクし、状態ファイルは `home/.config/.gitignore` で除外する方式に変えた（babarot/dotfiles と同じ）。
 - **`~/.claude/settings.json` の追跡**: やめた。中身のほとんどは Orca・herdr・tldraw の hook や statusLine で、各ツールが自分で書き込む。プラグイン（crit、ponytail）も、ツールのドキュメントどおりに入れただけだった。追跡していると、ツールが書き換えるたびに差分が出るうえ、`/model` の `model` を外す filter と pre-commit も要った。
 - **`mise run deploy`**: 削除。macOS のリンクは home-manager に移り、switch が古いリンクも消すようになった。Linux / Windows は `mise dotfiles apply`（`mise bootstrap` の手順3でも走る）を直接使い、エントリを消したときだけ `mise run clean` を先に実行する。git の hooksPath と filter は、clone ごとに `git config` する代わりに `repo.gitconfig` を `~/.gitconfig` の `includeIf` で読む。
 - **`mise.dotfiles.toml` / `mise.unix.toml`**: 削除。mise は設定ファイルを足し合わせるだけで、Mac だけエントリを外すことができない。Mac に `[dotfiles]` が見えると、`mise bootstrap` が home-manager と同じ場所にリンクを張ってぶつかる。共通エントリは `mise.linux.toml` と `mise.windows.toml` に1回ずつ書く。

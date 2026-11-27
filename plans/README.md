@@ -60,6 +60,6 @@ Status values: TODO | IN PROGRESS | DONE | BLOCKED（理由を 1 行で） | REJ
 
 ## 監査していない範囲
 
-- nvim の Lua 設定、Hammerspoon、Karabiner、kanata の中身。
+- nvim の Lua 設定、Karabiner、kanata の中身。
 - `docs/src/components/` のベンダー由来のコンポーネント（約 77 ファイル）。
 - Windows と Linux の実機での動作。どちらもコードを読んだうえでの判断で、Windows の 2 件（004、005）だけは macOS 上の PowerShell で再現を確認した。
