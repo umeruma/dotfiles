@@ -43,13 +43,11 @@
 
     # dev ---
     "clop"
-    "drawio"
     "fission"
     "handbrake-app" # nixpkgs handbrake is broken on darwin
     "homebrew-app" # BrewUI
     "kaleidoscope"
     "local"
-    "orbstack"
     "smoothcsv"
     "transmit"
     "xcodes-app" # nixpkgs has only the xcodes CLI
