@@ -35,7 +35,7 @@ rex.set("resume.trust.nvim", { command = { "nvim", rex.match.under("~") } })
 -- rex-pane-nav is linked by Nix (nix/home-manager/tools/rex.nix); tabs matches Workspace.tabStyle there
 local ok, err = pcall(function()
   dofile(os.getenv("HOME") .. "/.local/share/rex-pane-nav/rex/pane_nav.lua").setup{
-    tabs = "vertical",
+    tabs = "vertical", split = true,
     rex  = os.getenv("HOME") .. "/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex",
   }
 end)
