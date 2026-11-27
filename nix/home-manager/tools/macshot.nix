@@ -28,11 +28,14 @@ in
 
   # A whole AppleSymbolicHotKeys dict via targets.darwin.defaults would wipe the
   # other system shortcuts, so only the screenshot entries are merged in:
-  # 30/31 ⌘⇧4 (file/clipboard), 184 ⌘⇧5.
+  # 30/31 ⌘⇧4 (file/clipboard), 184 ⌘⇧5. Parameters are what System Settings
+  # writes (char, key code, modifiers). The XML form is needed: the
+  # { enabled = 0; } form stores strings, which macOS ignores.
   home.activation.macshotSystemShortcuts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    for id in 30 31 184; do
-      run /usr/bin/defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys \
-        -dict-add "$id" '{ enabled = 0; }'
+    for e in "30 52 21 1179648" "31 52 21 1441792" "184 53 23 1179648"; do
+      set -- $e
+      run /usr/bin/defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add "$1" \
+        "<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>$2</integer><integer>$3</integer><integer>$4</integer></array><key>type</key><string>standard</string></dict></dict>"
     done
     run /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
